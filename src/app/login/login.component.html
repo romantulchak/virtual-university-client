@@ -1,0 +1,17 @@
+<section class="login__section">
+    <form action="">
+        <mat-form-field hintLabel="Max 25 characters" appearance="fill">
+          <mat-label>Login</mat-label>
+          <input name="login" [(ngModel)]="loginRequest.login" matInput #input maxlength="25">
+          <mat-hint align="end">{{input.value?.length || 0}}/25</mat-hint>
+        </mat-form-field>      
+        <mat-form-field appearance="fill">
+            <mat-label>Enter your password</mat-label>
+            <input name="password" [(ngModel)]="loginRequest.password" matInput [type]="hide ? 'password' : 'text'">
+            <button class="icon__button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+          <button mat-stroked-button color="primary" (click)="login()">Login</button>
+    </form>
+</section>
