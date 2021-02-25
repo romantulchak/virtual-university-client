@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { StudentDTO } from '../dto/student.dto';
+import { Student } from '../model/student.model';
+import { ResetPasswordRequest } from '../request/resetPasswordRequest.request';
 
 const API_URL = environment.api;
 
@@ -16,4 +18,11 @@ export class StudentService {
   public getStudentInformation(id: number):Observable<StudentDTO>{
     return this.httpClient.get<StudentDTO>(API_URL + 'student/getStudentInformation/' + id);
   }
+  public resetStudentPassowrd(resetPasswordRequest: ResetPasswordRequest):Observable<any>{
+    return this.httpClient.put(API_URL + 'student/resetPassword', resetPasswordRequest);
+  }
+  public createStudent(student:Student):Observable<any>{
+    return this.httpClient.post(API_URL + 'student/createStudent', student);
+  }
+
 }

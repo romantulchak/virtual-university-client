@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { LoginRequest } from '../request/loginRequest.request';
 import { AuthService } from '../service/auth.service';
 import { TokenStorageService } from '../service/tokenStorage.service';
@@ -11,7 +12,7 @@ import { TokenStorageService } from '../service/tokenStorage.service';
 export class LoginComponent implements OnInit {
 
   public loginRequest: LoginRequest = new LoginRequest();
-  constructor(private authService: AuthService, private tokenStorageService: TokenStorageService) { }
+  constructor(private authService: AuthService, private tokenStorageService: TokenStorageService, private router: Router) { }
   public hide = true;
   ngOnInit(): void {
   }
@@ -19,10 +20,14 @@ export class LoginComponent implements OnInit {
   public login(){
     this.authService.login(this.loginRequest).subscribe(
       res=>{
-        console.log(res);
         this.tokenStorageService.saveToken(res.token);
         this.tokenStorageService.saveType(res.userType);
         this.tokenStorageService.saveUser(res);
+        if(res.userType === 'ROLE_STUDENT'){
+          this.router.navigate(['profile/student']);
+        }else if(res.userType === 'ROLE_TEACHER'){
+          this.router.navigate(['profile/teacher']);
+        }
       }
     );
   }

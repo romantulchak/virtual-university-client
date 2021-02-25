@@ -21,7 +21,7 @@ export class TeacherProfileGuardGuard implements CanActivate {
       else{
         if(this.tokenStorageService.getType() == 'ROLE_STUDENT'){
 
-            window.location.href = "/student-profile";
+            window.location.href = "profile/student";
             return false;
         }
       }
