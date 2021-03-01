@@ -21,6 +21,12 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatRadioModule} from '@angular/material/radio';
+import { ProfileComponent } from './profile/profile.component';
+import { StudentGradeComponent } from './student-grade/student-grade.component';
+import { StudentProfileDetailsComponent } from './student-profile-details/student-profile-details.component';
+import { SpecializationsComponent } from './specializations/specializations.component';
+import { CreateSpecializationComponent } from './create-specialization/create-specialization.component';
+import { CreateSemesterComponent } from './create-semester/create-semester.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,6 +35,12 @@ import {MatRadioModule} from '@angular/material/radio';
     GradesComponent,
     ControlPanleComponent,
     CreateStudentComponent,
+    ProfileComponent,
+    StudentGradeComponent,
+    StudentProfileDetailsComponent,
+    SpecializationsComponent,
+    CreateSpecializationComponent,
+    CreateSemesterComponent,
   ],
   imports: [
     BrowserModule,

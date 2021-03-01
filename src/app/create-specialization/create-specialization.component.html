@@ -1,0 +1,35 @@
+<section>
+    <form action="" [formGroup]="firstFormGroup">
+        <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="name" formControlName="name" required>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Course</mat-label>
+            <mat-select formControlName="courseName">
+              <mat-option *ngFor="let course of courses" [value]="course">
+                {{course.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Semester</mat-label>
+            <mat-select formControlName="semester" (selectionChange)="showSubjects($event)">
+              <mat-option *ngFor="let semester of semesters" [value]="semester">
+                {{semester.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+    <button (click)="create()" type="submit">Create</button>
+        </form>
+
+
+        <div>
+          <h2>Subjects</h2>
+          <div>
+            <div *ngFor="let subject of subjects">
+              <h3>{{subject.name}}</h3>
+            </div>
+          </div>
+        </div>
+</section>
