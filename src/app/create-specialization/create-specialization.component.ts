@@ -48,8 +48,6 @@ export class CreateSpecializationComponent implements OnInit {
     );
   }
   public showSubjects(event){
-    console.log(event);
-    
     this.subjects = event.value.subjects;
   }
   public create(){

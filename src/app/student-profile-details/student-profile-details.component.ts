@@ -26,8 +26,9 @@ export class StudentProfileDetailsComponent implements OnInit {
   public getStudentInformation(){
     this.studentService.getStudentInformation(this.studentId).subscribe(
       res=>{
-        if(res != null)
+        if(res != null){
           this.student = res;
+        }        
       }
     );
   }

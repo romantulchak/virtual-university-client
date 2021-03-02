@@ -14,6 +14,7 @@ import { StudentGradeComponent } from './student-grade/student-grade.component';
 import { StudentProfileDetailsComponent } from './student-profile-details/student-profile-details.component';
 import { CreateSpecializationComponent } from './create-specialization/create-specialization.component';
 import { CreateSemesterComponent } from './create-semester/create-semester.component';
+import { SubjectsComponent } from './subjects/subjects.component';
 
 const routes: Routes = [
   {path:'', component:LoginComponent, canActivate:[LoginGuard, ProfileGuard]},
@@ -21,7 +22,8 @@ const routes: Routes = [
   {path: 'profile', children:[
     {path:'student', component: StudentProfileComponent, children:[
       {path: '', component: StudentProfileDetailsComponent, canActivate:[StudentProfileGuardGuard]},
-      {path:'grades', component: StudentGradeComponent}
+      {path:'grades', component: StudentGradeComponent},
+      {path: 'subjects', component: SubjectsComponent}
     ]},
     {path:'teacher', component: TeacherProfileComponent, canActivate: [TeacherProfileGuardGuard]}
   ]},

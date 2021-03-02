@@ -27,6 +27,8 @@ import { StudentProfileDetailsComponent } from './student-profile-details/studen
 import { SpecializationsComponent } from './specializations/specializations.component';
 import { CreateSpecializationComponent } from './create-specialization/create-specialization.component';
 import { CreateSemesterComponent } from './create-semester/create-semester.component';
+import { SubjectsComponent } from './subjects/subjects.component';
+import {MatExpansionModule} from '@angular/material/expansion';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +43,7 @@ import { CreateSemesterComponent } from './create-semester/create-semester.compo
     SpecializationsComponent,
     CreateSpecializationComponent,
     CreateSemesterComponent,
+    SubjectsComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,7 +60,8 @@ import { CreateSemesterComponent } from './create-semester/create-semester.compo
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatRadioModule
+    MatRadioModule,
+    MatExpansionModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
