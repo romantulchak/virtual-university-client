@@ -15,6 +15,7 @@ import { StudentProfileDetailsComponent } from './student-profile-details/studen
 import { CreateSpecializationComponent } from './create-specialization/create-specialization.component';
 import { CreateSemesterComponent } from './create-semester/create-semester.component';
 import { SubjectsComponent } from './subjects/subjects.component';
+import { CreateSubjectComponent } from './create-subject/create-subject.component';
 
 const routes: Routes = [
   {path:'', component:LoginComponent, canActivate:[LoginGuard, ProfileGuard]},
@@ -31,7 +32,8 @@ const routes: Routes = [
     {path:'', component: ControlPanleComponent},
     {path:'create-student', component: CreateStudentComponent},
     {path:'create-specialization', component: CreateSpecializationComponent},
-    {path: 'create-semester', component: CreateSemesterComponent}
+    {path: 'create-semester', component: CreateSemesterComponent},
+    {path: 'create-subject', component: CreateSubjectComponent}
   ]}
 ];
 

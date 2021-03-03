@@ -29,6 +29,7 @@ import { CreateSpecializationComponent } from './create-specialization/create-sp
 import { CreateSemesterComponent } from './create-semester/create-semester.component';
 import { SubjectsComponent } from './subjects/subjects.component';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { CreateSubjectComponent } from './create-subject/create-subject.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,6 +45,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
     CreateSpecializationComponent,
     CreateSemesterComponent,
     SubjectsComponent,
+    CreateSubjectComponent,
   ],
   imports: [
     BrowserModule,
