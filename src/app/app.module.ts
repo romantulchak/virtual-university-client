@@ -30,6 +30,7 @@ import { CreateSemesterComponent } from './create-semester/create-semester.compo
 import { SubjectsComponent } from './subjects/subjects.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { CreateSubjectComponent } from './create-subject/create-subject.component';
+import { CreateGradesComponent } from './create-grades/create-grades.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,6 +47,7 @@ import { CreateSubjectComponent } from './create-subject/create-subject.componen
     CreateSemesterComponent,
     SubjectsComponent,
     CreateSubjectComponent,
+    CreateGradesComponent,
   ],
   imports: [
     BrowserModule,

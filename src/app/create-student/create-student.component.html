@@ -129,15 +129,33 @@
                   </mat-select>
                 </mat-form-field>
                </div>
+               <button mat-button (click)="createUser(stepper)">Create student</button>
               </form>
             </mat-step>
-            <mat-step>
-              <ng-template matStepLabel>Done</ng-template>
-              <p>You are now done.</p>
-              <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button (click)="createUser()">Reset</button>
-              </div>
+
+
+            <mat-step *ngIf="semester != null" errorMessage="Address is required.">
+              <form>
+                <ng-template matStepLabel>Student subjects</ng-template>
+                
+                <div>
+                  <h3>Semester name: {{semester?.name}}</h3>
+                  <h3>Semester number: {{semester?.semesterNumber}}</h3>
+                </div>
+                
+                <div *ngFor="let subject of semester.subjects">
+                    <h3>{{subject.name}}</h3>
+                    <em>{{subject.type}}</em>
+                    <mat-form-field appearance="fill">
+                      <mat-label>Teacher</mat-label>
+                      <mat-select [disabled]="isChecked && currentSubjectId == subject.id" (selectionChange)="addStudentGradeToArray(subject, $event.value)">
+                        <mat-option *ngFor="let teacher of subject.teachers" [value]="teacher">{{teacher.firstName}} {{teacher.lastName}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <button mat-button (click)="edit(subject)">Edit</button>
+                </div>
+                <button mat-button (click)="createStudentGrades()">Done</button>
+              </form>
             </mat-step>
           </mat-horizontal-stepper>
     </div>

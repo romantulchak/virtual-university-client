@@ -20,4 +20,7 @@ export class SemesterService{
     public getSemesters(): Observable<SemesterDTO>{
         return this.http.get<SemesterDTO>(API_URL + 'semester');
     }
+    public getSemesterForStudent(specializationId: number, currentSemesterId: number):Observable<SemesterDTO>{
+        return this.http.get<SemesterDTO>(API_URL + 'semester/findSemester/' + specializationId + '/' + currentSemesterId);
+    }
 }

@@ -5,10 +5,10 @@ import { Subject } from "./subject.model";
 import { Teacher } from "./teacher.model";
 
 export class TeacherSubjectStudentGradeLinks{
-    public id: number;
-    public student: Student;
+    public id?: number;
+    public student?: Student;
     public subject: Subject;
-    public grade: Grade;
+    public grade?: Grade;
     public specialization: Specialization;
     public teacher: Teacher;
 

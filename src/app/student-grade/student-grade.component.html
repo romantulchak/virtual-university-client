@@ -1,1 +1,16 @@
-<p>student-grade works!</p>
+<section>
+    <div>
+        <div *ngFor="let studentGrade of studentGrades">
+            <h3>Subject name: {{studentGrade.subject.name}}</h3>
+            <em>Type: {{studentGrade.subject.type}}</em>
+
+            <h4>Grade 
+                <span *ngIf="studentGrade.grade.grade == -1">No grade</span>
+                <span *ngIf="studentGrade.grade.grade != -1">{{studentGrade.grade.grade}}</span>
+            </h4>
+            <h4>Specialization name: {{studentGrade.specialization.name}}</h4>
+            <h4>Teacher: {{studentGrade.teacher.firstName}} {{studentGrade.teacher.lastName}}</h4>
+            
+        </div>
+    </div>
+</section>

@@ -21,8 +21,8 @@ export class StudentService {
   public resetStudentPassowrd(resetPasswordRequest: ResetPasswordRequest):Observable<any>{
     return this.httpClient.put(API_URL + 'student/resetPassword', resetPasswordRequest);
   }
-  public createStudent(student:Student):Observable<any>{
-    return this.httpClient.post(API_URL + 'student/createStudent', student);
+  public createStudent(student:Student):Observable<StudentDTO>{
+    return this.httpClient.post<StudentDTO>(API_URL + 'student/createStudent', student);
   }
 
 }

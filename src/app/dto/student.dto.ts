@@ -9,5 +9,6 @@ export class StudentDTO extends UserDTO{
     public studentStatus: string;
     public address: Address;
     public specializations: SpecializationDTO[];
+    public currentSemester: number;
     public teacherSubjectStudentGradeLinks: TeacherSubjectStudentGradeLinkDTO[];
 }
