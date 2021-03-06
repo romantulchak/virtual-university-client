@@ -5,6 +5,6 @@ import { User } from "./user.model";
 
 export class Teacher extends User{
     public specializations: Specialization[];
-    public teacherSubjectStudentGradeLinks: TeacherSubjectStudentGradeLinks[];
+    public teacherSubjectStudentGradeLinks?: TeacherSubjectStudentGradeLinks[];
     public roles: Role[];
 }

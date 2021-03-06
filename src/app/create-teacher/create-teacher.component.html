@@ -1,0 +1,95 @@
+<div>
+    <mat-horizontal-stepper #stepper>
+        <mat-step [stepControl]="firstFormGroup" errorMessage="Something wrong.">
+          <form [formGroup]="firstFormGroup">
+            <ng-template matStepLabel>Student details</ng-template>
+           <div class="form__fields">
+            <div>
+                <mat-form-field>
+                    <mat-label>First Name</mat-label>
+                    <input matInput placeholder="First name" formControlName="firstName" required>
+                  </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Last Name</mat-label>
+                    <input matInput placeholder="Last name" formControlName="lastName" required>
+                  </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field>
+                    <mat-label>Login</mat-label>
+                    <input matInput placeholder="Login" formControlName="login" required>
+                  </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Private Email</mat-label>
+                    <input matInput placeholder="Private Email" formControlName="privateEmail" required>
+                  </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field>
+                    <mat-label>University Email</mat-label>
+                    <input matInput placeholder="University Email" formControlName="universityEmail" required>
+                  </mat-form-field>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Gender</mat-label>
+                    <mat-select formControlName="gender">
+                      <mat-option value="FEMALE">Female</mat-option>
+                      <mat-option value="MALE">Male</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+            
+           </div>
+            
+            <div>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+
+
+        <mat-step [stepControl]="secondFormGroup" errorMessage="Address is required.">
+          <form [formGroup]="secondFormGroup">
+            <ng-template matStepLabel>Course</ng-template>
+            <mat-form-field appearance="fill">
+              <mat-label>Course</mat-label>
+              <mat-select (selectionChange)="getCourseSpecializations($event.value)">
+                <mat-option *ngFor="let course of courses" [value]="course.id">{{course.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <ng-container *ngIf="specializations != null">
+
+
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Specializations</mat-label>
+                    <mat-select [formControl]="specializationFormControl" multiple>
+                      <mat-select-trigger>
+                        {{specializationFormControl.value ? specializationFormControl.value[0].name : ''}}
+                        <span *ngIf="specializationFormControl.value?.length > 1" class="example-additional-selection">
+                          (+{{specializationFormControl.value.length - 1}} {{specializationFormControl.value?.length === 2 ? 'other' : 'others'}})
+                        </span>
+                      </mat-select-trigger>
+                      <mat-option *ngFor="let specialization of specializations" [value]="specialization">{{specialization.name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </ng-container>
+
+           <div>
+            <mat-form-field appearance="fill">
+              <mat-label>Roles</mat-label>
+              <mat-select [formControl]="rolesFormControl" multiple>
+                <mat-select-trigger>
+                  {{rolesFormControl.value ? rolesFormControl.value[0].name : ''}}
+                  <span *ngIf="rolesFormControl.value?.length > 1" class="example-additional-selection">
+                    (+{{rolesFormControl.value.length - 1}} {{rolesFormControl.value?.length === 2 ? 'other' : 'others'}})
+                  </span>
+                </mat-select-trigger>
+                <mat-option *ngFor="let role of roles" [value]="role">{{role.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+           </div>
+           <button mat-button (click)="createTeacher()">Create teacher</button>
+          </form>
+        </mat-step>
+      </mat-horizontal-stepper>
+</div>

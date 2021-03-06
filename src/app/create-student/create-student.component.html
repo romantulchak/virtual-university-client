@@ -97,7 +97,7 @@
                 </div>
               </form>
             </mat-step>
-            <mat-step [stepControl]="thridFormGroup" errorMessage="Address is required.">
+            <mat-step [stepControl]="thridFormGroup" errorMessage="Student specialization is required.">
               <form [formGroup]="thridFormGroup">
                 <ng-template matStepLabel>Student course</ng-template>
                 <mat-form-field appearance="fill">
@@ -148,7 +148,7 @@
                     <em>{{subject.type}}</em>
                     <mat-form-field appearance="fill">
                       <mat-label>Teacher</mat-label>
-                      <mat-select [disabled]="isChecked && currentSubjectId == subject.id" (selectionChange)="addStudentGradeToArray(subject, $event.value)">
+                      <mat-select [disabled]="isChecked && currentSubjectId == subject.id" (selectionChange)="addStudentGradeToArray(semester, subject, $event.value)">
                         <mat-option *ngFor="let teacher of subject.teachers" [value]="teacher">{{teacher.firstName}} {{teacher.lastName}}</mat-option>
                       </mat-select>
                     </mat-form-field>

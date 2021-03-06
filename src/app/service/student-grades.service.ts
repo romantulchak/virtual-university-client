@@ -21,5 +21,11 @@ export class StudentGradesService {
   public getStudentGrades(studentId: number):Observable<TeacherSubjectStudentGradeLinkDTO[]>{
     return this.http.get<TeacherSubjectStudentGradeLinkDTO[]>(API_URL + 'student-grades/' + studentId);
   }
+  public getStudentGradesForTeacher(teacherId: number, specializationId: number, semesterId:number):Observable<TeacherSubjectStudentGradeLinkDTO[]>{
+    return this.http.get<TeacherSubjectStudentGradeLinkDTO[]>(`${API_URL}student-grades/findStudentGradesForTeacher/${teacherId}/${specializationId}/${semesterId}`);
+  }
+  public setGradeForStudent(studentGrade: TeacherSubjectStudentGradeLinkDTO):Observable<any>{
+    return this.http.put(API_URL + 'student-grades/setGradeForStudent', studentGrade);
+  }
 
 }

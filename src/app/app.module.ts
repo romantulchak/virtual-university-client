@@ -31,6 +31,11 @@ import { SubjectsComponent } from './subjects/subjects.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { CreateSubjectComponent } from './create-subject/create-subject.component';
 import { CreateGradesComponent } from './create-grades/create-grades.component';
+import { CreateTeacherComponent } from './create-teacher/create-teacher.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { TeacherSpecializationsComponent } from './teacher-specializations/teacher-specializations.component';
+import { TeacherProfileDetailsComponent } from './teacher-profile-details/teacher-profile-details.component';
+import { TeacherProfileComponent } from './teacher-profile/teacher-profile.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,6 +53,11 @@ import { CreateGradesComponent } from './create-grades/create-grades.component';
     SubjectsComponent,
     CreateSubjectComponent,
     CreateGradesComponent,
+    CreateTeacherComponent,
+    ChangePasswordComponent,
+    TeacherSpecializationsComponent,
+    TeacherProfileDetailsComponent,
+    TeacherProfileComponent,
   ],
   imports: [
     BrowserModule,

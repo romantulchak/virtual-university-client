@@ -12,7 +12,6 @@ import { TokenStorageService } from '../service/tokenStorage.service';
 export class StudentProfileDetailsComponent implements OnInit {
   private studentId;
   public student: StudentDTO;
-  public resetPassword: ResetPasswordRequest = new ResetPasswordRequest();
   public hide: boolean = true;
   constructor(private studentService: StudentService, private tokenStorageService: TokenStorageService) { }
 
@@ -33,21 +32,6 @@ export class StudentProfileDetailsComponent implements OnInit {
     );
   }
 
-  public passwordReset(confirmPassword: string){
-
-    if(confirmPassword === this.resetPassword.newPassword){
-      this.resetPassword.userId = this.studentId;
-      this.studentService.resetStudentPassowrd(this.resetPassword).subscribe(
-        res=>{
-          console.log("Password changed");
-          
-        }
-      );
-    }else{
-      console.log("Passwords mistmatches");
-      
-    }
-    
-  }
+ 
 
 }

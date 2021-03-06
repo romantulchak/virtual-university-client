@@ -140,7 +140,7 @@ export class CreateStudentComponent implements OnInit {
   }
 
 
-  public addStudentGradeToArray(subject: SubjectDTO, teacher: Teacher){
+  public addStudentGradeToArray(semester:Semester, subject: SubjectDTO, teacher: Teacher){
     this.currentSubjectId = subject.id;
     this.isChecked = true;
     
@@ -149,17 +149,17 @@ export class CreateStudentComponent implements OnInit {
       subject: subject,
       teacher: teacher,
       student: this.student as unknown as Student,
+      semester: semester
+
     }
     if(this.studentGrade.filter(x=>x.subject.id == subject.id)){
       this.studentGrade = this.studentGrade.filter(x=>x.teacher.id != teacher.id); 
     }
     this.studentGrade.push(stGrade);
- 
   }
 
 
   public createStudentGrades(){
-    
     this.studentGradeService.createStudentGrades(this.studentGrade).subscribe(
       res=>{
         console.log("ok");

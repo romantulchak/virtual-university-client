@@ -9,13 +9,16 @@ import { ProfileGuard } from './guards/profile.guard';
 import { TeacherProfileComponent } from './teacher-profile/teacher-profile.component';
 import { ControlPanleComponent } from './control-panle/control-panle.component';
 import { CreateStudentComponent } from './create-student/create-student.component';
-import { ProfileComponent } from './profile/profile.component';
 import { StudentGradeComponent } from './student-grade/student-grade.component';
 import { StudentProfileDetailsComponent } from './student-profile-details/student-profile-details.component';
 import { CreateSpecializationComponent } from './create-specialization/create-specialization.component';
 import { CreateSemesterComponent } from './create-semester/create-semester.component';
 import { SubjectsComponent } from './subjects/subjects.component';
 import { CreateSubjectComponent } from './create-subject/create-subject.component';
+import { CreateTeacherComponent } from './create-teacher/create-teacher.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { TeacherSpecializationsComponent } from './teacher-specializations/teacher-specializations.component';
+import { TeacherProfileDetailsComponent } from './teacher-profile-details/teacher-profile-details.component';
 
 const routes: Routes = [
   {path:'', component:LoginComponent, canActivate:[LoginGuard, ProfileGuard]},
@@ -26,14 +29,20 @@ const routes: Routes = [
       {path:'grades', component: StudentGradeComponent},
       {path: 'subjects', component: SubjectsComponent}
     ]},
-    {path:'teacher', component: TeacherProfileComponent, canActivate: [TeacherProfileGuardGuard]}
+    {path:'teacher', component: TeacherProfileComponent, children:[
+      {path:'', component: TeacherProfileDetailsComponent, canActivate:[TeacherProfileGuardGuard]},
+      {path:'teacher-speicalizations', component: TeacherSpecializationsComponent}
+    
+    ]}, 
+    {path:'change-password', component: ChangePasswordComponent}
   ]},
   {path: 'manage', children:[
     {path:'', component: ControlPanleComponent},
     {path:'create-student', component: CreateStudentComponent},
     {path:'create-specialization', component: CreateSpecializationComponent},
     {path: 'create-semester', component: CreateSemesterComponent},
-    {path: 'create-subject', component: CreateSubjectComponent}
+    {path: 'create-subject', component: CreateSubjectComponent},
+    {path: 'create-teacher', component: CreateTeacherComponent}
   ]}
 ];
 
