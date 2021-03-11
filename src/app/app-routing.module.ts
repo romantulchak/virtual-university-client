@@ -19,6 +19,9 @@ import { CreateTeacherComponent } from './create-teacher/create-teacher.componen
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { TeacherSpecializationsComponent } from './teacher-specializations/teacher-specializations.component';
 import { TeacherProfileDetailsComponent } from './teacher-profile-details/teacher-profile-details.component';
+import { SubjectsPanelComponent } from './subjects-panel/subjects-panel.component';
+import { StudentPanelComponent } from './student-panel/student-panel.component';
+import { SpecializationPanelComponent } from './specialization-panel/specialization-panel.component';
 
 const routes: Routes = [
   {path:'', component:LoginComponent, canActivate:[LoginGuard, ProfileGuard]},
@@ -42,7 +45,10 @@ const routes: Routes = [
     {path:'create-specialization', component: CreateSpecializationComponent},
     {path: 'create-semester', component: CreateSemesterComponent},
     {path: 'create-subject', component: CreateSubjectComponent},
-    {path: 'create-teacher', component: CreateTeacherComponent}
+    {path: 'create-teacher', component: CreateTeacherComponent},
+    {path: 'teacher-subject', component: SubjectsPanelComponent},
+    {path: 'student-panel', component: StudentPanelComponent},
+    {path: 'specialization-panel', component: SpecializationPanelComponent}
   ]}
 ];
 

@@ -21,4 +21,7 @@ export class SubjectService{
     public createSubject(subject: Subject): Observable<any>{
         return this.http.post(API_URL + 'subject/createSubject', subject);
     }
+    public getAvailableSubjects(teacherId: number): Observable<SubjectDTO[]>{
+        return this.http.get<SubjectDTO[]>(API_URL + 'subject/availableSubjects/' + teacherId);
+    }
 }

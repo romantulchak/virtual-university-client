@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -26,6 +26,11 @@ export class StudentGradesService {
   }
   public setGradeForStudent(studentGrade: TeacherSubjectStudentGradeLinkDTO):Observable<any>{
     return this.http.put(API_URL + 'student-grades/setGradeForStudent', studentGrade);
+  }
+  public studentGradesBySemester(studentId: number, semesterId: number):Observable<TeacherSubjectStudentGradeLinkDTO[]>{
+    let params = new HttpParams();
+    params = params.append('studentId', studentId.toString()).append('semesterId', semesterId.toString());
+    return this.http.get<TeacherSubjectStudentGradeLinkDTO[]>(API_URL + 'student-grades/getStudentGrades', {params: params});
   }
 
 }

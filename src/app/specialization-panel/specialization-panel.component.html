@@ -1,0 +1,16 @@
+<section>
+
+    <ng-container *ngFor="let specialization of specializations">
+        <div>
+            <h3>{{specialization.name}}</h3>    
+            <button (click)="getSemestersForSpecializations(specialization.id)">Find specializations</button>
+        </div>   
+        <div *ngIf="semesters != null && currentSpecialization == specialization.id">
+            <div class="semester__card" *ngFor="let semester of semesters">
+                <h4>{{semester.name}}</h4>
+                <button (click)="addSemesterToSpecialization(semester.id, specialization.id)">Add semester</button>
+            </div>
+        </div> 
+    </ng-container>
+    
+</section>

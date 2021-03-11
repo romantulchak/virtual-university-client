@@ -23,4 +23,10 @@ export class SpecializationService{
     public getTeacherSpecializations(id: number):Observable<SpecializationDTO[]>{
         return this.httpClient.get<SpecializationDTO[]>(API_URL + 'specialization/teacherSpecializations/' + id);
     }
+    public getAllSpecializations():Observable<SpecializationDTO[]>{
+        return this.httpClient.get<SpecializationDTO[]>(API_URL + 'specialization/findAllSpecializations');
+    }
+    public addSemesterToSpecialization(semesterId: number, specializationId: number): Observable<any>{
+        return this.httpClient.put(`${API_URL}specialization/addSemesterToSpecialization/${semesterId}/${specializationId}`, null);
+    }
 }

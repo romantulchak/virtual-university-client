@@ -36,6 +36,11 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { TeacherSpecializationsComponent } from './teacher-specializations/teacher-specializations.component';
 import { TeacherProfileDetailsComponent } from './teacher-profile-details/teacher-profile-details.component';
 import { TeacherProfileComponent } from './teacher-profile/teacher-profile.component';
+import { SubjectsPanelComponent } from './subjects-panel/subjects-panel.component';
+import { SubjectSemesterComponent } from './subject-semester/subject-semester.component';
+import { StudentPanelComponent } from './student-panel/student-panel.component';
+import { SemesterPanelComponent } from './semester-panel/semester-panel.component';
+import { SpecializationPanelComponent } from './specialization-panel/specialization-panel.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,6 +63,11 @@ import { TeacherProfileComponent } from './teacher-profile/teacher-profile.compo
     TeacherSpecializationsComponent,
     TeacherProfileDetailsComponent,
     TeacherProfileComponent,
+    SubjectsPanelComponent,
+    SubjectSemesterComponent,
+    StudentPanelComponent,
+    SemesterPanelComponent,
+    SpecializationPanelComponent,
   ],
   imports: [
     BrowserModule,

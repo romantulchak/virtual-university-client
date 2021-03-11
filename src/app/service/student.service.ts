@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -25,4 +25,9 @@ export class StudentService {
     return this.httpClient.post<StudentDTO>(API_URL + 'student/createStudent', student);
   }
 
+  public getStudentByName(firstName: string, lastName: string):Observable<StudentDTO[]>{
+    let params = new HttpParams();
+    params = params.append('firstName', firstName).append('lastName', lastName);
+    return this.httpClient.get<StudentDTO[]>(API_URL + 'student/getStudentByName', {params: params});
+  }
 }

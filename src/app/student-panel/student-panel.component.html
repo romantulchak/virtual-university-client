@@ -1,0 +1,53 @@
+<section>
+    <h3>Find student by Name</h3>
+    <form action="">
+
+        <div>
+            <label for="firstName">First name</label>
+            <input type="text" id="firstName" name="firstName" [(ngModel)]="firstName">
+        </div>
+        
+        <div>
+            <label for="lastName">Last name</label>
+            <input type="text" id="lastName" name="lastName" [(ngModel)]="lastName">
+        </div>
+        <button type="submit" (click)="findStudentByName()">Find</button>
+    </form>
+
+</section>
+
+<section *ngIf="students != null">
+    <ng-container *ngFor="let student of students">
+        <h3>{{student.firstName}} {{student.lastName}}</h3>
+        <button (click)="getStudentGrades(student.id, student.currentSemester)">Get student grades</button>
+
+        <ng-container *ngFor="let studentGrade of studentGrades">
+
+            <div>
+                <h3>Semester: {{studentGrade.semester.id}}</h3>
+                
+                <h3>Subject: {{studentGrade.subject.name}}</h3>
+                
+                <h3>Teacher: {{studentGrade.teacher.firstName}} {{studentGrade.teacher.lastName}}</h3>
+            </div>
+            <button (click)="showTeachers(studentGrade.subject.id)">Change Teacher</button>
+
+            <ng-container *ngIf="teachers != null ">
+
+                <form action="" >
+                    <mat-form-field appearance="fill">
+                        <mat-label>Teachers</mat-label>
+                        <mat-select>
+                            <mat-option *ngFor="let teacher of teachers" [value]="teacher">{{teacher.firstName}} {{teacher.lastName}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    <button (click)="changeTeacher()">Change Teacher</button>
+                </form>
+            </ng-container>
+
+
+        </ng-container>
+
+
+    </ng-container>
+</section>
