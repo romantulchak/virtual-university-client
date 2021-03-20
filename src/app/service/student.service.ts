@@ -30,4 +30,7 @@ export class StudentService {
     params = params.append('firstName', firstName).append('lastName', lastName);
     return this.httpClient.get<StudentDTO[]>(API_URL + 'student/getStudentByName', {params: params});
   }
+  public getStudentsWithoutGroup(): Observable<StudentDTO[]>{
+    return this.httpClient.get<StudentDTO[]>(API_URL + 'student/studentWithoutGroup');
+  }
 }

@@ -17,22 +17,30 @@ import { SubjectService } from '../service/subject.service';
 })
 export class CreateSpecializationComponent implements OnInit {
 
-  constructor(private courseService: CourseService, private formBuilder: FormBuilder, private semesterService: SemesterService, private specializationService: SpecializationService) { }
+  constructor(private courseService: CourseService, private formBuilder: FormBuilder,
+              private semesterService: SemesterService,
+              private specializationService: SpecializationService,
+              private subjectService: SubjectService) { }
   public courses: CourseDTO[];
   public firstFormGroup: FormGroup;
-  public semesters: SemesterDTO;
+  public semesters: SemesterDTO[];
   public subjects: SubjectDTO[];
+  public subjectsFormControl: FormControl = new FormControl();
   ngOnInit(): void {
+    this.initForm();
+  
+    this.getCourses();
+    this.getSemesters();
+    this.getSubjects();
+  }
+
+  private initForm(){
     this.firstFormGroup = this.formBuilder.group({
       name: ['', Validators.required],
       courseName: ['', Validators.required],
       semester:['', Validators.required]
     });
-  
-    this.getCourses();
-    this.getSemesters();
   }
-
   private getCourses(){
     this.courseService.getCourses().subscribe(
       res=>{
@@ -47,14 +55,19 @@ export class CreateSpecializationComponent implements OnInit {
       }
     );
   }
-  public showSubjects(event){
-    this.subjects = event.value.subjects;
+  private getSubjects(){
+    this.subjectService.getAllSubjects().subscribe(
+      res=>{
+        this.subjects = res;
+      }
+    );
   }
   public create(){
     let specialization: Specialization = {
       name: this.firstFormGroup.get('name').value,
       course: this.firstFormGroup.get('courseName').value,
-      semesters: [this.firstFormGroup.get('semester').value] 
+      semesters: [this.firstFormGroup.get('semester').value],
+      subjects: this.subjectsFormControl.value
     }
     this.specializationService.createSpecialization(specialization).subscribe(
       res=>{
@@ -62,6 +75,6 @@ export class CreateSpecializationComponent implements OnInit {
         
       }
     );
-    
   }
+
 }

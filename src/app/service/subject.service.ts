@@ -24,4 +24,10 @@ export class SubjectService{
     public getAvailableSubjects(teacherId: number): Observable<SubjectDTO[]>{
         return this.http.get<SubjectDTO[]>(API_URL + 'subject/availableSubjects/' + teacherId);
     }
+    public getSubjectsForTeacher(teacherId: number):Observable<SubjectDTO[]>{
+        return this.http.get<SubjectDTO[]>(API_URL + 'subject/findTeacherSubjects/' + teacherId);
+    }
+    public getAllForSpecialization(semesterId: number):Observable<SubjectDTO[]>{
+        return this.http.get<SubjectDTO[]>(API_URL + 'subject/findAllForSpecialization/' + semesterId);
+    }
 }
