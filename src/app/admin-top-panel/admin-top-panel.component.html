@@ -1,0 +1,16 @@
+<section class="admin__top_panel">
+    
+    <div class="top__panel_visible" [style.background]="backgroundColor" *ngIf="isPanelDisplayed">
+        <div class="panel__links">
+            <a routerLink="/">Home</a>
+            <a routerLink="/manage">Admin Panel</a>
+        </div>
+        <div class="panel__button">
+            <button (click)="hidePanel()">Hide panel</button>
+        </div>
+    </div>
+    <div class="top__panel_hide">
+        <button *ngIf="!isPanelDisplayed" (click)="showPanel()">Show panel</button>
+    </div>
+
+</section>

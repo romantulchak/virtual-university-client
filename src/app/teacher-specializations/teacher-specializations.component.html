@@ -22,9 +22,9 @@
                         <h3>{{studentGrade.subject.type}}</h3>
                         
                         <form action="">
-                            <input type="text" [value]="studentGrade.grade.grade == -1 ? '' : studentGrade.grade.grade" [disabled]="studentGrade.grade.grade >= 2" #grade>
+                            <input type="text" [value]="studentGrade.grade == 0 ? '' : studentGrade.grade" [disabled]="studentGrade.grade >= 2" #grade>
                     
-                            <button type="submit" *ngIf="studentGrade.grade.grade < 2" (click)="setGrade(grade.value,studentGrade)" >Set grade</button>
+                            <button type="submit" *ngIf="studentGrade.grade < 2" (click)="setGrade(grade.value,studentGrade)" >Set grade</button>
                         </form>
 
                     </div>

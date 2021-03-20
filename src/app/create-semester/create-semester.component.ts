@@ -38,7 +38,6 @@ export class CreateSemesterComponent implements OnInit {
   public createSemester(){
     let semester: Semester = {
       name: this.semesterForm.get('name').value,
-      subjects: this.subjectFormControl.value,
       semesterNumber: this.semesterForm.get('semesterNumber').value
     }
    

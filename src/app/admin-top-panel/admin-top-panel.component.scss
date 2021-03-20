@@ -1,0 +1,23 @@
+.admin__top_panel{
+    position: relative;
+    .top__panel_visible{
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .panel__links{
+            margin-left: 5em;
+            a{
+                color: #fff;
+                margin-right: 1em;
+            }
+        }
+        .panel__button{
+            margin-right: 3em;
+        }
+    }
+    .top__panel_hide{
+        position: absolute;
+        right: 0;
+    }
+}

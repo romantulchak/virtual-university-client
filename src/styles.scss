@@ -24,3 +24,10 @@ $virtual-university-client-theme: mat-light-theme((
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+a{
+  text-decoration: none;
+}
+.container{
+  max-width: 1800px;
+  margin: 0 auto;
+}

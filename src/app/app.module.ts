@@ -41,6 +41,14 @@ import { SubjectSemesterComponent } from './subject-semester/subject-semester.co
 import { StudentPanelComponent } from './student-panel/student-panel.component';
 import { SemesterPanelComponent } from './semester-panel/semester-panel.component';
 import { SpecializationPanelComponent } from './specialization-panel/specialization-panel.component';
+import { TeacherSubjectComponent } from './teacher-subject/teacher-subject.component';
+import { CreateCourseComponent } from './create-course/create-course.component';
+import { CreateGroupComponent } from './create-group/create-group.component';
+import { AdminTopPanelComponent } from './admin-top-panel/admin-top-panel.component';
+import { MatTableModule } from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,6 +76,10 @@ import { SpecializationPanelComponent } from './specialization-panel/specializat
     StudentPanelComponent,
     SemesterPanelComponent,
     SpecializationPanelComponent,
+    TeacherSubjectComponent,
+    CreateCourseComponent,
+    CreateGroupComponent,
+    AdminTopPanelComponent,
   ],
   imports: [
     BrowserModule,
@@ -85,7 +97,10 @@ import { SpecializationPanelComponent } from './specialization-panel/specializat
     MatDatepickerModule,
     MatNativeDateModule,
     MatRadioModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatCheckboxModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]

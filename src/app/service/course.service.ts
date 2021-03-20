@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { CourseDTO } from "../dto/course.dto";
+import { Course } from "../model/course.model";
 
 const API_URL = environment.api;
 
@@ -14,5 +15,8 @@ export class CourseService{
 
     public getCourses(): Observable<CourseDTO[]>{
         return this.http.get<CourseDTO[]>(API_URL + 'courses');
+    }
+    public createCourse(course: Course): Observable<any>{
+        return this.http.post(API_URL + 'courses/createCourse', course);
     }
 }

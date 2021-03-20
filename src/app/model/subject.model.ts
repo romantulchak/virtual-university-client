@@ -8,5 +8,4 @@ export class Subject{
     public teacherSubjectStudentGradeLinks?: TeacherSubjectStudentGradeLinks[];
     public type: string;
     public teachers?: Teacher[];
-    public semesters?: Semester[];
 }

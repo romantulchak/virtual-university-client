@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { SemesterDTO } from "../dto/semester.dto";
+import { SpecializationDTO } from "../dto/specialization.dto";
 import { Semester } from "../model/semester.model";
 
 const API_URL = environment.api;
@@ -17,13 +18,16 @@ export class SemesterService{
     public createSemester(semester: Semester):Observable<any>{
        return this.http.post(API_URL + 'semester/createSemester', semester);       
     }
-    public getSemesters(): Observable<SemesterDTO>{
-        return this.http.get<SemesterDTO>(API_URL + 'semester');
+    public getSemesters(): Observable<SemesterDTO[]>{
+        return this.http.get<SemesterDTO[]>(API_URL + 'semester');
     }
     public getSemesterForStudent(specializationId: number, currentSemesterId: number):Observable<SemesterDTO>{
         return this.http.get<SemesterDTO>(API_URL + 'semester/findSemester/' + specializationId + '/' + currentSemesterId);
     }
     public getAvailableSemestersForSpecialization(specializationId: number):Observable<SemesterDTO[]>{
         return this.http.get<SemesterDTO[]>(API_URL + 'semester/findAvailableSemestersForSpecialization/' + specializationId);
+    }
+    public getSemestersForSpecialization(specializetionId: number):Observable<SemesterDTO[]>{
+        return this.http.get<SemesterDTO[]>(API_URL + 'semester/findSemestersForSpecialization/' + specializetionId);
     }
 }

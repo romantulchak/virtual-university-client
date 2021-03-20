@@ -2,6 +2,7 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Student } from '../model/student.model';
+import { Subject } from '../model/subject.model';
 import { StudentService } from '../service/student.service';
 import { CourseService } from '../service/course.service';
 import { SpecializationDTO } from '../dto/specialization.dto';
@@ -146,16 +147,18 @@ export class CreateStudentComponent implements OnInit {
     
     let stGrade: TeacherSubjectStudentGradeLinks ={
       specialization: this.thridFormGroup.get('specialization').value,
-      subject: subject,
+      subject: subject as unknown as Subject,
       teacher: teacher,
       student: this.student as unknown as Student,
       semester: semester
 
     }
-    if(this.studentGrade.filter(x=>x.subject.id == subject.id)){
-      this.studentGrade = this.studentGrade.filter(x=>x.teacher.id != teacher.id); 
-    }
+    // if(this.studentGrade.filter(x=>x.subject.id == subject.id)){
+    //   this.studentGrade = this.studentGrade.filter(x=>x.teacher.id != teacher.id); 
+    // }
     this.studentGrade.push(stGrade);
+    console.log(this.studentGrade);
+    
   }
 
 

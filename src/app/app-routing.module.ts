@@ -22,6 +22,9 @@ import { TeacherProfileDetailsComponent } from './teacher-profile-details/teache
 import { SubjectsPanelComponent } from './subjects-panel/subjects-panel.component';
 import { StudentPanelComponent } from './student-panel/student-panel.component';
 import { SpecializationPanelComponent } from './specialization-panel/specialization-panel.component';
+import { TeacherSubjectComponent } from './teacher-subject/teacher-subject.component';
+import { CreateCourseComponent } from './create-course/create-course.component';
+import { CreateGroupComponent } from './create-group/create-group.component';
 
 const routes: Routes = [
   {path:'', component:LoginComponent, canActivate:[LoginGuard, ProfileGuard]},
@@ -34,14 +37,16 @@ const routes: Routes = [
     ]},
     {path:'teacher', component: TeacherProfileComponent, children:[
       {path:'', component: TeacherProfileDetailsComponent, canActivate:[TeacherProfileGuardGuard]},
-      {path:'teacher-speicalizations', component: TeacherSpecializationsComponent}
-    
+      {path:'teacher-speicalizations', component: TeacherSpecializationsComponent},
+      {path: 'subjects', component: TeacherSubjectComponent}
     ]}, 
     {path:'change-password', component: ChangePasswordComponent}
   ]},
   {path: 'manage', children:[
     {path:'', component: ControlPanleComponent},
     {path:'create-student', component: CreateStudentComponent},
+    {path: 'create-group', component: CreateGroupComponent},
+    {path: 'create-course', component: CreateCourseComponent},
     {path:'create-specialization', component: CreateSpecializationComponent},
     {path: 'create-semester', component: CreateSemesterComponent},
     {path: 'create-subject', component: CreateSubjectComponent},
