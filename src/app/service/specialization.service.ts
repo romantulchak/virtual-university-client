@@ -5,6 +5,7 @@ import { environment } from "src/environments/environment";
 import { SemesterDTO } from "../dto/semester.dto";
 import { SpecializationDTO } from "../dto/specialization.dto";
 import { Specialization } from "../model/specialization.model";
+import { Subject } from "../model/subject.model";
 
 const API_URL = environment.api;
 
@@ -28,5 +29,8 @@ export class SpecializationService{
     }
     public addSemesterToSpecialization(semesterId: number, specializationId: number): Observable<any>{
         return this.httpClient.put(`${API_URL}specialization/addSemesterToSpecialization/${semesterId}/${specializationId}`, null);
+    }
+    public addSubjectsToSpecialization(subjects: Subject[], specializationId: number):Observable<any>{
+        return this.httpClient.put(API_URL + 'specialization/addSubjects/' + specializationId, subjects);
     }
 }

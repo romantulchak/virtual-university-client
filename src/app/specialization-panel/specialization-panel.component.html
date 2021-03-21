@@ -3,14 +3,28 @@
     <ng-container *ngFor="let specialization of specializations">
         <div>
             <h3>{{specialization.name}}</h3>    
-            <button (click)="getSemestersForSpecializations(specialization.id)">Find specializations</button>
+            <button (click)="getSemestersForSpecializations(specialization.id)">Find semesters</button>
+            <button (click)="getAvailableSubjectsForSpecialization(specialization.id)">Find subjects</button>
         </div>   
-        <div *ngIf="semesters != null && currentSpecialization == specialization.id">
+        <div *ngIf="semesters != null && currentSpecializationId == specialization.id">
             <div class="semester__card" *ngFor="let semester of semesters">
                 <h4>{{semester.name}}</h4>
                 <button (click)="addSemesterToSpecialization(semester.id, specialization.id)">Add semester</button>
             </div>
         </div> 
     </ng-container>
+
+    <div *ngIf="source != null">
+        <h3>Subjects</h3>
+        <app-subjects-table [source]="source"
+                            [showTecahers]="false"
+                            [displayedColumns]="displayedData" 
+                            [isAddSubject]="true"
+                            (getSubjects)="addSubjectsToArray($event)"
+                            (sendFilter)="filter($event)"
+                            ></app-subjects-table>
+    
+        <button (click)="addSubjectsToSpecialization()">Add</button>
+    </div>
     
 </section>
