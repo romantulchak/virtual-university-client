@@ -30,4 +30,7 @@ export class SubjectService{
     public getAllForSpecialization(semesterId: number):Observable<SubjectDTO[]>{
         return this.http.get<SubjectDTO[]>(API_URL + 'subject/findAllForSpecialization/' + semesterId);
     }
+    public getAvailableSubjectsForSpecializations(specializationId: number):Observable<SubjectDTO[]>{
+        return this.http.get<SubjectDTO[]>(API_URL + 'subject/availableSubject/' + specializationId);
+    }
 }

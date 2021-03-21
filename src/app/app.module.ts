@@ -48,6 +48,8 @@ import { AdminTopPanelComponent } from './admin-top-panel/admin-top-panel.compon
 import { MatTableModule } from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatSortModule} from '@angular/material/sort';
+import { SubjectsTableComponent } from './subjects-table/subjects-table.component';
 
 @NgModule({
   declarations: [
@@ -80,28 +82,30 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     CreateCourseComponent,
     CreateGroupComponent,
     AdminTopPanelComponent,
+    SubjectsTableComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    FormsModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatButtonModule,
-    MatStepperModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatRadioModule,
-    MatExpansionModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatCheckboxModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        FormsModule,
+        MatInputModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatButtonModule,
+        MatStepperModule,
+        MatSelectModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatRadioModule,
+        MatExpansionModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatCheckboxModule,
+        MatSortModule
+    ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })
