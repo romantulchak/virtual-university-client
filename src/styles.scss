@@ -1,6 +1,27 @@
 
 @import '~@angular/material/theming';
 
+@font-face{
+  font-family: TitleFont;
+  src: url('assets/fonts/TitleFont.otf');
+}
+
+$smallIcon: 15px;
+$titleFont: TitleFont;
+%icon{
+  width: $smallIcon;
+  height: $smallIcon;
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+
+  img{
+    width: 100%;
+    height: 100%;
+  }
+}
+
 @include mat-core();
 $virtual-university-client-primary: mat-palette($mat-indigo);
 $virtual-university-client-accent: mat-palette($mat-pink, A200, A100, A400);
@@ -30,4 +51,25 @@ a{
 .container{
   max-width: 1800px;
   margin: 0 auto;
+}
+
+.icon__small{
+    @extend %icon;
+    margin-left: 12px;
+}
+
+.table__legend{
+    padding: 2em;
+    border: 3px solid #bbbbbb36;
+    border-radius: 10px;
+    position: relative;
+    min-height: 330px;
+    .table__title{
+      position: absolute;
+      top: -18px;
+      font-family: $titleFont;
+      font-size: 21px;
+      background: white;
+      color: #4f9a7a;
+    }
 }

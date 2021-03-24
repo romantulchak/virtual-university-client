@@ -25,6 +25,9 @@ import { SpecializationPanelComponent } from './specialization-panel/specializat
 import { TeacherSubjectComponent } from './teacher-subject/teacher-subject.component';
 import { CreateCourseComponent } from './create-course/create-course.component';
 import { CreateGroupComponent } from './create-group/create-group.component';
+import { GroupPanelComponent } from './group-panel/group-panel.component';
+import { GroupsComponent } from './groups/groups.component';
+import { GroupDetailsComponent } from './group-details/group-details.component';
 
 const routes: Routes = [
   {path:'', component:LoginComponent, canActivate:[LoginGuard, ProfileGuard]},
@@ -53,7 +56,13 @@ const routes: Routes = [
     {path: 'create-teacher', component: CreateTeacherComponent},
     {path: 'teacher-subject', component: SubjectsPanelComponent},
     {path: 'student-panel', component: StudentPanelComponent},
-    {path: 'specialization-panel', component: SpecializationPanelComponent}
+    {path: 'specialization-panel', component: SpecializationPanelComponent},
+    {path: 'group-panel', children:[
+      {path: '', component: GroupPanelComponent},
+      {path:'groups', component: GroupsComponent},
+      {path: 'group-details/:id', component: GroupDetailsComponent}
+    ]},
+    
   ]}
 ];
 

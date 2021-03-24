@@ -1,0 +1,12 @@
+<section>
+    <div>
+        <div *ngFor="let group of groups">
+            <h3>{{group.name}}</h3>
+            <div>
+                <h4>{{group.semester.name}} /# {{group.semester.semesterNumber}}</h4>
+            </div>
+            <a routerLink="../group-details/{{group.id}}">Details</a>
+            <hr>
+        </div>
+    </div>
+</section>

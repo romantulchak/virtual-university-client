@@ -50,6 +50,10 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSortModule} from '@angular/material/sort';
 import { SubjectsTableComponent } from './subjects-table/subjects-table.component';
+import { GroupPanelComponent } from './group-panel/group-panel.component';
+import { GroupsComponent } from './groups/groups.component';
+import { GroupDetailsComponent } from './group-details/group-details.component';
+import { StudentsTableComponent } from './students-table/students-table.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +87,10 @@ import { SubjectsTableComponent } from './subjects-table/subjects-table.componen
     CreateGroupComponent,
     AdminTopPanelComponent,
     SubjectsTableComponent,
+    GroupPanelComponent,
+    GroupsComponent,
+    GroupDetailsComponent,
+    StudentsTableComponent,
   ],
     imports: [
         BrowserModule,
