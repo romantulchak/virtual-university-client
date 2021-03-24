@@ -14,6 +14,13 @@ export class TokenStorageService {
         localStorage.clear;
         window.location.reload();
     }
+
+    public clearStorage(){
+        localStorage.removeItem(USER_KEY);
+        localStorage.removeItem(USER_TYPE);
+        localStorage.removeItem(TOKEN_KEY);
+    }
+
     
     public saveToken(token: string){
         localStorage.removeItem(TOKEN_KEY);

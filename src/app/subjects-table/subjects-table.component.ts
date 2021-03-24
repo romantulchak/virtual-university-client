@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { SubjectDTO } from '../dto/subject.dto';
+import { FilterHelper } from '../helpers/filter.helper';
 import { Subject } from '../model/subject.model';
 import { SubjectTeacherGroup } from '../model/subjectTeacherGroup.model';
 import { Teacher } from '../model/teacher.model';
@@ -18,18 +19,19 @@ export class SubjectsTableComponent implements OnInit, OnChanges {
 
   @Input("source") source: MatTableDataSource<SubjectDTO>;
 
-  @Input("showTecahers") isShowTeachers: boolean;
+  @Input("showTecahers") isShowTeachers: boolean = false;
 
   @Output() getTeachers: EventEmitter<SubjectTeacherGroup> = new EventEmitter<SubjectTeacherGroup>(null);
   @Output() sendFilter: EventEmitter<any> = new EventEmitter<any>();
   @Output() getSubjects: EventEmitter<Subject> = new EventEmitter<Subject>();
 
   @Input() displayedColumns: string[];
-  @Input() isAddSubject: boolean = false;
+  @Input("showAddSubjectButton") isAddSubject: boolean = false;
+  @Input("showTeacherDetails") isShowTeacherDetails: boolean = false;
 
   @ViewChild(MatPaginator) subjectsPaginator: MatPaginator;
   @ViewChild(MatSort) subjectsSort: MatSort;
-  constructor() { }
+  constructor(private filterHelper: FilterHelper) { }
 
   ngOnInit(): void {
     
@@ -51,11 +53,7 @@ export class SubjectsTableComponent implements OnInit, OnChanges {
   }
 
   public filter(e: Event, source){
-    let obj = {
-      e: e,
-      source: source
-    }
-    this.sendFilter.emit(obj);
+    this.filterHelper.filter(e, source);
   }
   public addSubject(subject: Subject){
     this.getSubjects.emit(subject);

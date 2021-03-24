@@ -19,7 +19,7 @@
         <app-subjects-table [source]="source"
                             [showTecahers]="false"
                             [displayedColumns]="displayedData" 
-                            [isAddSubject]="true"
+                            [showAddSubjectButton]="true"
                             (getSubjects)="addSubjectsToArray($event)"
                             (sendFilter)="filter($event)"
                             ></app-subjects-table>

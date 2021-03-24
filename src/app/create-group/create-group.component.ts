@@ -32,7 +32,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
   public specializations: SpecializationDTO[];
 
   public displayedColumns: string[] = ['id', 'firstName', 'lastName', 'add'];
-  public subjectsDisplayedColumns: string[] = ['id', 'name', 'teacher'];
+  public subjectsDisplayedColumns: string[] = ['id', 'name','type', 'teacher'];
   public dataSource: MatTableDataSource<StudentDTO>;
   public subjectsSource: MatTableDataSource<SubjectDTO>;
 
@@ -48,8 +48,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
               private studentService: StudentService,
               private subjectService: SubjectService,
               private specializationService: SpecializationService,
-              private studentGroupService: StudentGroupService,
-              private filterHelper: FilterHelper) {
+              private studentGroupService: StudentGroupService) {
   }
 
   ngOnInit(): void {
@@ -68,10 +67,6 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
       semester: ['', Validators.required],
       specialization: ['', Validators.required]
     });
-  }
-
-  public filter(e, dataSource = null) {
-    this.filterHelper.filter(e, dataSource);
   }
 
 
@@ -96,12 +91,8 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
     );
   }
 
-  public addStudentToArray(student: Student) {
-    if (this.studentToGroup.filter(x => x.id == student.id).length != 0) {
-      this.studentToGroup = this.studentToGroup.filter(x => x.id != student.id);
-    } else {
-      this.studentToGroup.push(student);
-    }
+  public addStudentToArray(students: Student[]) {
+    this.studentToGroup = students;
   }
 
 

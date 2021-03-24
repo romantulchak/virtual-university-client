@@ -1,0 +1,42 @@
+.grid__tables{
+    display: flex;
+    align-items: center;
+    margin-top: 1em;
+    flex-wrap: wrap;
+
+    .group__information_block{
+        flex: 0 1 34%;
+        justify-content: center;
+        justify-self: center;
+        margin: 0 auto;
+        text-align: center;
+        display: flex;
+    }
+    .group__students_block{
+        flex: 0 1 66%;
+    }
+    .group__subjects_block{
+        flex: 0 1 49%;
+        margin-top: 3em;
+        margin-right: 15px;
+    }
+}
+.group__information{
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+
+    thead tr {
+        background-color: #009879;
+        color: #ffffff;
+        text-align: left;
+    }
+    th, td{
+        padding: 12px 15px;
+        text-align: center;
+    }
+    
+}
