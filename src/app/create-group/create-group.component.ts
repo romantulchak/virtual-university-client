@@ -39,8 +39,6 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
   private studentToGroup: Student[] = [];
   private subjectTeacherGroup: SubjectTeacherGroup[] = [];
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
 
 
   constructor(private formBuilder: FormBuilder,
@@ -76,8 +74,6 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
         if (res != null) {
 
           this.dataSource = new MatTableDataSource(res);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
         }
       }
     );
@@ -120,7 +116,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
   private getSubjectsBySpecialiaztion(id: number) {
     this.subjectService.getAllForSpecialization(id).subscribe(
       res => {
-        this.subjectsSource = new MatTableDataSource(res);
+        this.subjectsSource = new MatTableDataSource(res);  
       }
     );
   }
@@ -133,16 +129,9 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
     );
   }
 
-  public setTeacherForSubject(subjectTeacher: SubjectTeacherGroup) {
+  public setTeacherForSubject(subjectTeacher: SubjectTeacherGroup[]) {
+    console.log(subjectTeacher);
     
-    let subjectTeacherGroup: SubjectTeacherGroup = {
-      subject: subjectTeacher.subject,
-      teacher: subjectTeacher.teacher,
-      studentGroup: null
-    };
-    if (this.subjectTeacherGroup.filter(x => x.subject.id == subjectTeacher.subject.id)) {
-      this.subjectTeacherGroup = this.subjectTeacherGroup.filter(x => x.subject.id != subjectTeacher.subject.id);
-    }
-    this.subjectTeacherGroup.push(subjectTeacherGroup);    
+    this.subjectTeacherGroup = subjectTeacher;
   }
 }

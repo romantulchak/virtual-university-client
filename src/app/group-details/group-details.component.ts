@@ -1,13 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { StudentDTO } from '../dto/student.dto';
 import { StudentGroupDTO } from '../dto/studentGroup.dto';
 import { SubjectDTO } from '../dto/subject.dto';
 import { SubjectTeacherGroupDTO } from '../dto/subjectTeacherGroup.dto';
+import { TeacherDTO } from '../dto/teacher.dto';
 import { Student } from '../model/student.model';
+import { Subject } from '../model/subject.model';
+import { SubjectTeacherGroup } from '../model/subjectTeacherGroup.model';
+import { Teacher } from '../model/teacher.model';
 import { StudentGroupService } from '../service/student-group.service';
 import { StudentService } from '../service/student.service';
+import { SubjectService } from '../service/subject.service';
 
 @Component({
   selector: 'app-group-details',
@@ -22,15 +29,24 @@ export class GroupDetailsComponent implements OnInit {
   public source: MatTableDataSource<StudentDTO>;
   public displayedColumns: string[] = ['id', 'firstName', 'lastName', 'delete'];
 
-  public subjectsSource: MatTableDataSource<SubjectTeacherGroupDTO>;
+  public subjectsSource: MatTableDataSource<SubjectTeacherGroup>;
   public subjectsDisplayedColumns: string[] = ['id', 'name', 'type', 'teacherDetails'];
 
   public studentsToAddSource: MatTableDataSource<StudentDTO>;
   public studentsToAddDisplayedColumns: string[] = ['id', 'firstName', 'lastName', 'add'];
 
-  public studentToGroup: StudentDTO[] = [];
 
-  constructor(private router: ActivatedRoute, private groupService: StudentGroupService, private studentService: StudentService) { 
+  public subjectsToAddSource: MatTableDataSource<SubjectDTO>;
+  public subjectsToAddDisplayedColumns: string[] = ['id', 'name', 'type', 'teacher'];
+
+
+  public studentToGroup: StudentDTO[] = [];
+  public subjectTeacherGroup: SubjectTeacherGroup[] = [];
+
+  constructor(private router: ActivatedRoute,
+              private groupService: StudentGroupService,
+              private studentService: StudentService,
+              private subjectService: SubjectService) { 
     this.router.params.subscribe(
       res=>{
         this.groupId = res.id;
@@ -41,6 +57,7 @@ export class GroupDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.findGroupDetails();    
     this.findStudentsWithoutGroup();
+    this.getAvailableSubjectsForGroup();
   }
 
 
@@ -50,29 +67,13 @@ export class GroupDetailsComponent implements OnInit {
         if(res != null){
           this.groupDetais = res;
           this.source = new MatTableDataSource<StudentDTO>(res.students);
-          this.convetToSubjectSource(res.subjects);
+          this.subjectsSource = new MatTableDataSource<SubjectTeacherGroup>(this.convetToSubjectSource(res.subjects));
           this.loading = false;
         }
       }
     );
   }
 
-  private convetToSubjectSource(subjects: SubjectTeacherGroupDTO[]){
-    let subjectsArr = [];
-          subjects.forEach(subjectTeacherGroup=>{
-            let subject = {
-              id: subjectTeacherGroup.id,
-              name: subjectTeacherGroup.subject.name,
-              type: subjectTeacherGroup.subject.type,
-              teacher: {
-                id: subjectTeacherGroup.teacher.id,
-                name: subjectTeacherGroup.teacher.firstName + ' ' + subjectTeacherGroup.teacher.lastName
-              }  
-            }
-            subjectsArr.push(subject);
-          });
-      this.subjectsSource = new MatTableDataSource<SubjectTeacherGroupDTO>(subjectsArr);
-  }
 
   private findStudentsWithoutGroup(){
     this.studentService.getStudentsWithoutGroup().subscribe(
@@ -85,17 +86,44 @@ export class GroupDetailsComponent implements OnInit {
   public addStudentToArray(students: StudentDTO[]) {
     this.studentToGroup = students;
   }
+  public getAvailableSubjectsForGroup(){
+    this.subjectService.getAvailableSubjectsForGroup(this.groupId).subscribe(
+      res=>{
+        this.subjectsToAddSource = new MatTableDataSource<SubjectDTO>(res);
+      }
+    );
+  }
   public addStudentsToGroup(){
     this.groupService.addStudentsToGroup(this.studentToGroup, this.groupId).subscribe(
       res=>{
-        this.updateTableData();
+        this.updateStudentsTableData();
       }
     );
-  
-      
-
   }
-  private updateTableData(){
+
+
+  public addSubjectToGroup(){
+    
+    this.groupService.addSubjectsToGroup(this.subjectTeacherGroup, this.groupId).subscribe(
+      res=>{
+        this.updateSubjectsTableData();  
+      }
+    );
+  }
+
+  public setSubjectsToArray(subjectTeacherGroup: SubjectTeacherGroup[]){
+    this.subjectTeacherGroup = subjectTeacherGroup; 
+  }
+  private updateSubjectsTableData(){
+    this.subjectTeacherGroup.forEach(x=>{
+      if(this.subjectTeacherGroup.includes(x)){
+        this.subjectsToAddSource = new MatTableDataSource<SubjectDTO>(this.subjectsToAddSource.data.filter(s => s != x.subject ))
+        this.subjectsSource.data.push(this.convertToSubjectTeacherGroup(x.subject, x.teacher));
+         this.subjectsSource = new MatTableDataSource<SubjectTeacherGroup>(this.subjectsSource.data);
+      }
+    });
+  }
+  private updateStudentsTableData(){
     this.studentToGroup.forEach(x=>{
       if(this.studentsToAddSource.data.includes(x)){
         this.studentsToAddSource = new MatTableDataSource<StudentDTO>(this.studentsToAddSource.data.filter(s => s != x));
@@ -103,5 +131,37 @@ export class GroupDetailsComponent implements OnInit {
         this.source = new MatTableDataSource<StudentDTO>(this.source.data);
       }
     })
+  }
+ 
+  //TODO: fix it
+  private convertToSubjectTeacherGroup(subject: SubjectDTO | Subject, teacher: TeacherDTO | Teacher): SubjectTeacherGroup{
+    let subjectTeacherGroup ={
+      id: subject.id,
+      name: subject.name,
+      type: subject.type,
+      teacher:{
+        id: teacher.id,
+        name: teacher.firstName + ' ' + teacher.lastName
+      }
+    }
+    return subjectTeacherGroup as unknown as SubjectTeacherGroup;
+  }  
+
+  private convetToSubjectSource(subjects: SubjectTeacherGroupDTO[]){
+  
+    let subjectsArr = [];
+          subjects.forEach(subjectTeacherGroup=>{
+            let subject = {
+              id: subjectTeacherGroup.subject.id,
+              name: subjectTeacherGroup.subject.name,
+              type: subjectTeacherGroup.subject.type,
+              teacher: {
+                id: subjectTeacherGroup.teacher.id,
+                name: subjectTeacherGroup.teacher.firstName + ' ' + subjectTeacherGroup.teacher.lastName
+              }  
+            }
+            subjectsArr.push(subject);
+          });
+      return subjectsArr;
   }
 }
