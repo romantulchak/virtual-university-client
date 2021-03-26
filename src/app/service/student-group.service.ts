@@ -6,6 +6,7 @@ import { StudentDTO } from "../dto/student.dto";
 import { StudentGroupDTO } from "../dto/studentGroup.dto";
 import { Student } from "../model/student.model";
 import { StudentGroup } from "../model/studentGroup.model";
+import { SubjectTeacherGroup } from "../model/subjectTeacherGroup.model";
 
 
 const API_URL = environment.api;
@@ -31,6 +32,12 @@ export class StudentGroupService{
     }
     public findGroupById(id: number):Observable<StudentGroupDTO>{
         return this.http.get<StudentGroupDTO>(API_URL + 'student-group/' + id)
+    }
+    public addSubjectsToGroup(subjectTeacherGroup: SubjectTeacherGroup[], groupId: number):Observable<any>{
+        return this.http.put(API_URL + 'student-group/addSubjects/' + groupId, subjectTeacherGroup);
+    }
+    public delete(id: number):Observable<any>{
+        return this.http.delete(API_URL + 'student-group/deleteGroup/' + id);
     }
 
 }

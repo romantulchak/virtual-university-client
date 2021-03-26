@@ -14,14 +14,14 @@ import { Teacher } from '../model/teacher.model';
   templateUrl: './subjects-table.component.html',
   styleUrls: ['./subjects-table.component.scss']
 })
-export class SubjectsTableComponent implements OnInit, OnChanges {
+export class SubjectsTableComponent implements OnInit, AfterViewInit, OnChanges {
 
 
   @Input("source") source: MatTableDataSource<SubjectDTO>;
 
   @Input("showTecahers") isShowTeachers: boolean = false;
 
-  @Output() getTeachers: EventEmitter<SubjectTeacherGroup> = new EventEmitter<SubjectTeacherGroup>(null);
+  @Output() getTeachers: EventEmitter<SubjectTeacherGroup[]> = new EventEmitter<SubjectTeacherGroup[]>(null);
   @Output() sendFilter: EventEmitter<any> = new EventEmitter<any>();
   @Output() getSubjects: EventEmitter<Subject> = new EventEmitter<Subject>();
 
@@ -31,17 +31,25 @@ export class SubjectsTableComponent implements OnInit, OnChanges {
 
   @ViewChild(MatPaginator) subjectsPaginator: MatPaginator;
   @ViewChild(MatSort) subjectsSort: MatSort;
+  private subjectTeacherGroup: SubjectTeacherGroup[] =[];
   constructor(private filterHelper: FilterHelper) { }
 
   ngOnInit(): void {
     
   }
-  ngOnChanges(){
-    this.source.paginator = this.subjectsPaginator;
-    this.source.sort = this.subjectsSort;
+  ngAfterViewInit(){
+    if(this.source != null){
+      this.source.paginator = this.subjectsPaginator;
+      this.source.sort = this.subjectsSort;
+    }
   }
 
-
+  ngOnChanges(){
+    if(this.source != null){
+      this.source.paginator = this.subjectsPaginator;
+      this.source.sort = this.subjectsSort;
+    }
+  }
 
   public setTeacherForSubject(subject: Subject, teacher: Teacher){
     let subjectTeacherGroup: SubjectTeacherGroup ={
@@ -49,13 +57,20 @@ export class SubjectsTableComponent implements OnInit, OnChanges {
       subject: subject, 
       teacher: teacher
     }
-    this.getTeachers.emit(subjectTeacherGroup);
+     
+
+    if (this.subjectTeacherGroup.filter(x => x.subject.id == subjectTeacherGroup.subject.id)) {
+      this.subjectTeacherGroup = this.subjectTeacherGroup.filter(x => x.subject.id != subjectTeacherGroup.subject.id);
+    }
+    this.subjectTeacherGroup.push(subjectTeacherGroup);    
+  
+    this.getTeachers.emit(this.subjectTeacherGroup);
   }
 
   public filter(e: Event, source){
     this.filterHelper.filter(e, source);
   }
-  public addSubject(subject: Subject){
+  public addSubject(subject: Subject){ 
     this.getSubjects.emit(subject);
   }
 

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -11,7 +11,7 @@ import { Student } from '../model/student.model';
   templateUrl: './students-table.component.html',
   styleUrls: ['./students-table.component.scss']
 })
-export class StudentsTableComponent implements OnInit {
+export class StudentsTableComponent implements OnInit, AfterViewInit, OnChanges {
 
   @Input("source") source: MatTableDataSource<StudentDTO>;
 
@@ -27,23 +27,31 @@ export class StudentsTableComponent implements OnInit {
  
 
   private studentToGroup: Student[] = [];
-  @ViewChild(MatPaginator) subjectsPaginator: MatPaginator;
-  @ViewChild(MatSort) subjectsSort: MatSort;
+  @ViewChild(MatPaginator) studentsPaginator: MatPaginator;
+  @ViewChild(MatSort) studentsSort: MatSort;
 
   constructor(private filterHelper: FilterHelper) { }
 
   ngOnInit(): void {
   }
+  ngAfterViewInit(){
+    if(this.source != null){
+      this.source.paginator = this.studentsPaginator;
+      this.source.sort = this.studentsSort;
+    }
+  }
 
+  ngOnChanges(){
+
+    if(this.source != null){
+      this.source.paginator = this.studentsPaginator;
+      this.source.sort = this.studentsSort;
+    }
+  }
   public filter(e: Event, source: any){
      this.filterHelper.filter(e, source);
     
   }
- /* public addStudentToArray(student: Student){
-    this.studentToArray.emit(student);
-    
-  }
-  */
 
   public deleteStudentFromGroup(student: Student){
 

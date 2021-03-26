@@ -16,7 +16,10 @@ export class AppComponent implements OnInit{
 
   private isUserAdmin(){
     let user = this.tokenStorageService.getUser();
-    return user.roles.find(role=> role === "ROLE_ADMIN" || role === "ROLE_MANAGER") != null;
+    if(user != null){
+      return user.roles.find(role=> role === "ROLE_ADMIN" || role === "ROLE_MANAGER") != null;
+    }
+    return false;
   }
   
 }
