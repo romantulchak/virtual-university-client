@@ -11,4 +11,5 @@ export class StudentGroupDTO{
     public students: StudentDTO[];
     public specialization: SpecializationDTO;
     public subjects: SubjectTeacherGroupDTO[];
+    public studentsCount: number;
 }

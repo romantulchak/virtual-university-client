@@ -2,22 +2,7 @@
     <div class="container">
         <div class="grid__tables">
             <div class="group__information_block" *ngIf="!loading; else loadingBlock">
-                <table class="group__information">
-                    <thead>
-                        <tr>
-                            <th>Group name</th>
-                            <th>Students count</th>
-                            <th>Specialization</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{{groupDetais.name}}</td>
-                            <td>{{groupDetais.students.length}}</td>
-                            <td><a routerLink="{{groupDetais.specialization.id}}">{{groupDetais.specialization.name}}</a></td>
-                        </tr>
-                    </tbody>
-                </table>
+               <app-group-information [group]="groupDetais"></app-group-information>
             </div>
 
             <div class="group__students_block">

@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { StudentGroupDTO } from '../dto/studentGroup.dto';
 import { TeacherSubjectStudentGradeLinkDTO } from '../dto/teacherSubjectStudentGradeLink.dto';
 import { TeacherSubjectStudentGradeLinks } from '../model/teacherSubjectStudentGradeLinks.model';
 
@@ -32,5 +33,4 @@ export class StudentGradesService {
     params = params.append('studentId', studentId.toString()).append('semesterId', semesterId.toString());
     return this.http.get<TeacherSubjectStudentGradeLinkDTO[]>(API_URL + 'student-grades/getStudentGrades', {params: params});
   }
-
 }

@@ -39,6 +39,11 @@ export class StudentGroupService{
     public delete(id: number):Observable<any>{
         return this.http.delete(API_URL + 'student-group/deleteGroup/' + id);
     }
-
+    public getGroupsForTeacher(id: number):Observable<StudentGroupDTO[]>{
+        return this.http.get<StudentGroupDTO[]>(API_URL + 'student-group/groupsForTeacher/' + id);
+    }
+    public findGroupByIdForTeacher(id: number, teacherId: number):Observable<StudentGroupDTO>{
+        return this.http.get<StudentGroupDTO>(`${API_URL}student-group/${id}/${teacherId}`);
+    }
 }
     

@@ -47,6 +47,7 @@ export class StudentsTableComponent implements OnInit, AfterViewInit, OnChanges 
       this.source.paginator = this.studentsPaginator;
       this.source.sort = this.studentsSort;
     }
+    this.studentToGroup = [];
   }
   public filter(e: Event, source: any){
      this.filterHelper.filter(e, source);

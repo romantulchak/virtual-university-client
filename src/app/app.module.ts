@@ -27,7 +27,6 @@ import { StudentProfileDetailsComponent } from './student-profile-details/studen
 import { SpecializationsComponent } from './specializations/specializations.component';
 import { CreateSpecializationComponent } from './create-specialization/create-specialization.component';
 import { CreateSemesterComponent } from './create-semester/create-semester.component';
-import { SubjectsComponent } from './subjects/subjects.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { CreateSubjectComponent } from './create-subject/create-subject.component';
 import { CreateGradesComponent } from './create-grades/create-grades.component';
@@ -54,6 +53,11 @@ import { GroupPanelComponent } from './group-panel/group-panel.component';
 import { GroupsComponent } from './groups/groups.component';
 import { GroupDetailsComponent } from './group-details/group-details.component';
 import { StudentsTableComponent } from './students-table/students-table.component';
+import { TeacherGroupsComponent } from './teacher-groups/teacher-groups.component';
+import { StudentGroupComponent } from './student-group/student-group.component';
+import { GroupInformationComponent } from './group-information/group-information.component';
+import { GroupDetailsTeacherComponent } from './group-details-teacher/group-details-teacher.component';
+
 
 @NgModule({
   declarations: [
@@ -69,7 +73,6 @@ import { StudentsTableComponent } from './students-table/students-table.componen
     SpecializationsComponent,
     CreateSpecializationComponent,
     CreateSemesterComponent,
-    SubjectsComponent,
     CreateSubjectComponent,
     CreateGradesComponent,
     CreateTeacherComponent,
@@ -91,6 +94,10 @@ import { StudentsTableComponent } from './students-table/students-table.componen
     GroupsComponent,
     GroupDetailsComponent,
     StudentsTableComponent,
+    TeacherGroupsComponent,
+    StudentGroupComponent,
+    GroupInformationComponent,
+    GroupDetailsTeacherComponent,
   ],
     imports: [
         BrowserModule,
