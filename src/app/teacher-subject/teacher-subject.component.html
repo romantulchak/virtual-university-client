@@ -1,1 +1,15 @@
-<p>teacher-subject works!</p>
+<section>
+    <div class="container">
+        <div>
+            <div *ngFor="let subject of subjects">
+
+                <div>
+                    <h3>{{subject.name}}</h3>
+                    <h4>{{subject.type}}</h4>
+                </div>
+                <hr>
+
+            </div>
+        </div>
+    </div>
+</section>

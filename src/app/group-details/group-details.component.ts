@@ -65,6 +65,8 @@ export class GroupDetailsComponent implements OnInit {
     this.groupService.findGroupById(this.groupId).subscribe(
       res=>{
         if(res != null){
+          console.log(res);
+          
           this.groupDetais = res;
           this.source = new MatTableDataSource<StudentDTO>(res.students);
           this.subjectsSource = new MatTableDataSource<SubjectTeacherGroup>(this.convetToSubjectSource(res.subjects));
@@ -84,6 +86,9 @@ export class GroupDetailsComponent implements OnInit {
     );
   }
   public addStudentToArray(students: StudentDTO[]) {
+    console.log(students);
+    
+    
     this.studentToGroup = students;
   }
   public getAvailableSubjectsForGroup(){
@@ -97,6 +102,7 @@ export class GroupDetailsComponent implements OnInit {
     this.groupService.addStudentsToGroup(this.studentToGroup, this.groupId).subscribe(
       res=>{
         this.updateStudentsTableData();
+        this.studentToGroup =[];
       }
     );
   }
@@ -107,6 +113,7 @@ export class GroupDetailsComponent implements OnInit {
     this.groupService.addSubjectsToGroup(this.subjectTeacherGroup, this.groupId).subscribe(
       res=>{
         this.updateSubjectsTableData();  
+        this.subjectTeacherGroup = [];
       }
     );
   }

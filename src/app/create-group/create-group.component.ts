@@ -116,6 +116,8 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
   private getSubjectsBySpecialiaztion(id: number) {
     this.subjectService.getAllForSpecialization(id).subscribe(
       res => {
+        console.log(res);
+        
         this.subjectsSource = new MatTableDataSource(res);  
       }
     );

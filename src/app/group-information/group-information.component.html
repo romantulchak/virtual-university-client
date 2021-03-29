@@ -1,0 +1,16 @@
+<table class="group__information">
+    <thead>
+        <tr>
+            <th>Group name</th>
+            <th>Students count</th>
+            <th>Specialization</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{group.name}}</td>
+            <td>{{group.studentsCount}}</td>
+            <td><a routerLink="{{group.specialization.id}}">{{group.specialization.name}}</a></td>
+        </tr>
+    </tbody>
+</table>
