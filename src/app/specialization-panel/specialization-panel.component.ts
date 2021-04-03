@@ -34,15 +34,7 @@ export class SpecializationPanelComponent implements OnInit {
       }
     );
   }
-  public getSemestersForSpecializations(specializationId: number){
-    this.semesterService.getAvailableSemestersForSpecialization(specializationId).subscribe(
-      res=>{
-        this.currentSpecializationId = specializationId;
-        this.semesters = res;
-        
-      }
-    );
-  }
+
 
   public addSemesterToSpecialization(semesterId: number, specializationId: number){
     this.specializationService.addSemesterToSpecialization(semesterId, specializationId).subscribe(
