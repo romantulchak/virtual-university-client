@@ -6,4 +6,7 @@ export class Semester{
     public name: string;
     public specialization?: Specialization;
     public semesterNumber: number;
+    public startDate:Date;
+    public endDate: Date;
+
 }

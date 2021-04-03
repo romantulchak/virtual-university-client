@@ -10,6 +10,6 @@ export class Specialization{
     public course: Course;
     public student?: Student[];
     public teacher?: Teacher[];
-    public semesters: Semester[];
+    public semesters?: Semester[];
     public subjects: Subject[];
 }

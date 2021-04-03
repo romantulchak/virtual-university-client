@@ -1,0 +1,124 @@
+$card-line-height: 1.2em;
+$card-padding: 1em;
+$card-radius: 0.5em;
+$color-green: #558309b0;
+$color-gray: #e2ebf6;
+$color-dark-gray: #c4d1e1;
+$radio-border-width: 2px;
+$radio-size: 1.5em;
+
+
+table {
+    width: 100%;
+    
+    .mat-form-field {
+        font-size: 14px;
+        width: 100%;
+      }
+      
+    td, th {
+        width: 25%;
+    } 
+}
+  
+ 
+
+.subjects{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 2em;
+}
+
+
+  
+  .radio {
+    font-size: inherit;
+    margin: 0;
+    position: absolute;
+    right: calc($card-padding + $radio-border-width);
+    top: calc($card-padding + $radio-border-width);
+  }
+  
+  
+  .plan-details {
+    border: $radio-border-width solid $color-gray;
+    border-radius: $card-radius;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    padding: $card-padding;
+    transition: border-color 0.2s ease-out;
+    justify-content: center;
+    min-height: 110px;
+  }
+  
+  .card:hover .plan-details {
+    border-color: $color-dark-gray;
+  }
+  
+  .radio:checked ~ .plan-details {
+    border-color: $color-green;
+  }
+  
+  .subject__type {
+    color: $color-green;
+    font-size: .9em;
+    font-weight: bold;
+    line-height: 1em;
+  }
+  
+  .subject__name {
+    font-size: 1.3rem;
+    font-weight: bold;
+    padding: 0.5rem 0;
+    font-family: TitleFont;
+  }
+  
+  .slash {
+    font-weight: normal;
+  }
+  
+  .plan-cycle {
+    font-size: 2rem;
+    font-variant: none;
+    border-bottom: none;
+    cursor: inherit;
+    text-decoration: none;
+  }
+  
+  .hidden-visually {
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+
+
+  @supports(-webkit-appearance: none) or (-moz-appearance: none) { 
+    .radio {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      visibility: hidden;
+  
+  
+  
+      &:checked {
+        background: $color-green;
+        border-color: $color-green;
+      }
+    }
+    
+    .card:hover .radio {
+      border-color: $color-dark-gray;
+      
+      &:checked {
+        border-color: $color-green;
+      }
+    }
+  }
+  
