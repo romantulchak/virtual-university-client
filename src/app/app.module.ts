@@ -57,6 +57,7 @@ import { TeacherGroupsComponent } from './teacher-groups/teacher-groups.componen
 import { StudentGroupComponent } from './student-group/student-group.component';
 import { GroupInformationComponent } from './group-information/group-information.component';
 import { GroupDetailsTeacherComponent } from './group-details-teacher/group-details-teacher.component';
+import { SubjectCardComponent } from './subject-card/subject-card.component';
 
 
 @NgModule({
@@ -98,6 +99,7 @@ import { GroupDetailsTeacherComponent } from './group-details-teacher/group-deta
     StudentGroupComponent,
     GroupInformationComponent,
     GroupDetailsTeacherComponent,
+    SubjectCardComponent,
   ],
     imports: [
         BrowserModule,

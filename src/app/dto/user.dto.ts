@@ -5,4 +5,5 @@ export class UserDTO{
     public privateEmail: string;
     public email: string;
     public gender: string;
+    public numberIdentifier: string;
 }

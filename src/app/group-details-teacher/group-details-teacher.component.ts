@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { StudentGroupGradeDTO } from '../dto/student-group-grade.dto';
@@ -27,6 +28,9 @@ export class GroupDetailsTeacherComponent implements OnInit {
   public grades: number[] = [2, 3, 3.5, 4, 4.5, 5];
   private studentGroupGrades: StudentGroupGrade[] = [];
   private subject: Subject;
+  public loaded: boolean = true;
+
+
   constructor(private router: ActivatedRoute,
               private studentGroupService: StudentGroupService,
               private tokenStorageService: TokenStorageService, 
@@ -80,6 +84,7 @@ export class GroupDetailsTeacherComponent implements OnInit {
   public setGrade(){
 this.studentGroupGradeService.setGrade(this.studentGroupGrades).subscribe(
       res=>{
+        //TODO: make it only on the client side
         this.findStudentGrades();
         
       }
@@ -87,16 +92,22 @@ this.studentGroupGradeService.setGrade(this.studentGroupGrades).subscribe(
   }
 
   private findStudentGrades(){
+    this.loaded = false;
     this.studentGroupGradeService.getStudentGradesBySubjectAndGroupForTeacher(this.groupId, this.subject.id, this.teacherId).subscribe(
       res=>{
-        console.log(res);
-        
-        this.source = new MatTableDataSource(res);
-        
+        if(res != null){
+          this.source = new MatTableDataSource(res);
+          this.loaded = true;
+        }
       }
     );
   }
 
-  
+  @ViewChild(MatPaginator) 
+  set paginator(value: MatPaginator) {
+      if(value != undefined){
+        this.source.paginator = value;
+      }
+  }
 
 }

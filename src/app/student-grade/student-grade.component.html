@@ -1,16 +1,31 @@
 <section>
-    <div>
-        <div *ngFor="let studentGrade of studentGrades">
-            <h3>Subject name: {{studentGrade.subject.name}}</h3>
-            <em>Type: {{studentGrade.subject.type}}</em>
-
-            <h4>Grade 
-                <span *ngIf="studentGrade.grade == 0">No grade</span>
-                <span *ngIf="studentGrade.grade != 0">{{studentGrade.grade}}</span>
-            </h4>
-            <h4>Specialization name: {{studentGrade.specialization.name}}</h4>
-            <h4>Teacher: {{studentGrade.teacher.firstName}} {{studentGrade.teacher.lastName}}</h4>
-            
-        </div>
+    <div class="container">
+        <table class="group__information">
+            <thead>
+                <tr>
+                    <th class="table__number">No.</th>
+                    <th>Subject</th>
+                    <th>Type</th>
+                    <th>Teacher</th>
+                    <th>Grade</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let grade of studentGrades; let i = index">
+                        <td class="table__number">{{i+1}}</td>
+                        <td>{{grade.subjectTeacherGroup.subject.name}}</td>
+                        <td>{{grade.subjectTeacherGroup.subject.type}}</td>
+                        <td><a routerLink="teacher-profile/{{grade.subjectTeacherGroup.teacher.id}}">{{grade.subjectTeacherGroup.teacher.firstName}} {{grade.subjectTeacherGroup.teacher.lastName}}</a></td>
+                        <td>
+                            <span class="grade" *ngIf="grade.grade != 0" 
+                                  [class.best-grade]="grade.grade == 5"
+                                  [class.good-grade]="grade.grade == 4.5"
+                                  [class.bad-grade]="grade.grade == 2"
+                                  >{{grade.grade}}</span>
+                        </td>
+                    </tr>
+                 <tr>
+            </tbody>
+        </table>
     </div>
 </section>
