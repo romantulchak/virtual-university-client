@@ -33,4 +33,5 @@ export class StudentGradesService {
     params = params.append('studentId', studentId.toString()).append('semesterId', semesterId.toString());
     return this.http.get<TeacherSubjectStudentGradeLinkDTO[]>(API_URL + 'student-grades/getStudentGrades', {params: params});
   }
+ 
 }

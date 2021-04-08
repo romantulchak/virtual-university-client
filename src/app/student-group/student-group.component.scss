@@ -1,0 +1,44 @@
+.subjects {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 1em;
+}
+
+.subject__details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5em;
+  margin-top: 2em;
+  justify-content: space-between;
+
+  .details {
+
+    flex: 0 1 55%;
+    height: 250px;
+    background: beige;
+
+  }
+
+  .attachments {
+
+    flex: 0 1 40%;
+    height: 150px;
+    background: tan;
+
+  }
+
+  .student__grade {
+    width: 75px;
+    align-self: center;
+    display: flex;
+    box-sizing: border-box;
+    padding: 9px;
+    justify-content: center;
+    background: beige;
+    height: 75px;
+    border-radius: 5px;
+    align-items: baseline;
+    flex-wrap: wrap;
+    text-align: center;
+  }
+}

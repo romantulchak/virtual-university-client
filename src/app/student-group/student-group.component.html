@@ -1,5 +1,36 @@
 <section>
     <div class="container">
-        <app-group-information *ngIf="studentGroup != null" [group]="studentGroup"></app-group-information>
+        <div >
+            <app-group-information *ngIf="studentGroup != null" [group]="studentGroup"></app-group-information>
+            <div class="subjects">
+                <ng-container *ngFor="let subject of studentGroup?.subjects">
+                    <app-subject-card [subject]="subject.subject" (selectedSubject)="selectedSubject($event, subject.teacher)"></app-subject-card>
+                </ng-container>
+            </div>
+
+            <div *ngIf="currentSubject.subject != null">
+                <h3>Subject {{currentSubject.subject.name}} details</h3>
+                <div class="subject__details" >
+                    <div class="details">
+                        <h3>Subject details ...</h3>
+                    </div>
+           
+              
+                    <div class="attachments">
+                        <h3>Subject attachments</h3>
+                    </div>
+                    <div class="teacher">
+                        <h3>My teacher</h3>
+                        <h4>No. {{currentSubject.teacher.numberIdentifier}}</h4>
+                        <h4>{{currentSubject.teacher.firstName}} {{currentSubject.teacher.lastName}}</h4>
+                    </div>
+                    <div class="student__grade" *ngIf="gradeForSubject != 0">
+                        <h4>My grade</h4>
+                        <h3>{{gradeForSubject}}</h3>
+                    </div>
+                </div>
+              
+            </div>
+        </div>
     </div>
 </section>

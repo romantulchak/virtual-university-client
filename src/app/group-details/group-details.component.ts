@@ -124,7 +124,7 @@ export class GroupDetailsComponent implements OnInit {
   private updateSubjectsTableData(){
     this.subjectTeacherGroup.forEach(x=>{
       if(this.subjectTeacherGroup.includes(x)){
-        this.subjectsToAddSource = new MatTableDataSource<SubjectDTO>(this.subjectsToAddSource.data.filter(s => s != x.subject ))
+        this.subjectsToAddSource = new MatTableDataSource<SubjectDTO>(this.subjectsToAddSource.data.filter(s => s.id != x.subject.id ));
         this.subjectsSource.data.push(this.convertToSubjectTeacherGroup(x.subject, x.teacher));
          this.subjectsSource = new MatTableDataSource<SubjectTeacherGroup>(this.subjectsSource.data);
       }

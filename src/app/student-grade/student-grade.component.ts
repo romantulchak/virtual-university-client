@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { StudentGroupGradeDTO } from '../dto/student-group-grade.dto';
 import { TeacherSubjectStudentGradeLinkDTO } from '../dto/teacherSubjectStudentGradeLink.dto';
 import { Student } from '../model/student.model';
+import { StudentGroupGrade } from '../model/studentGroupGrade.model';
 import { StudentGradesService } from '../service/student-grades.service';
+import { StudentGroupGradeService } from '../service/studentGroupGrade.service';
 import { TokenStorageService } from '../service/tokenStorage.service';
 
 @Component({
@@ -11,9 +14,9 @@ import { TokenStorageService } from '../service/tokenStorage.service';
 })
 export class StudentGradeComponent implements OnInit {
 
-  constructor(private studentGradeService: StudentGradesService, private tokenStorageService: TokenStorageService) { }
+  constructor(private tokenStorageService: TokenStorageService, private studentGroupGrade: StudentGroupGradeService) { }
   private studentId: number;
-  public studentGrades: TeacherSubjectStudentGradeLinkDTO[];
+  public studentGrades: StudentGroupGradeDTO[];
   ngOnInit(): void {
     this.studentId = this.tokenStorageService.getUser().id;
     this.getStudentGrades();
@@ -21,11 +24,9 @@ export class StudentGradeComponent implements OnInit {
 
 
   private getStudentGrades(){
-    this.studentGradeService.getStudentGrades(this.studentId).subscribe(
+    this.studentGroupGrade.getStudentGrades(this.studentId).subscribe(
       res=>{
-        if(res != null){
-          this.studentGrades = res;
-        }
+        this.studentGrades = res;
       }
     );
   }
