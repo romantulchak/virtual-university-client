@@ -17,6 +17,7 @@ export class StudentGradeComponent implements OnInit {
   constructor(private tokenStorageService: TokenStorageService, private studentGroupGrade: StudentGroupGradeService) { }
   private studentId: number;
   public studentGrades: StudentGroupGradeDTO[];
+  public averageGrade: number = 0;
   ngOnInit(): void {
     this.studentId = this.tokenStorageService.getUser().id;
     this.getStudentGrades();
@@ -26,6 +27,8 @@ export class StudentGradeComponent implements OnInit {
   private getStudentGrades(){
     this.studentGroupGrade.getStudentGrades(this.studentId).subscribe(
       res=>{
+        this.averageGrade = res.map(x=> x.grade).reduce((previous, current) => previous + current) / res.length;
+       
         this.studentGrades = res;
       }
     );

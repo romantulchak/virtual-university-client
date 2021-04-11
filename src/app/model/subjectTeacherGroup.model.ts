@@ -4,7 +4,7 @@ import { Teacher } from "./teacher.model";
 
 export class SubjectTeacherGroup{
     public id?: number;
-    public subject: Subject;
-    public teacher: Teacher;
-    public studentGroup: StudentGroup[];
+    public subject?: Subject;
+    public teacher?: Teacher;
+    public studentGroup?: StudentGroup[];
 }

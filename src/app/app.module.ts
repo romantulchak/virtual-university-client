@@ -58,7 +58,8 @@ import { StudentGroupComponent } from './student-group/student-group.component';
 import { GroupInformationComponent } from './group-information/group-information.component';
 import { GroupDetailsTeacherComponent } from './group-details-teacher/group-details-teacher.component';
 import { SubjectCardComponent } from './subject-card/subject-card.component';
-
+import { SchedulePanelComponent } from './schedule-panel/schedule-panel.component';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 
 @NgModule({
   declarations: [
@@ -100,6 +101,7 @@ import { SubjectCardComponent } from './subject-card/subject-card.component';
     GroupInformationComponent,
     GroupDetailsTeacherComponent,
     SubjectCardComponent,
+    SchedulePanelComponent,
   ],
     imports: [
         BrowserModule,
@@ -121,7 +123,8 @@ import { SubjectCardComponent } from './subject-card/subject-card.component';
         MatTableModule,
         MatPaginatorModule,
         MatCheckboxModule,
-        MatSortModule
+        MatSortModule,
+        NgxMaterialTimepickerModule
     ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]

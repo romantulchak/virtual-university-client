@@ -14,22 +14,17 @@ import { Student } from '../model/student.model';
 export class StudentsTableComponent implements OnInit, AfterViewInit, OnChanges {
 
   @Input("source") source: MatTableDataSource<StudentDTO>;
-
   @Input("showAddButton") isShowAddButton: boolean = false;
   @Input("showDeleteButton") isShowDeleteButton: boolean = false;
-
- 
- 
-  @Output() studentToArray: EventEmitter<Student[]> = new EventEmitter<Student[]>();
-
-
   @Input() displayedColumns: string[];
- 
-
-  private studentToGroup: Student[] = [];
+  
+  @Output() studentToArray: EventEmitter<Student[]> = new EventEmitter<Student[]>();
+  @Output() studentToRemove: EventEmitter<StudentDTO> = new EventEmitter<StudentDTO>();
   @ViewChild(MatPaginator) studentsPaginator: MatPaginator;
   @ViewChild(MatSort) studentsSort: MatSort;
 
+
+  private studentToGroup: Student[] = [];
   constructor(private filterHelper: FilterHelper) { }
 
   ngOnInit(): void {
@@ -54,8 +49,8 @@ export class StudentsTableComponent implements OnInit, AfterViewInit, OnChanges 
     
   }
 
-  public deleteStudentFromGroup(student: Student){
-
+  public deleteStudentFromGroup(student: StudentDTO){
+    this.studentToRemove.emit(student);
   }
 
 
