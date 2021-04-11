@@ -155,7 +155,6 @@ export class GroupDetailsComponent implements OnInit {
   }  
 
   private convetToSubjectSource(subjects: SubjectTeacherGroupDTO[]){
-  
     let subjectsArr = [];
           subjects.forEach(subjectTeacherGroup=>{
             let subject = {
@@ -170,5 +169,20 @@ export class GroupDetailsComponent implements OnInit {
             subjectsArr.push(subject);
           });
       return subjectsArr;
+  }
+
+  public removeStudent(student: StudentDTO){
+    this.groupService.deleteStudentFromGroup(this.groupId, student.id).subscribe(
+      res=>{
+        
+        if(this.source.data.filter(s=>s.id == student.id) != null){
+          this.studentsToAddSource.data.push(student);
+          this.studentsToAddSource = new MatTableDataSource<StudentDTO>(this.studentsToAddSource.data);
+          this.source.data = this.source.data.filter(s => s.id != student.id);
+          this.source = new MatTableDataSource(this.source.data);
+        } 
+      }
+    );
+    
   }
 }

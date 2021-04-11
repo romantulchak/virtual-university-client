@@ -8,7 +8,7 @@
             <div class="group__students_block">
                 <div class="table__legend">
                     <h3 class="table__title">Students in Group {{groupDetais?.name}}</h3>
-                    <app-students-table [source]="source" [displayedColumns]="displayedColumns" [showDeleteButton]="true"></app-students-table>
+                    <app-students-table [source]="source" [displayedColumns]="displayedColumns" [showDeleteButton]="true" (studentToRemove)="removeStudent($event)"></app-students-table>
                 </div>
             </div>
 

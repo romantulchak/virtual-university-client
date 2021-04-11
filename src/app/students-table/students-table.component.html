@@ -31,7 +31,7 @@
       <ng-container matColumnDef="delete" *ngIf="isShowDeleteButton">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Delete </th>
         <td mat-cell *matCellDef="let row">
-            <button class="icon__small" (click)="deleteStudentFromGroup(row)"><img src="../../assets/images/icons/delete.svg" alt=""></button> 
+            <button class="icon__small" (click)="deleteStudentFromGroup(row)"><img class="remove__student_icon" src="../../assets/images/icons/delete.svg" alt=""></button> 
         </td>
       </ng-container>
 

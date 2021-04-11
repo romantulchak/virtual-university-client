@@ -6,10 +6,10 @@ import { SubjectTeacherGroup } from "./subjectTeacherGroup.model";
 
 export class StudentGroup{
     public id: number;
-    public name: string;
-    public semester: Semester;
-    public schedule:  Schedule;
-    public students: Student[];
-    public subjectTeacherGroups: SubjectTeacherGroup[];
-    public specialization: Specialization;
+    public name?: string;
+    public semester?: Semester;
+    public schedule?:  Schedule;
+    public students?: Student[];
+    public subjectTeacherGroups?: SubjectTeacherGroup[];
+    public specialization?: Specialization;
 }

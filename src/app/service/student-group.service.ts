@@ -1,9 +1,10 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { StudentDTO } from "../dto/student.dto";
 import { StudentGroupDTO } from "../dto/studentGroup.dto";
+import { SubjectTeacherGroupDTO } from "../dto/subjectTeacherGroup.dto";
 import { Student } from "../model/student.model";
 import { StudentGroup } from "../model/studentGroup.model";
 import { SubjectTeacherGroup } from "../model/subjectTeacherGroup.model";
@@ -44,6 +45,14 @@ export class StudentGroupService{
     }
     public findGroupByIdForTeacher(id: number, teacherId: number):Observable<StudentGroupDTO>{
         return this.http.get<StudentGroupDTO>(`${API_URL}student-group/${id}/${teacherId}`);
+    }
+    public deleteStudentFromGroup(groupId: number, studentId: number):Observable<any>{
+        let params = new HttpParams();
+        params = params.append('groupId', groupId.toString()).append('studentId', studentId.toString());
+        return this.http.delete(API_URL + 'student-group/deleteStudentFromGroup', {params: params});
+    }
+    public findSubjectsForGroup(groupId: number):Observable<SubjectTeacherGroupDTO[]>{
+        return this.http.get<SubjectTeacherGroupDTO[]>(API_URL + 'student-group/findSubjectsForGroup/' + groupId);
     }
 }
     
