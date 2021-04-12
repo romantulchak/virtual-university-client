@@ -8,6 +8,8 @@
 
 $smallIcon: 15px;
 $titleFont: TitleFont;
+$badGrade: #f70808;
+$errorMsg: #f70808;
 %icon{
   width: $smallIcon;
   height: $smallIcon;
@@ -82,8 +84,11 @@ a{
   color: rgb(0 128 0 / 69%);
 }
 .bad-grade{
-  color: #f70808;
+  color: $badGrade;
 }
 .grade{
   font-weight: 900;
+}
+.error-msg{
+  color: $errorMsg;
 }

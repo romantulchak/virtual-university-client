@@ -1,74 +1,159 @@
 <section>
-    <div class="container">
-            <table class="table__header_days">
-                <thead>
-                    <tr>
-                        <th>Time from</th>
-                        <th>Time to</th>
-                        <th>Teacher</th>
-                        <th>Subject</th>
-                        <th>Type</th>
-                        <th>Group</th>
-                    </tr>
-                </thead>
-            </table>
-            <table class="table_day" *ngFor="let day of schedule?.days">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                    <div class="day__header_button">
-                        <h3 class="day_header">{{day.day}}</h3>
-                        <button (click)="setCurrentDay(day)">Add lesson</button>
-                    </div>
-                <tbody>
-                    <ng-container class="lesson" *ngFor="let lesson of day.lessons">
-                        <tr>
-                            <th>{{lesson.dateStart | date: "HH:mm"}}</th>
-                            <th>{{lesson.dateEnd | date: "HH:mm"}}</th>
-                            <th>{{lesson.subjectTeacher.teacher.firstName}} {{lesson.subjectTeacher.teacher.lastName}}</th>
-                            <th>{{lesson.subjectTeacher.subject.name}}</th>
-                            <th>{{lesson.subjectTeacher.subject.type}}</th>
-                            <th>{{schedule.studentGroup.name}}</th>
-                        </tr>
-                    </ng-container>
-                </tbody>
-            </table>
-
-            <form action="" *ngIf="currentDay != null">
-                <div>
-                    <div>
-                        <label for="timeStart">Time from</label>                
-                        <input placeholder="Start Date" aria-label="24hr format" [ngxTimepicker]="startTime" id="timeStart" [format]="24"  readonly>
-                        <ngx-material-timepicker (timeSet)="setTimeStart($event)" #startTime></ngx-material-timepicker>
-                    </div>
-                    <div>
-                        <label for="timeEnd">Time end</label>
-                        <input placeholder="End Date" aria-label="24hr format" [ngxTimepicker]="endTime" id="timeEnd" [format]="24"  readonly>
-                        <ngx-material-timepicker (timeSet)="setTimeEnd($event)" #endTime></ngx-material-timepicker>
-                   </div>
-                  
-                   
-                  
-                </div>
-                <div>
-                    <mat-form-field appearance="fill">
-                        <mat-label>Subject</mat-label>
-                        <mat-select (selectionChange)="setSubjectToLesson($event.value)">
-                          <mat-option *ngFor="let subject of subjectTeacher" [value]="subject">{{subject.subject.name}} | {{subject.teacher.firstName}} {{subject.teacher.lastName}}</mat-option>
-                        </mat-select>
-                      </mat-form-field>
-                </div>
-
-                <button (click)="addLessonToDay()">Create</button>
-            </form>
-
+  <div class="container">
+    <div>
+      <h4>Group</h4>
+      <mat-form-field appearance="fill">
+        <mat-label>Subject</mat-label>
+        <mat-select (selectionChange)="getScheduleForGroup($event.value)">
+          <mat-option *ngFor="let group of groups" [value]="group">{{group.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
+
+
+
+
+    <table class="table__header_days" *ngIf="schedule != null">
+      <thead>
+        <tr>
+          <th>Time from</th>
+          <th>Time to</th>
+          <th>Teacher</th>
+          <th>Subject</th>
+          <th>Type</th>
+          <th>Group</th>
+        </tr>
+      </thead>
+    </table>
+    <table class="table_day" *ngFor="let day of schedule?.days">
+      <thead>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <div class="day__header_button">
+        <h3 class="day_header">{{day.day}}</h3>
+        <button (click)="setCurrentDay(day)">Add lesson</button>
+      </div>
+      <tbody>
+        <ng-container class="lesson" *ngFor="let lesson of day.lessons">
+          <tr>
+            <th>{{lesson.dateStart | date: "HH:mm"}}</th>
+            <th>{{lesson.dateEnd | date: "HH:mm"}}</th>
+            <th>{{lesson.subjectTeacher.teacher.firstName}} {{lesson.subjectTeacher.teacher.lastName}}</th>
+            <th>{{lesson.subjectTeacher.subject.name}}</th>
+            <th>{{lesson.subjectTeacher.subject.type}}</th>
+            <th>{{schedule.studentGroup.name}}</th>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+    <button *ngIf="schedule != null" (click)="addNewScheduleDay()">Add day</button>
+
+
+    <div *ngIf="scheduleDay != null">
+
+      <form action="" [formGroup]="scheduleDay">
+        <div [formArrayName]="'days'">
+            <ng-container *ngFor="let day of days.controls; let i = index">
+                <h3>Date: {{day.get('day').value}}</h3>
+                <div class="day__lessons_card">
+                    <div [formGroupName]="i">
+                      <div>
+                        <label for="date-{{i}}">Day Date</label>
+                        <input type="date" (change)="checkIfDayAvailable(dayToAdd)" formControlName='day' #dayToAdd id="date-{{i}}">
+                        <span class="error-msg" *ngIf="!dayIsAvailable">Error: Date isn't available - change date</span>
+                      </div>
+                      <div *ngIf="day.get('day').value != null && dayIsAvailable " class="day__lessons" [formArrayName]="'lessons'">
+                        <div class="lesson__card" *ngFor="let lesson of lessons(i).controls; let j = index">
+                          <div [formGroupName]="j">
+                            <div>
+                              <label for="startTime-{{j}}">Start Time</label>
+                              <input placeholder="End Date" aria-label="24hr format" formControlName="dateStart"
+                                [ngxTimepicker]="startTimeCreate" id="startTime-{{j}}" [format]="24" readonly>
+                              <ngx-material-timepicker #startTimeCreate></ngx-material-timepicker>
+                            </div>
+                            <div>
+                                <label for="endTime-{{j}}">End Time</label>
+                                <input placeholder="End Date" aria-label="24hr format" formControlName="dateEnd"
+                                  [ngxTimepicker]="endTimeCreate" id="endTime-{{j}}" [format]="24" readonly>
+                                <ngx-material-timepicker #endTimeCreate></ngx-material-timepicker>
+                              </div>
+        
+                              <div>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Subject</mat-label>
+                                    <mat-select formControlName="subjectTeacher">
+                                      <mat-option *ngFor="let subject of subjectTeacher" [value]="subject">{{subject.subject.name}} |
+                                        {{subject.teacher.firstName}} {{subject.teacher.lastName}}</mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                              </div>
+        
+                              <div>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Status</mat-label>
+                                    <mat-select formControlName="status">
+                                      <mat-option value="ACTIVE">ACTIVE</mat-option>
+                                      <mat-option value="DISCARDED">DISCARDED</mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                              </div>
+                          </div>
+                          <button *ngIf="lessons(i).value.length != 1" (click)="removeLessonFromDay(i,j)">Remove Lesson</button>
+                        </div>
+                      </div>
+                    </div>
+                    <button *ngIf="day.get('day').value != null  && dayIsAvailable" (click)="addNewLesson(i)">Add Lesson</button>
+                    <button *ngIf="currentIndex == i && day.get('day').value != null  && dayIsAvailable" (click)="addNewDay(i+1)">Add new day</button>
+                    <button (click)="removeDayFromForm(i)">Remove day</button>
+                  </div>
+            </ng-container>
+        </div>
+
+
+      </form>
+      <button (click)="create()">Create</button>
+    </div>
+
+
+
+    <form action="" *ngIf="currentDay != null">
+      <div>
+        <div>
+          <label for="timeStart">Time from</label>
+          <input placeholder="Start Date" aria-label="24hr format" [ngxTimepicker]="startTime" id="timeStart"
+            [format]="24" readonly>
+          <ngx-material-timepicker (timeSet)="setTimeStart($event)" #startTime></ngx-material-timepicker>
+        </div>
+        <div>
+          <label for="timeEnd">Time end</label>
+          <input placeholder="End Date" aria-label="24hr format" [ngxTimepicker]="endTime" id="timeEnd" [format]="24"
+            readonly>
+          <ngx-material-timepicker (timeSet)="setTimeEnd($event)" #endTime></ngx-material-timepicker>
+        </div>
+
+
+
+      </div>
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Subject</mat-label>
+          <mat-select (selectionChange)="setSubjectToLesson($event.value)">
+            <mat-option *ngFor="let subject of subjectTeacher" [value]="subject">{{subject.subject.name}} |
+              {{subject.teacher.firstName}} {{subject.teacher.lastName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <button (click)="addLessonToDay()">Create</button>
+    </form>
+
+  </div>
 
 </section>
