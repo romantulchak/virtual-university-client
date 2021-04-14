@@ -50,7 +50,9 @@ export class StudentsTableComponent implements OnInit, AfterViewInit, OnChanges 
   }
 
   public deleteStudentFromGroup(student: StudentDTO){
-    this.studentToRemove.emit(student);
+    if(window.confirm(`Are you sure that you want do remove ${student.firstName} ${student.lastName} from group?`)){
+      this.studentToRemove.emit(student);
+    }
   }
 
 

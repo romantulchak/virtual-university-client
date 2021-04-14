@@ -60,6 +60,9 @@ import { GroupDetailsTeacherComponent } from './group-details-teacher/group-deta
 import { SubjectCardComponent } from './subject-card/subject-card.component';
 import { SchedulePanelComponent } from './schedule-panel/schedule-panel.component';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { ScheduleTableComponent } from './schedule-table/schedule-table.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { AddLessonDialogComponent } from './add-lesson-dialog/add-lesson-dialog.component';
 
 @NgModule({
   declarations: [
@@ -102,29 +105,32 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
     GroupDetailsTeacherComponent,
     SubjectCardComponent,
     SchedulePanelComponent,
+    ScheduleTableComponent,
+    AddLessonDialogComponent,
   ],
     imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        FormsModule,
-        MatInputModule,
-        MatFormFieldModule,
-        MatIconModule,
-        MatButtonModule,
-        MatStepperModule,
-        MatSelectModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatRadioModule,
-        MatExpansionModule,
-        MatTableModule,
-        MatPaginatorModule,
-        MatCheckboxModule,
-        MatSortModule,
-        NgxMaterialTimepickerModule
+      BrowserModule,
+      AppRoutingModule,
+      BrowserAnimationsModule,
+      HttpClientModule,
+      ReactiveFormsModule,
+      FormsModule,
+      MatInputModule,
+      MatFormFieldModule,
+      MatIconModule,
+      MatButtonModule,
+      MatStepperModule,
+      MatSelectModule,
+      MatDatepickerModule,
+      MatNativeDateModule,
+      MatRadioModule,
+      MatExpansionModule,
+      MatTableModule,
+      MatPaginatorModule,
+      MatCheckboxModule,
+      MatSortModule,
+      NgxMaterialTimepickerModule,
+      MatDialogModule
     ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]

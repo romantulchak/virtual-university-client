@@ -8,4 +8,5 @@ export class LessonDTO{
     public subjectTeacher: SubjectTeacherGroupDTO;
     public scheduleDay: ScheduleDay;
     public status: string;
+    public groupName: string;
 }

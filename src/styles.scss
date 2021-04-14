@@ -7,12 +7,13 @@
 }
 
 $smallIcon: 15px;
+$mediumIcon: 25px;
 $titleFont: TitleFont;
 $badGrade: #f70808;
 $errorMsg: #f70808;
-%icon{
-  width: $smallIcon;
-  height: $smallIcon;
+@mixin icon($size) {
+  width: $size;
+  height: $size;
   background: none;
   border: none;
   cursor: pointer;
@@ -57,8 +58,13 @@ a{
 }
 
 .icon__small{
-    @extend %icon;
+    @include icon($smallIcon);
+
     margin-left: 12px;
+}
+.icon__medium{
+  @include icon($mediumIcon);
+
 }
 
 .table__legend{
@@ -91,4 +97,7 @@ a{
 }
 .error-msg{
   color: $errorMsg;
+}
+.timepicker-overlay{
+  z-index: 1000 !important;
 }
