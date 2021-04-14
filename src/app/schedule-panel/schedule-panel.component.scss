@@ -1,50 +1,6 @@
-$table-font: TitleFont;
 
 thead th,tbody td{
     width: 20%;
-}
-.table__header_days{
-    width: 100%;
-    margin-top: 1em;
-    th{
-        text-align: left;
-        padding: 1em;
-        background: #c2ffcd;
-        border-radius: 4px;
-        font-family: $table-font;
-    }
-}
-.table_day{
-    display: block;
-    width: 100%;
-
-    tbody{
-        width: 100%;
-        display: block;
-
-        th{
-            width: 20%;
-            background: aliceblue;
-            padding: 1em;
-            border-radius: 5px;
-            font-family: $table-font;
-            text-align: left;
-        }
-    }
-    .day__header_button{
-        display: flex;
-
-        padding: .5em;
-        margin: 1em 3em 1em 3em;
-        background: #c2ffcd8a;
-        justify-content: space-between;
-        font-family: $table-font;
-
-        border-radius: 8px;
-        .day_header{
-            display: block;
-        }
-    }
 }
 
 .day__lessons_card{

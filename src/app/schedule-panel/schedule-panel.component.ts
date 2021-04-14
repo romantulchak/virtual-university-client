@@ -19,15 +19,16 @@ import { StudentGroupService } from '../service/student-group.service';
   styleUrls: ['./schedule-panel.component.scss']
 })
 export class SchedulePanelComponent implements OnInit {
-  private lesson: Lesson = new Lesson();
-  private currentGroup: StudentGroup;
+
+  public currentGroup: StudentGroup;
   public schedule: ScheduleDTO;
   public subjectTeacher: SubjectTeacherGroupDTO[];
-  public currentDay: ScheduleDay;
   public groups: StudentGroupDTO[];
 
   public scheduleDay: FormGroup;
   public dayIsAvailable: boolean = true;
+  public showCreateNewScheduleDay: boolean = false;
+
 
   public currentIndex: number = 0;
   public currentLessonIndex: number = 0;
@@ -41,64 +42,17 @@ export class SchedulePanelComponent implements OnInit {
     this.getAllGroups();  
   }
 
-  get days():FormArray{
-    return this.scheduleDay.get('days') as FormArray;
-  }
-  public lessons(index: number):FormArray{
-    return this.days.controls[index].get('lessons') as FormArray;
-  }
 
   public create(){
-    // let dateStart = new Date(2021, 10, 29, 11, 20);
-    // let dateEnd = new Date(2021, 10, 29, 12,45);
-    // let schedule: Schedule = {
-    //   id: null,
-    //   studentGroup: {
-    //     id: 161, 
-
-    //   },
-    //   days:[
-    //     {
-    //       id: null,
-    //       day: new Date(2021, 10, 29),
-    //       lessons:[
-    //         {
-    //           id: null, 
-    //           dateStart: dateStart,
-    //           dateEnd: dateEnd,
-    //           status: 'ACTIVE',
-    //           scheduleDay: null,
-    //           subjectTeacher:{
-    //             id: 132
-    //           }
-    //         },
-    //         {
-    //           id: null, 
-    //           dateStart: dateStart,
-    //           dateEnd: dateEnd,
-    //           status: 'ACTIVE',
-    //           scheduleDay: null,
-    //           subjectTeacher:{
-    //             id: 131
-    //           }
-    //         }
-    //       ],
-    //       schedule: null
-    //     }
-    //   ]
-    // }
     let schedule: Schedule = {
       id: this.schedule.id,
       studentGroup: this.currentGroup,
       days: this.convetToDays(),
 
     }
-    console.log(schedule);
-    
     this.scheduleService.create(schedule).subscribe(
       res=>{
-
-        
+         this.getScheduleForGroup(this.currentGroup);
       }
     );
   }
@@ -128,16 +82,19 @@ export class SchedulePanelComponent implements OnInit {
       }
     );
   }
-  public getScheduleForGroup(group: StudentGroup){
+
+  public getScheduleForGroup(group: StudentGroup = this.currentGroup) {
     this.scheduleService.getScheduleForGroup(group.id).subscribe(
-      res=>{
+      res => {
+
         this.schedule = res;
         this.currentGroup = group;
-        
-        this.resetForm();      
+        this.resetForm(); 
+
       }
     );
   }
+  
   public removeLessonFromDay(dayIndex: number, lessonIndex: number){
     this.lessons(dayIndex).removeAt(lessonIndex);
   }
@@ -152,6 +109,7 @@ export class SchedulePanelComponent implements OnInit {
     this.resetForm();
     this.addNewDay(0);
     this.findSubjectsForGroup();
+    this.showCreateNewScheduleDay = !this.showCreateNewScheduleDay;
   }
 
   public addNewDay(index: number){
@@ -177,38 +135,17 @@ export class SchedulePanelComponent implements OnInit {
     this.currentLessonIndex = index;
   }
 
-  public setCurrentDay(day: ScheduleDay){
-      this.currentDay = day;
-      this.findSubjectsForGroup();
-  }
+
 
   private findSubjectsForGroup(){
-    this.groupService.findSubjectsForGroup(161).subscribe(
+    this.groupService.findSubjectsForGroup(this.currentGroup.id).subscribe(
       res=>{
         this.subjectTeacher = res;
       }
     );
   }
 
-  public setTimeStart(time: string){
-    this.lesson.dateStart = new Date(this.currentDay.day + " " + time);
-  }
-  public setTimeEnd(time: string){
-    this.lesson.dateEnd = new Date(this.currentDay.day + " " + time);
-  }
-  public setSubjectToLesson(subject: SubjectTeacherGroup){
-    this.lesson.subjectTeacher = subject;
-  }
 
-  public addLessonToDay(){
-    this.lesson.scheduleDay = this.currentDay;
-   
-    this.lessonService.create(this.lesson).subscribe(
-      res=>{
-        this.currentDay.lessons.push(this.lesson);
-      }
-    );
-  }
 
   public checkIfDayAvailable(day:any){
 
@@ -225,4 +162,12 @@ export class SchedulePanelComponent implements OnInit {
   public removeDayFromForm(index: number){
     this.days.removeAt(index);
   }
+
+  get days():FormArray{
+    return this.scheduleDay.get('days') as FormArray;
+  }
+  public lessons(index: number):FormArray{
+    return this.days.controls[index].get('lessons') as FormArray;
+  }
+
 }
