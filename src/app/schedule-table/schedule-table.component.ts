@@ -32,6 +32,7 @@ export class ScheduleTableComponent implements OnInit, OnChanges {
   constructor(private fb: FormBuilder, 
               private scheduleDayService: ScheduleDayService, 
               private lessonService: LessonService,
+              private scheduleDay: ScheduleDayService,
               private dialog: MatDialog) {}
 
   ngOnInit(): void {
@@ -123,5 +124,16 @@ export class ScheduleTableComponent implements OnInit, OnChanges {
       );
     }
     
+  }
+
+
+
+
+  public getDaysForWeek(){
+    this.scheduleDay.getDaysForWeek(this.group.id).subscribe(
+      res=>{
+        this.days = res;
+      }
+    );
   }
 }

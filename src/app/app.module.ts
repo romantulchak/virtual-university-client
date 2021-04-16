@@ -29,7 +29,6 @@ import { CreateSpecializationComponent } from './create-specialization/create-sp
 import { CreateSemesterComponent } from './create-semester/create-semester.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { CreateSubjectComponent } from './create-subject/create-subject.component';
-import { CreateGradesComponent } from './create-grades/create-grades.component';
 import { CreateTeacherComponent } from './create-teacher/create-teacher.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { TeacherSpecializationsComponent } from './teacher-specializations/teacher-specializations.component';
@@ -63,6 +62,7 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { ScheduleTableComponent } from './schedule-table/schedule-table.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { AddLessonDialogComponent } from './add-lesson-dialog/add-lesson-dialog.component';
+import { AddDayComponent } from './add-day/add-day.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +79,6 @@ import { AddLessonDialogComponent } from './add-lesson-dialog/add-lesson-dialog.
     CreateSpecializationComponent,
     CreateSemesterComponent,
     CreateSubjectComponent,
-    CreateGradesComponent,
     CreateTeacherComponent,
     ChangePasswordComponent,
     TeacherSpecializationsComponent,
@@ -107,6 +106,7 @@ import { AddLessonDialogComponent } from './add-lesson-dialog/add-lesson-dialog.
     SchedulePanelComponent,
     ScheduleTableComponent,
     AddLessonDialogComponent,
+    AddDayComponent,
   ],
     imports: [
       BrowserModule,

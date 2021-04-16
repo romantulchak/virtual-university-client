@@ -1,14 +1,14 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { environment } from "src/environments/environment";
-import { CourseDTO } from "../dto/course.dto";
-import { Course } from "../model/course.model";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { CourseDTO } from '../dto/course.dto';
+import { Course } from '../model/course.model';
 
 const API_URL = environment.api;
 
 @Injectable({
-    providedIn:'root'
+    providedIn: 'root'
 })
 export class CourseService{
     constructor(private http: HttpClient){}

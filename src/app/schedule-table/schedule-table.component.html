@@ -5,6 +5,10 @@
           <input type="radio" id="allDays" name="option" (change)="getAllDays()" checked>
         </div>
         <div>
+          <label for="thisWeek">For this week</label>
+          <input type="radio" id="thisWeek" name="option" (change)="getDaysForWeek()">
+        </div>
+        <div>
           <label for="range">Range</label>
           <input type="radio" id="range" name="option" (change)="setFilterOption()">
         </div>

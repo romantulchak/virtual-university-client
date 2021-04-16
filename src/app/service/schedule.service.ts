@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { ScheduleDTO } from "../dto/schedule.dto";
 import { Schedule } from "../model/schedule.model";
@@ -10,6 +10,7 @@ const API_URL = environment.api;
     providedIn:'root'
 })
 export class ScheduleService{
+    public updateSchedule: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     constructor(private http: HttpClient){}
 
     public create(schedule: Schedule):Observable<any>{

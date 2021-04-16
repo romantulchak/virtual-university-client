@@ -17,20 +17,19 @@ export class ChangePasswordComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  public passwordReset(confirmPassword: string){
-
-    if(confirmPassword === this.resetPassword.newPassword){
+  public passwordReset(confirmPassword: string): void{
+    if (confirmPassword === this.resetPassword.newPassword){
       this.resetPassword.userId = this.userId;
       this.studentService.resetStudentPassowrd(this.resetPassword).subscribe(
-        res=>{
-          console.log("Password changed");
-          
+        res => {
+          console.log('Password changed');
+
         }
       );
     }else{
-      console.log("Passwords mistmatches");
-      
+      console.log('Passwords mistmatches');
+
     }
-    
+
   }
 }

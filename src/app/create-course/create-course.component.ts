@@ -16,11 +16,11 @@ export class CreateCourseComponent implements OnInit {
   }
 
 
-  public createCourse(){
+  public createCourse(): void{
     this.courseService.createCourse(this.course).subscribe(
-      res=>{
-        console.log("Create");
-        
+      res => {
+        console.log('Create');
+
       }
     );
   }
