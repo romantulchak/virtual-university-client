@@ -1,0 +1,65 @@
+
+    <div *ngIf="scheduleDay != null && showCreateNewScheduleDay">
+
+        <form action="" [formGroup]="scheduleDay">
+          <div [formArrayName]="'days'">
+              <ng-container *ngFor="let day of days.controls; let i = index">
+                  <h3>Date: {{day.get('day').value}}</h3>
+                  <div class="day__lessons_card">
+                      <div [formGroupName]="i">
+                        <div>
+                          <label for="date-{{i}}">Day Date</label>
+                          <input type="date" (change)="checkIfDayAvailable(dayToAdd)" formControlName='day' #dayToAdd id="date-{{i}}">
+                          <span class="error-msg" *ngIf="!dayIsAvailable">Error: Date isn't available - change date</span>
+                        </div>
+                        <div *ngIf="day.get('day').value != null && dayIsAvailable" class="day__lessons" [formArrayName]="'lessons'">
+                          <div class="lesson__card" *ngFor="let lesson of lessons(i).controls; let j = index">
+                            <div [formGroupName]="j">
+                              <div>
+                                <label for="startTime-{{j}}">Start Time</label>
+                                <input placeholder="End Date" aria-label="24hr format" formControlName="dateStart"
+                                  [ngxTimepicker]="startTimeCreate" id="startTime-{{j}}" [format]="24" readonly>
+                                <ngx-material-timepicker #startTimeCreate></ngx-material-timepicker>
+                              </div>
+                              <div>
+                                  <label for="endTime-{{j}}">End Time</label>
+                                  <input placeholder="End Date" aria-label="24hr format" formControlName="dateEnd"
+                                    [ngxTimepicker]="endTimeCreate" id="endTime-{{j}}" [format]="24" readonly>
+                                  <ngx-material-timepicker #endTimeCreate></ngx-material-timepicker>
+                                </div>
+          
+                                <div>
+                                  <mat-form-field appearance="fill">
+                                      <mat-label>Subject</mat-label>
+                                      <mat-select formControlName="subjectTeacher">
+                                        <mat-option *ngFor="let subject of subjectTeacher" [value]="subject">{{subject.subject.name}} |
+                                          {{subject.teacher.firstName}} {{subject.teacher.lastName}}</mat-option>
+                                      </mat-select>
+                                    </mat-form-field>
+                                </div>
+          
+                                <div>
+                                  <mat-form-field appearance="fill">
+                                      <mat-label>Status</mat-label>
+                                      <mat-select formControlName="status">
+                                        <mat-option value="ACTIVE">ACTIVE</mat-option>
+                                        <mat-option value="DISCARDED">DISCARDED</mat-option>
+                                      </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <button *ngIf="lessons(i).value.length != 1" (click)="removeLessonFromDay(i,j)">Remove Lesson</button>
+                          </div>
+                        </div>
+                      </div>
+                      <button *ngIf="day.get('day').value != null  && dayIsAvailable" (click)="addNewLesson(i)">Add Lesson</button>
+                      <button *ngIf="currentIndex == i && day.get('day').value != null  && dayIsAvailable" (click)="addNewDay(i+1)">Add new day</button>
+                      <button *ngIf="days.length != 1" (click)="removeDayFromForm(i)">Remove day</button>
+                    </div>
+              </ng-container>
+          </div>
+  
+          <button (click)="create()">Create</button>
+  
+        </form>
+      </div>

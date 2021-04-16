@@ -16,26 +16,26 @@ export class AdminTopPanelComponent implements OnInit {
   }
 
 
-  private getPanelStatus() :boolean{
+  private getPanelStatus(): boolean{
       if(localStorage.getItem("showAdminPanel") === null)
-        localStorage.setItem("showAdminPanel", "true"); 
+        localStorage.setItem("showAdminPanel", "true");
       return !!localStorage.getItem("showAdminPanel");
   }
 
-  public hidePanel(){
+  public hidePanel(): void{
     localStorage.setItem("showAdminPanel", "");
     this.setPanelDispalyed();
   }
 
-  public showPanel(){
+  public showPanel(): void{
     localStorage.setItem("showAdminPanel", "true");
     this.setPanelDispalyed();
   }
 
-  
-  private setPanelDispalyed() {
+
+  private setPanelDispalyed():void {
     this.isPanelDisplayed = this.getPanelStatus();
-  
+
   }
-  
+
 }
