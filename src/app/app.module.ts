@@ -63,6 +63,7 @@ import { ScheduleTableComponent } from './schedule-table/schedule-table.componen
 import {MatDialogModule} from '@angular/material/dialog';
 import { AddLessonDialogComponent } from './add-lesson-dialog/add-lesson-dialog.component';
 import { AddDayComponent } from './add-day/add-day.component';
+import { StudentGroupScheduleComponent } from './student-group-schedule/student-group-schedule.component';
 
 @NgModule({
   declarations: [
@@ -107,6 +108,7 @@ import { AddDayComponent } from './add-day/add-day.component';
     ScheduleTableComponent,
     AddLessonDialogComponent,
     AddDayComponent,
+    StudentGroupScheduleComponent,
   ],
     imports: [
       BrowserModule,

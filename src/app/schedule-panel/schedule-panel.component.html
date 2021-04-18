@@ -4,21 +4,12 @@
       <h4>Group</h4>
       <mat-form-field appearance="fill">
         <mat-label>Subject</mat-label>
-        <mat-select (selectionChange)="getScheduleForGroup($event.value)">
+        <mat-select (selectionChange)="selectGroup($event.value)">
           <mat-option *ngFor="let group of groups" [value]="group">{{group.name}}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
-
-
-
-    <app-schedule-table *ngIf="currentGroup != null" [group]="currentGroup" [days]="schedule.days" [isAdmin]="true" (allDaysToUpdate)="getScheduleForGroup()" [scheduleId]="schedule?.id"></app-schedule-table>
- 
-    <button *ngIf="schedule != null" (click)="addNewScheduleDay()">Add day</button>
-
-
-
-
+    <app-schedule-table *ngIf="currentGroup != null" [scheduleId]="scheduleId" [group]="currentGroup" [isAdmin]="true"></app-schedule-table>
 
   </div>
 

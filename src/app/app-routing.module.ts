@@ -31,6 +31,7 @@ import { TeacherGroupsComponent } from './teacher-groups/teacher-groups.componen
 import { StudentGroupComponent } from './student-group/student-group.component';
 import { GroupDetailsTeacherComponent } from './group-details-teacher/group-details-teacher.component';
 import { SchedulePanelComponent } from './schedule-panel/schedule-panel.component';
+import { StudentGroupScheduleComponent } from './student-group-schedule/student-group-schedule.component';
 
 
 const routes: Routes = [
@@ -40,7 +41,8 @@ const routes: Routes = [
     {path:'student', component: StudentProfileComponent, children:[
       {path: '', component: StudentProfileDetailsComponent, canActivate:[StudentProfileGuardGuard]},
       {path:'grades', component: StudentGradeComponent},
-      {path: 'my-group', component: StudentGroupComponent}
+      {path: 'my-group', component: StudentGroupComponent},
+      {path: 'schedule', component: StudentGroupScheduleComponent}
     ]},
     {path:'teacher', component: TeacherProfileComponent, children:[
       {path:'', component: TeacherProfileDetailsComponent, canActivate:[TeacherProfileGuardGuard]},

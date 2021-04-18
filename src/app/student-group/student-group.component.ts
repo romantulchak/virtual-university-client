@@ -30,8 +30,11 @@ export class StudentGroupComponent implements OnInit {
   private getStudentGroup(){
     this.groupService.findStudentGroup(this.studentId).subscribe(
       res=>{
-      
         this.studentGroup = res;
+      },
+      err=>{
+        console.log(err);
+        
       }
     );
   }
@@ -42,7 +45,6 @@ export class StudentGroupComponent implements OnInit {
     if(this.currentSubject.subject != subject){
       this.currentSubject.subject = subject;
       this.currentSubject.teacher = teacher;
-    
       this.getGradeForSubject(subject.id);
     }
   }

@@ -1,8 +1,10 @@
 import { AfterContentInit, Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { AddDayComponent } from '../add-day/add-day.component';
 import { AddLessonDialogComponent } from '../add-lesson-dialog/add-lesson-dialog.component';
 import { ScheduleDayDTO } from '../dto/schedule-day.dto';
+import { ScheduleDTO } from '../dto/schedule.dto';
 import { StudentGroupDTO } from '../dto/studentGroup.dto';
 import { SubjectTeacherGroupDTO } from '../dto/subjectTeacherGroup.dto';
 import { Lesson } from '../model/lesson.model';
@@ -19,32 +21,58 @@ import { StudentGroupService } from '../service/student-group.service';
   templateUrl: './schedule-table.component.html',
   styleUrls: ['./schedule-table.component.scss']
 })
-export class ScheduleTableComponent implements OnInit, OnChanges {
+export class ScheduleTableComponent implements OnInit, OnChanges, AfterContentInit {
 
-  @Input("days") days: ScheduleDayDTO[];
+  public days: ScheduleDayDTO[];
   @Input("isAdmin") isAdmin: boolean = false;
   @Input("group") group: StudentGroupDTO;
   @Input("scheduleId") scheduleId: number;
-  @Output("allDaysToUpdate") daysToUpdate: EventEmitter<boolean> = new EventEmitter<boolean>();
   public rangeFilter: boolean = false;
   public rangeGroup: FormGroup;
   public currentDay: ScheduleDay;
+  public schedule: ScheduleDTO;
   constructor(private fb: FormBuilder, 
               private scheduleDayService: ScheduleDayService, 
               private lessonService: LessonService,
               private scheduleDay: ScheduleDayService,
-              private dialog: MatDialog) {}
+              private dialog: MatDialog,
+              private scheduleService: ScheduleService) {}
 
   ngOnInit(): void {
     
     this.generateRangeForm();
     this.updateLessonsInDay();
+    this.updateSchedule();
   }
 
   ngOnChanges(){
+    this.getDaysForWeek();
+
+  }
+  
+  ngAfterContentInit(){
+    
   }
 
-
+  public getScheduleForGroup(group: StudentGroupDTO = this.group) {
+    this.scheduleService.getScheduleForGroup(group.id).subscribe(
+      res => {
+        this.schedule = res;
+        this.days = res.days;
+        this.group = group;  
+      }
+    );
+  }
+  private updateSchedule() {
+    this.scheduleService.updateSchedule.subscribe(
+      res=>{
+        if(res){
+          this.getScheduleForGroup();
+        }
+        
+      }
+    );
+  }
 
   private updateLessonsInDay(){
     this.lessonService.lesson.subscribe(
@@ -56,10 +84,7 @@ export class ScheduleTableComponent implements OnInit, OnChanges {
     );
   }
 
-  public getAllDays(){
-    this.daysToUpdate.emit(true);
-  }
- 
+
   private generateRangeForm() {
     this.rangeGroup = this.fb.group({
       dayAfter: ['', Validators.required],
@@ -71,7 +96,7 @@ export class ScheduleTableComponent implements OnInit, OnChanges {
   }
 
   public filterByRange() {
-    this.scheduleDayService.getScheduleInRange(this.dayAfter, this.dayBefore, this.scheduleId).subscribe(
+    this.scheduleDayService.getScheduleInRange(this.dayAfter, this.dayBefore, this.schedule.id).subscribe(
       res => {
         this.days = res;
 
@@ -135,5 +160,18 @@ export class ScheduleTableComponent implements OnInit, OnChanges {
         this.days = res;
       }
     );
+  }
+
+
+
+
+  public addNewScheduleDay(){
+    this.dialog.open(AddDayComponent, {
+      data:{
+        scheduleId: this.scheduleId,
+        currentGroup: this.group
+      },
+      panelClass:"create-day-modal"
+    });
   }
 }
