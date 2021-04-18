@@ -19,5 +19,7 @@ export class ScheduleService{
     public getScheduleForGroup(groupId: number):Observable<ScheduleDTO>{
         return this.http.get<ScheduleDTO>(API_URL + 'schedule/findForGroup/' + groupId);
     }
-
+    public getScheduleIdForGroup(groupId: number):Observable<number>{
+        return this.http.get<number>(API_URL + 'schedule/findScheduleIfForGroup/' + groupId);
+    }
 }

@@ -38,7 +38,7 @@ export class AddDayComponent implements OnInit {
 
   public create(){
     let schedule: Schedule = {
-      id: this.data.schedule.id,
+      id: this.data.scheduleId,
       studentGroup: this.data.currentGroup,
       days: this.convetToDays(),
 
@@ -56,10 +56,17 @@ export class AddDayComponent implements OnInit {
     this.scheduleDay.value.days.forEach((day:ScheduleDay) => {
       day.day = new Date(day.day);
       day.lessons.forEach(lesson=>{
+          
+          
           let start =  this.convertStringToTime(lesson.dateStart.toString());
+          
           let end = this.convertStringToTime(lesson.dateEnd.toString());
+          end[0] = end[0] + 2; //fix it
+          start[0] = start[0] + 2;
+
           lesson.dateStart = new Date(day.day.setHours(start[0], start[1]));
           lesson.dateEnd = new Date(day.day.setHours(end[0], end[1]));
+         
       });
     });
 
@@ -67,7 +74,11 @@ export class AddDayComponent implements OnInit {
   }
 
   private convertStringToTime(time: string): number[]{
-    return time.split(":") as unknown as number[];
+    let times = [];
+    time.split(":").forEach(x=>{
+      times.push(Number.parseInt(x));
+    })
+    return times;//convert every value
   }
 
   private resetForm(){
@@ -114,7 +125,7 @@ export class AddDayComponent implements OnInit {
   }
 
   public checkIfDayAvailable(day:any){
-    this.scheduleDayService.checkIfDayFree(this.data.schedule.id,day.value).subscribe(
+    this.scheduleDayService.checkIfDayFree(this.data.scheduleId, day.value).subscribe(
       res=>{
         this.dayIsAvailable = !res;
       }

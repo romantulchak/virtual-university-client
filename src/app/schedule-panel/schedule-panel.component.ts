@@ -22,8 +22,8 @@ import { StudentGroupService } from '../service/student-group.service';
 })
 export class SchedulePanelComponent implements OnInit {
 
-  public currentGroup: StudentGroup;
-  public schedule: ScheduleDTO;
+  public currentGroup: StudentGroupDTO;
+  public scheduleId: number;
   public subjectTeacher: SubjectTeacherGroupDTO[];
   public groups: StudentGroupDTO[];
 
@@ -36,10 +36,12 @@ export class SchedulePanelComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllGroups();  
-    this.updateSchedule();
   }
 
-
+  public selectGroup(group: StudentGroupDTO){
+    this.currentGroup = group;
+    this.getScheduleIdByGroup();
+  }
 
   private getAllGroups(){
     this.groupService.findAllGroups().subscribe(
@@ -49,38 +51,17 @@ export class SchedulePanelComponent implements OnInit {
     );
   }
 
-  public getScheduleForGroup(group: StudentGroup = this.currentGroup) {
-    this.scheduleService.getScheduleForGroup(group.id).subscribe(
-      res => {
 
-        this.schedule = res;
-        this.currentGroup = group;  
-      }
-    );
-  }
-  
-
-
-  public addNewScheduleDay(){
-    this.dialog.open(AddDayComponent, {
-      data:{
-        schedule: this.schedule,
-        currentGroup: this.currentGroup
-      },
-      panelClass:"create-day-modal"
-    });
-  }
-
-  private updateSchedule() {
-    this.scheduleService.updateSchedule.subscribe(
+  private getScheduleIdByGroup(){
+    this.scheduleService.getScheduleIdForGroup(this.currentGroup.id).subscribe(
       res=>{
-        if(res){
-          this.getScheduleForGroup();
-        }
+        this.scheduleId = res;
+        console.log(res);
         
       }
     );
   }
+
 
  
 }

@@ -2,11 +2,11 @@
     <div class="schedule__filters">
         <div>
           <label for="allDays">All days</label>
-          <input type="radio" id="allDays" name="option" (change)="getAllDays()" checked>
+          <input type="radio" id="allDays" name="option" (change)="getScheduleForGroup()" >
         </div>
         <div>
           <label for="thisWeek">For this week</label>
-          <input type="radio" id="thisWeek" name="option" (change)="getDaysForWeek()">
+          <input type="radio" id="thisWeek" name="option" (change)="getDaysForWeek()" checked>
         </div>
         <div>
           <label for="range">Range</label>
@@ -29,7 +29,7 @@
         
     </div>
 
-    <div  *ngIf="days != null && days.length != 0">
+    <div  *ngIf="days != null && days.length != 0;else scheduleNotFound">
       <table class="table__header_days">
         <thead>
           <tr>
@@ -83,8 +83,11 @@
           </ng-container>
         </tbody>
       </table>
+      <button *ngIf="scheduleId != null" (click)="addNewScheduleDay()">Add day</button>
     </div>
-
+    <ng-template #scheduleNotFound>
+      <h3>Schedule not found</h3>
+    </ng-template>
   </div>
 
 

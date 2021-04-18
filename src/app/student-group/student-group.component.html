@@ -1,6 +1,6 @@
 <section>
     <div class="container">
-        <div >
+        <div *ngIf="studentGroup != null;else groupNotFound">
             <app-group-information *ngIf="studentGroup != null" [group]="studentGroup"></app-group-information>
             <div class="subjects">
                 <ng-container *ngFor="let subject of studentGroup?.subjects">
@@ -29,8 +29,12 @@
                         <h3>{{gradeForSubject}}</h3>
                     </div>
                 </div>
-              
             </div>
         </div>
+        <ng-template #groupNotFound>
+
+            <h3>You don't have a group</h3>
+
+        </ng-template>
     </div>
 </section>
