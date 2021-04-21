@@ -17,7 +17,7 @@ export class CreateSubjectComponent implements OnInit {
   public subject: Subject = new Subject();
   public firstFormGroup: FormGroup;
   public teacherFormControl: FormControl = new FormControl();
-
+  private files: File[] = [];
   ngOnInit(): void {
     this.getAllTeachers();
 
@@ -39,14 +39,18 @@ export class CreateSubjectComponent implements OnInit {
     this.subject.name = this.firstFormGroup.get('name').value;
     this.subject.type = this.firstFormGroup.get('type').value;
     this.subject.teachers = this.teacherFormControl.value;
-    this.subjectService.createSubject(this.subject).subscribe(
+    this.subjectService.createSubject(this.subject, this.files).subscribe(
       res=>{
         console.log("Ok");
         
       }
     );
     
-    
+  }
+
+  public selectFile(event){
+    this.files = [];
+    this.files = event.target.files;    
   }
 
 }

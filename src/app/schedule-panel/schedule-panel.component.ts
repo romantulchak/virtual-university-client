@@ -23,16 +23,14 @@ import { StudentGroupService } from '../service/student-group.service';
 export class SchedulePanelComponent implements OnInit {
 
   public currentGroup: StudentGroupDTO;
-  public scheduleId: number;
   public subjectTeacher: SubjectTeacherGroupDTO[];
   public groups: StudentGroupDTO[];
 
 
 
 
-  constructor(private scheduleService: ScheduleService,
-              private groupService: StudentGroupService,
-              private dialog: MatDialog) { }
+  constructor(private groupService: StudentGroupService,
+              ) { }
 
   ngOnInit(): void {
     this.getAllGroups();  
@@ -40,7 +38,6 @@ export class SchedulePanelComponent implements OnInit {
 
   public selectGroup(group: StudentGroupDTO){
     this.currentGroup = group;
-    this.getScheduleIdByGroup();
   }
 
   private getAllGroups(){
@@ -52,15 +49,6 @@ export class SchedulePanelComponent implements OnInit {
   }
 
 
-  private getScheduleIdByGroup(){
-    this.scheduleService.getScheduleIdForGroup(this.currentGroup.id).subscribe(
-      res=>{
-        this.scheduleId = res;
-        console.log(res);
-        
-      }
-    );
-  }
 
 
  

@@ -56,7 +56,7 @@
           </tr>
         </thead>
         <div class="day__header_button">
-          <h3 class="day_header">{{day.day}}</h3>
+          <h3 class="day_header">{{day.day | date: 'dd-MM-yyyy'}}</h3>
           <div class="day__control_buttons">
             <button title="Add new Lesson to {{day.day}}" *ngIf="isAdmin" class="icon__medium"  (click)="setCurrentDay(day)"><img src="../../assets/images/icons/add.svg" alt=""></button> 
             <button title="Delete day {{day.day}}" *ngIf="isAdmin" class="icon__medium"  (click)="deleteDayFromSchedule(day)"><img src="../../assets/images/icons/delete.svg" alt=""></button> 

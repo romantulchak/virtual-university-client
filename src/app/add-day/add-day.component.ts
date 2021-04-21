@@ -47,6 +47,8 @@ export class AddDayComponent implements OnInit {
       res=>{
          this.showCreateNewScheduleDay = false;
          this.scheduleService.updateSchedule.next(true);
+         this.resetForm();
+         this.addNewDay(0);
       }
     );
   }
