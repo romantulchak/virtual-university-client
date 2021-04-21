@@ -26,7 +26,7 @@ export class ScheduleTableComponent implements OnInit, OnChanges, AfterContentIn
   public days: ScheduleDayDTO[];
   @Input("isAdmin") isAdmin: boolean = false;
   @Input("group") group: StudentGroupDTO;
-  @Input("scheduleId") scheduleId: number;
+  public scheduleId: number;
   public rangeFilter: boolean = false;
   public rangeGroup: FormGroup;
   public currentDay: ScheduleDay;
@@ -39,20 +39,34 @@ export class ScheduleTableComponent implements OnInit, OnChanges, AfterContentIn
               private scheduleService: ScheduleService) {}
 
   ngOnInit(): void {
-    
+
     this.generateRangeForm();
     this.updateLessonsInDay();
     this.updateSchedule();
+
   }
 
   ngOnChanges(){
-    this.getDaysForWeek();
+    if(this.group != null){
+      this.getDaysForWeek();
+      this.getScheduleIdByGroup();
+    }
 
   }
   
   ngAfterContentInit(){
     
   }
+
+  private getScheduleIdByGroup(){
+    this.scheduleService.getScheduleIdForGroup(this.group.id).subscribe(
+      res=>{
+        this.scheduleId = res;
+        
+      }
+    );
+  }
+
 
   public getScheduleForGroup(group: StudentGroupDTO = this.group) {
     this.scheduleService.getScheduleForGroup(group.id).subscribe(
@@ -96,7 +110,7 @@ export class ScheduleTableComponent implements OnInit, OnChanges, AfterContentIn
   }
 
   public filterByRange() {
-    this.scheduleDayService.getScheduleInRange(this.dayAfter, this.dayBefore, this.schedule.id).subscribe(
+    this.scheduleDayService.getScheduleInRange(this.dayAfter, this.dayBefore, this.scheduleId).subscribe(
       res => {
         this.days = res;
 
@@ -157,11 +171,12 @@ export class ScheduleTableComponent implements OnInit, OnChanges, AfterContentIn
   public getDaysForWeek(){
     this.scheduleDay.getDaysForWeek(this.group.id).subscribe(
       res=>{
+
         this.days = res;
+        
       }
     );
   }
-
 
 
 

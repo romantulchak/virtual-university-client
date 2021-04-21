@@ -9,7 +9,7 @@
             <mat-label>Teachers</mat-label>
           <mat-select [formControl]="teacherFormControl" multiple>
             <mat-select-trigger>
-              {{teacherFormControl.value ? teacherFormControl.value[0].firstName + ' ' + teacherFormControl.value[0].lastName : ''}}
+              {{teacherFormControl.value ? teacherFormControl.value[0]?.firstName + ' ' + teacherFormControl.value[0]?.lastName : ''}}
               <span *ngIf="teacherFormControl.value?.length > 1" class="example-additional-selection">
                 (+{{teacherFormControl.value.length - 1}} {{teacherFormControl.value?.length === 2 ? 'other' : 'others'}})
               </span>
@@ -26,6 +26,10 @@
               <mat-option value="EXERCISE">Exercise</mat-option>
             </mat-select>
           </mat-form-field>
+          <div>
+            <label for="files">Files</label>
+            <input type="file" multiple (change)="selectFile($event)">
+          </div>
           <button type="submit" (click)="createSubject()">Create</button>
     </form>
 </section>

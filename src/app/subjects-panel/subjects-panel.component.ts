@@ -41,7 +41,6 @@ export class SubjectsPanelComponent implements OnInit {
   }
 
   public addSubject(){
-    console.log(this.subjectsFormControl.value);
     this.teacherService.addSubjectsToTeacher(this.currentTeacherId, this.subjectsFormControl.value).subscribe(
       res=>{
         console.log("Ok");
@@ -49,4 +48,6 @@ export class SubjectsPanelComponent implements OnInit {
       }
     );
   }
+
+ 
 }
