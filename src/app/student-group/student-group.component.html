@@ -17,7 +17,9 @@
            
               
                     <div class="attachments">
-                        <h3>Subject attachments</h3>
+                        <div *ngFor="let file of subjectFiles">
+                            <button (click)="downloadFile(file.name)">{{file.name}}</button>
+                        </div>
                     </div>
                     <div class="teacher">
                         <h3>My teacher</h3>
