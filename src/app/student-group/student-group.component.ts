@@ -3,12 +3,12 @@ import { StudentGroupDTO } from '../dto/studentGroup.dto';
 import { SubjectDTO } from '../dto/subject.dto';
 import { SubjectTeacherGroupDTO } from '../dto/subjectTeacherGroup.dto';
 import { TeacherDTO } from '../dto/teacher.dto';
-import { StudentGradesService } from '../service/student-grades.service';
 import { StudentGroupService } from '../service/student-group.service';
 import { StudentGroupGradeService } from '../service/studentGroupGrade.service';
 import { SubjectService } from '../service/subject.service';
 import { TokenStorageService } from '../service/tokenStorage.service';
-
+import { SubjectFile } from '../model/subject-file.model';
+import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-student-group',
   templateUrl: './student-group.component.html',
@@ -21,6 +21,7 @@ export class StudentGroupComponent implements OnInit {
   private studentId: number;
   public gradeForSubject: number;
   public currentSubject: SubjectTeacherGroupDTO = new SubjectTeacherGroupDTO();
+  public subjectFiles: SubjectFile[];
   constructor(private groupService: StudentGroupService, private tokenStorageService: TokenStorageService, private groupGradeService: StudentGroupGradeService, private subjectService: SubjectService) { }
 
   ngOnInit(): void {
@@ -49,7 +50,7 @@ export class StudentGroupComponent implements OnInit {
       this.getGradeForSubject(subject.id);
       this.subjectService.getFilesForSubject(subject.id).subscribe(
         res=>{
-          console.log(res);
+          this.subjectFiles = res;
           
         }
       )
@@ -64,5 +65,11 @@ export class StudentGroupComponent implements OnInit {
     );
   }
   
+  public downloadFile(filename: string){
+    this.subjectService.downloadFile(filename).subscribe(res=>{
+      saveAs(res, filename)
+        
+    });
+  }
 
 }
