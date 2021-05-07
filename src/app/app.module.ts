@@ -64,6 +64,10 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { AddLessonDialogComponent } from './add-lesson-dialog/add-lesson-dialog.component';
 import { AddDayComponent } from './add-day/add-day.component';
 import { StudentGroupScheduleComponent } from './student-group-schedule/student-group-schedule.component';
+import { EditLessonComponent } from './edit-lesson/edit-lesson.component';
+import { GroupDetailsTeacherLayoutComponent } from './group-details-teacher-layout/group-details-teacher-layout.component';
+import { TeacherScheduleComponent } from './teacher-schedule/teacher-schedule.component';
+import { ChangeSemesterComponent } from './change-semester/change-semester.component';
 
 @NgModule({
   declarations: [
@@ -109,6 +113,10 @@ import { StudentGroupScheduleComponent } from './student-group-schedule/student-
     AddLessonDialogComponent,
     AddDayComponent,
     StudentGroupScheduleComponent,
+    EditLessonComponent,
+    GroupDetailsTeacherLayoutComponent,
+    TeacherScheduleComponent,
+    ChangeSemesterComponent,
   ],
     imports: [
       BrowserModule,

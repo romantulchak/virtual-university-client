@@ -22,10 +22,11 @@ export class TeacherGroupsComponent implements OnInit {
   private getGroupsForTeacher(){
     this.studentGroupService.getGroupsForTeacher(this.teacherId).subscribe(
       res=>{
-        console.log(res);
-        
         this.studentGroups = res;
       }
     );
+  }
+  public selectGroup(group: StudentGroupDTO){
+    this.studentGroupService.teacherCurrentGroup.next(group);
   }
 }

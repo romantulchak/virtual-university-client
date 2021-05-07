@@ -1,36 +1,36 @@
 <section *ngIf="data.currentDay != null">
+  <div>
+    <h3>Current day: {{data.currentDay.day}}</h3>
+  </div>
+  <form>
     <div>
-        <h3>Current day: {{data.currentDay.day}}</h3>
+      <div>
+        <label for="timeStart">Time from</label>
+        <input placeholder="Start Date" aria-label="24hr format" [ngxTimepicker]="startTime" id="timeStart"
+          [format]="24" readonly>
+        <ngx-material-timepicker (timeSet)="setTimeStart($event)" #startTime></ngx-material-timepicker>
+      </div>
+      <div>
+        <label for="timeEnd">Time end</label>
+        <input placeholder="End Date" aria-label="24hr format" [ngxTimepicker]="endTime" id="timeEnd" [format]="24"
+          readonly>
+        <ngx-material-timepicker (timeSet)="setTimeEnd($event)" #endTime></ngx-material-timepicker>
+      </div>
     </div>
-    
-    <form>
-        <div>
-          <div>
-            <label for="timeStart">Time from</label>
-            <input placeholder="Start Date" aria-label="24hr format" [ngxTimepicker]="startTime" id="timeStart"
-              [format]="24" readonly>
-            <ngx-material-timepicker (timeSet)="setTimeStart($event)" #startTime></ngx-material-timepicker>
-          </div>
-          <div>
-            <label for="timeEnd">Time end</label>
-            <input placeholder="End Date" aria-label="24hr format" [ngxTimepicker]="endTime" id="timeEnd" [format]="24"
-              readonly>
-            <ngx-material-timepicker (timeSet)="setTimeEnd($event)" #endTime></ngx-material-timepicker>
-          </div>
-    
-    
-    
-        </div>
-        <div>
-          <mat-form-field appearance="fill">
-            <mat-label>Subject</mat-label>
-            <mat-select (selectionChange)="setSubjectToLesson($event.value)">
-              <mat-option *ngFor="let subject of subjectTeacher" [value]="subject">{{subject.subject.name}} |
-                {{subject.teacher.firstName}} {{subject.teacher.lastName}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-    
-        <button (click)="addLessonToDay()">Add lesson to day</button>
-    </form>
+    <div>
+      <label for="roomNumber">Room Number</label>
+      <input type="text" id="roomNumber" #room (change)="setRoomNumber(room.value)">
+    </div>
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Subject</mat-label>
+        <mat-select (selectionChange)="setSubjectToLesson($event.value)">
+          <mat-option *ngFor="let subject of subjectTeacher" [value]="subject">{{subject.subject.name}} |
+            {{subject.teacher.firstName}} {{subject.teacher.lastName}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <button (click)="addLessonToDay()">Add lesson to day</button>
+  </form>
 </section>

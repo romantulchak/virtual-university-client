@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SubjectTeacherGroupDTO } from '../dto/subjectTeacherGroup.dto';
+import { DateConvertHelper } from '../helpers/date-convert.helper';
 import { Lesson } from '../model/lesson.model';
 import { ScheduleDay } from '../model/schedule-day.model';
 import { SubjectTeacherGroup } from '../model/subjectTeacherGroup.model';
@@ -24,10 +25,12 @@ export class AddLessonDialogComponent implements OnInit {
 
 
   public setTimeStart(time: string) {
-    this.lesson.dateStart = new Date(this.data.currentDay.day + " " + time);
+    //this.lesson.dateStart = new Date(this.data.currentDay.day + " " + time);
+      this.lesson.dateStart = DateConvertHelper.convertDateToString(this.data.currentDay.day, time);
   }
   public setTimeEnd(time: string) {
-    this.lesson.dateEnd = new Date(this.data.currentDay.day + " " + time);
+   // this.lesson.dateEnd = new Date(this.data.currentDay.day + " " + time);
+     this.lesson.dateEnd = DateConvertHelper.convertDateToString(this.data.currentDay.day, time);
   }
 
   public setSubjectToLesson(subject: SubjectTeacherGroup) {
@@ -51,5 +54,8 @@ export class AddLessonDialogComponent implements OnInit {
         this.subjectTeacher = res;
       }
     );
+  }
+  public setRoomNumber(roomNumber: string){
+    this.lesson.roomNumber = roomNumber;
   }
 }

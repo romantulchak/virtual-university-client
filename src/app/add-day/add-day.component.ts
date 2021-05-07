@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ScheduleDTO } from '../dto/schedule.dto';
 import { SubjectTeacherGroupDTO } from '../dto/subjectTeacherGroup.dto';
+import { DateConvertHelper } from '../helpers/date-convert.helper';
 import { ScheduleDay } from '../model/schedule-day.model';
 import { Schedule } from '../model/schedule.model';
 import { StudentGroup } from '../model/studentGroup.model';
@@ -58,29 +59,11 @@ export class AddDayComponent implements OnInit {
     this.scheduleDay.value.days.forEach((day:ScheduleDay) => {
       day.day = new Date(day.day);
       day.lessons.forEach(lesson=>{
-          
-          
-          let start =  this.convertStringToTime(lesson.dateStart.toString());
-          
-          let end = this.convertStringToTime(lesson.dateEnd.toString());
-          end[0] = end[0] + 2; //fix it
-          start[0] = start[0] + 2;
-
-          lesson.dateStart = new Date(day.day.setHours(start[0], start[1]));
-          lesson.dateEnd = new Date(day.day.setHours(end[0], end[1]));
-         
+          lesson.dateStart = DateConvertHelper.convertDateToString(day.day.toISOString().slice(0,10), lesson.dateStart);
+          lesson.dateEnd = DateConvertHelper.convertDateToString(day.day.toISOString().slice(0,10), lesson.dateEnd);  
       });
     });
-
     return this.scheduleDay.value.days;
-  }
-
-  private convertStringToTime(time: string): number[]{
-    let times = [];
-    time.split(":").forEach(x=>{
-      times.push(Number.parseInt(x));
-    })
-    return times;//convert every value
   }
 
   private resetForm(){
@@ -149,7 +132,8 @@ export class AddDayComponent implements OnInit {
       dateEnd: ['', Validators.required],
       subjectTeacher: ['', Validators.required],
       scheduleDay: null,
-      status: ''
+      status: '',
+      roomNumber: ['', Validators.required]
     }));
     this.currentLessonIndex = index;
   }

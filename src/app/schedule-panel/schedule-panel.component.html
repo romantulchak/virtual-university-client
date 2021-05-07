@@ -9,7 +9,14 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <app-schedule-table *ngIf="currentGroup != null" [group]="currentGroup" [isAdmin]="true"></app-schedule-table>
+    <app-schedule-table 
+      *ngIf="currentGroup != null" 
+      (showDaysForWeek)="getDaysForWeek()"
+      (showAllDays)="getScheduleForGroup()"
+      (showDaysByRange)="filterByRange($event)"
+      [schedule]="schedule"
+      [group]="currentGroup"
+      [isAdmin]="true"></app-schedule-table>
 
   </div>
 

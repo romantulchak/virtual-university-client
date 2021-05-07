@@ -33,4 +33,7 @@ export class StudentService {
   public getStudentsWithoutGroup(): Observable<StudentDTO[]>{
     return this.httpClient.get<StudentDTO[]>(API_URL + 'student/studentWithoutGroup');
   }
+  public getStudentCurrentSemester(studentId: number): Observable<number>{
+    return this.httpClient.get<number>(API_URL + 'student/studentCurrentSemester/' + studentId);
+  }
 }

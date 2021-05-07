@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { StudentDTO } from "../dto/student.dto";
 import { StudentGroupDTO } from "../dto/studentGroup.dto";
@@ -19,6 +19,8 @@ export class StudentGroupService{
 
     constructor(private http: HttpClient){}
 
+    public teacherCurrentGroup: BehaviorSubject<StudentGroupDTO> = new BehaviorSubject<StudentGroupDTO>(null)
+
     public create(studentGroup: StudentGroup):Observable<any>{
         return this.http.post(API_URL + 'student-group/create', studentGroup);
     }
@@ -26,7 +28,7 @@ export class StudentGroupService{
         return this.http.put(API_URL + 'student-group/addStudents/' + groupId, students);
     }
     public findStudentGroup(studentId: number):Observable<StudentGroupDTO>{
-        return this.http.get<StudentGroupDTO>(API_URL + 'student-group/findStudentGroup/' + studentId);
+        return this.http.get<StudentGroupDTO>(`${API_URL}student-group/findStudentGroup/${studentId}`);
     }
     public findAllGroups():Observable<StudentGroupDTO[]>{
         return this.http.get<StudentGroupDTO[]>(API_URL + 'student-group');
@@ -53,6 +55,11 @@ export class StudentGroupService{
     }
     public findSubjectsForGroup(groupId: number):Observable<SubjectTeacherGroupDTO[]>{
         return this.http.get<SubjectTeacherGroupDTO[]>(API_URL + 'student-group/findSubjectsForGroup/' + groupId);
+    }
+    public changeGroupSemester(groupId: number, semesterId: number, subjects: SubjectTeacherGroup[]):Observable<any>{
+        let params = new HttpParams();
+        params = params.append('groupId', groupId.toString()).append('semesterId', semesterId.toString());
+        return this.http.put(API_URL + 'student-group/changeGroupSemester', subjects, {params: params})
     }
 }
     

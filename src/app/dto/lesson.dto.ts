@@ -9,4 +9,5 @@ export class LessonDTO{
     public scheduleDay: ScheduleDay;
     public status: string;
     public groupName: string;
+    public roomNumber: string;
 }

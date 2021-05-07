@@ -45,7 +45,7 @@ export class SubjectService{
         return this.http.get<SubjectDTO[]>(API_URL + 'subject/availableSubject/' + specializationId);
     }
     public getAvailableSubjectsForGroup(groupId: number):Observable<SubjectDTO[]>{
-        return this.http.get<SubjectDTO[]>(API_URL + 'subject/availableSubjectForGroup/' + groupId);
+        return this.http.get<SubjectDTO[]>(`${API_URL}subject/availableSubjectForGroup/${groupId}`);
     }
     public getFilesForSubject(subjectId: number):Observable<SubjectFile[]>{
         return this.http.get<SubjectFile[]>(API_URL + 'subject/getFilesForSubject/' + subjectId);
@@ -54,5 +54,7 @@ export class SubjectService{
     public downloadFile(filename: string): Observable<Blob>{
         return this.http.get(API_URL + 'subject/getFile/' + filename, {responseType: 'blob'});
     }
-    
+    public findAllSubjectsWithTeachers():Observable<SubjectDTO[]>{
+        return this.http.get<SubjectDTO[]>(API_URL + 'subject/findAllSubjectsWithTeachers');
+    }
 }

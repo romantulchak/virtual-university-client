@@ -98,7 +98,6 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
     this.group.semester = this.formGroup.get('semester').value;
     this.group.students = this.studentToGroup;
     this.group.subjectTeacherGroups = this.subjectTeacherGroup;
-
     this.studentGroupService.create(this.group).subscribe(
       res => {
         console.log('Ok');
