@@ -11,6 +11,7 @@
         margin: 0 auto;
         text-align: center;
         display: flex;
+        flex-wrap: wrap;
     }
     .group__students_block{
         flex: 0 1 66%;
@@ -25,4 +26,12 @@
         margin-top: 3em;
              
     }
+}
+
+.information_block{
+    flex: 0 1 100%;
+    justify-self: center;
+    display: flex;
+    justify-content: center;
+
 }

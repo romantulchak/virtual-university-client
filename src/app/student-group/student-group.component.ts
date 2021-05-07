@@ -22,7 +22,10 @@ export class StudentGroupComponent implements OnInit {
   public gradeForSubject: number;
   public currentSubject: SubjectTeacherGroupDTO = new SubjectTeacherGroupDTO();
   public subjectFiles: SubjectFile[];
-  constructor(private groupService: StudentGroupService, private tokenStorageService: TokenStorageService, private groupGradeService: StudentGroupGradeService, private subjectService: SubjectService) { }
+  constructor(private groupService: StudentGroupService, 
+              private tokenStorageService: TokenStorageService,
+              private groupGradeService: StudentGroupGradeService,
+              private subjectService: SubjectService) { }
 
   ngOnInit(): void {
     this.studentId = this.tokenStorageService.getUser().id;
@@ -57,8 +60,9 @@ export class StudentGroupComponent implements OnInit {
     }
   }
 
+  //TODO: make select for semester
   private getGradeForSubject(subjectId: number){
-    this.groupGradeService.getGradeForStudentBySubject(this.studentGroup.id, subjectId, this.studentId).subscribe(
+    this.groupGradeService.getGradeForStudentBySubject(this.studentGroup.id, subjectId, this.studentId, this.studentGroup.semester.id).subscribe(
       res=>{
         this.gradeForSubject = res;
       }

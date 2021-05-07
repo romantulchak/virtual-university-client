@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
+import { ChangeSemesterComponent } from '../change-semester/change-semester.component';
 import { StudentDTO } from '../dto/student.dto';
 import { StudentGroupDTO } from '../dto/studentGroup.dto';
 import { SubjectDTO } from '../dto/subject.dto';
@@ -12,6 +14,7 @@ import { Student } from '../model/student.model';
 import { Subject } from '../model/subject.model';
 import { SubjectTeacherGroup } from '../model/subjectTeacherGroup.model';
 import { Teacher } from '../model/teacher.model';
+import { SemesterService } from '../service/semester.service';
 import { StudentGroupService } from '../service/student-group.service';
 import { StudentService } from '../service/student.service';
 import { SubjectService } from '../service/subject.service';
@@ -46,7 +49,9 @@ export class GroupDetailsComponent implements OnInit {
   constructor(private router: ActivatedRoute,
               private groupService: StudentGroupService,
               private studentService: StudentService,
-              private subjectService: SubjectService) { 
+              private subjectService: SubjectService,
+              private semesterService: SemesterService,
+              private dialog: MatDialog) { 
     this.router.params.subscribe(
       res=>{
         this.groupId = res.id;
@@ -65,8 +70,6 @@ export class GroupDetailsComponent implements OnInit {
     this.groupService.findGroupById(this.groupId).subscribe(
       res=>{
         if(res != null){
-          console.log(res);
-          
           this.groupDetais = res;
           this.source = new MatTableDataSource<StudentDTO>(res.students);
           this.subjectsSource = new MatTableDataSource<SubjectTeacherGroup>(this.convetToSubjectSource(res.subjects));
@@ -86,9 +89,6 @@ export class GroupDetailsComponent implements OnInit {
     );
   }
   public addStudentToArray(students: StudentDTO[]) {
-    console.log(students);
-    
-    
     this.studentToGroup = students;
   }
   public getAvailableSubjectsForGroup(){
@@ -183,6 +183,11 @@ export class GroupDetailsComponent implements OnInit {
         } 
       }
     );
-    
+  }
+
+  public changeSemester(){
+      this.dialog.open(ChangeSemesterComponent, {
+        data: this.groupDetais
+      })
   }
 }

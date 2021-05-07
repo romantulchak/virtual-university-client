@@ -12,4 +12,5 @@ export class StudentGroup{
     public students?: Student[];
     public subjectTeacherGroups?: SubjectTeacherGroup[];
     public specialization?: Specialization;
+    public semesters?: Semester[];
 }

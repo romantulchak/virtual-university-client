@@ -1,12 +1,13 @@
 <div>
+  <button (click)="exportPdf()">Export PDF</button>
     <div class="schedule__filters">
         <div>
           <label for="allDays">All days</label>
-          <input type="radio" id="allDays" name="option" (change)="getScheduleForGroup()" >
+          <input type="radio" id="allDays" name="option" (change)="getAllDays('exportPdf-f')" >
         </div>
         <div>
           <label for="thisWeek">For this week</label>
-          <input type="radio" id="thisWeek" name="option" (change)="getDaysForWeek()" checked>
+          <input type="radio" id="thisWeek" name="option" (change)="getDaysForWeek('exportPdf-w')" checked>
         </div>
         <div>
           <label for="range">Range</label>
@@ -39,6 +40,7 @@
             <th>Subject</th>
             <th>Type</th>
             <th>Group</th>
+            <th>Room</th>
             <th *ngIf="isAdmin">Edit</th>
           </tr>
         </thead>
@@ -46,6 +48,7 @@
       <table class="table_day" *ngFor="let day of days">
         <thead>
           <tr>
+            <th></th>
             <th></th>
             <th></th>
             <th></th>
@@ -66,24 +69,24 @@
         <tbody>
           <ng-container class="lesson" *ngFor="let lesson of day.lessons">
             <tr>
-              <th [ngStyle]="{'width': isAdmin ? '225px' : '266px'}">{{lesson.dateStart | date: "HH:mm"}}</th>
-              <th [ngStyle]="{'width': isAdmin ? '225px' : '266px'}">{{lesson.dateEnd | date: "HH:mm"}}</th>
-              <th [ngStyle]="{'width': isAdmin ? '225px' : '266px'}">{{lesson.subjectTeacher.teacher.firstName}} {{lesson.subjectTeacher.teacher.lastName}}</th>
-              <th [ngStyle]="{'width': isAdmin ? '225px' : '266px'}">{{lesson.subjectTeacher.subject.name}}</th>
-              <th [ngStyle]="{'width': isAdmin ? '225px' : '266px'}">{{lesson.subjectTeacher.subject.type}}</th>
-              <th [ngStyle]="{'width': isAdmin ? '225px' : '266px'}">{{lesson.groupName}}</th>
-              <th [ngStyle]="{'width': isAdmin ? '225px' : '266px'}" *ngIf="isAdmin">
+              <th [ngStyle]="{'width': isAdmin ? '225px' : '230px'}">{{lesson.dateStart | date: "HH:mm"}}</th>
+              <th [ngStyle]="{'width': isAdmin ? '225px' : '230px'}">{{lesson.dateEnd | date: "HH:mm"}}</th>
+              <th [ngStyle]="{'width': isAdmin ? '225px' : '230px'}">{{lesson.subjectTeacher.teacher.firstName}} {{lesson.subjectTeacher.teacher.lastName}}</th>
+              <th [ngStyle]="{'width': isAdmin ? '225px' : '230px'}">{{lesson.subjectTeacher.subject.name}}</th>
+              <th [ngStyle]="{'width': isAdmin ? '225px' : '230px'}">{{lesson.subjectTeacher.subject.type}}</th>
+              <th [ngStyle]="{'width': isAdmin ? '225px' : '230px'}">{{lesson.groupName}}</th>
+              <th [ngStyle]="{'width': isAdmin ? '225px' : '230px'}">{{lesson.roomNumber}}</th>
+              <th [ngStyle]="{'width': isAdmin ? '225px' : '230px'}" *ngIf="isAdmin">
                 <div>
                   <button title="Remove {{lesson.subjectTeacher.subject.name}}" class="icon__small" (click)="deleteLessonFromDay(lesson, day)"><img src="../../assets/images/icons/delete.svg" alt=""></button> 
-                  <button title="Edit {{lesson.subjectTeacher.subject.name}}" class="icon__small" (click)="editLessonInDay(lesson)"><img src="../../assets/images/icons/edit.svg" alt=""></button> 
+                  <button title="Edit {{lesson.subjectTeacher.subject.name}}" class="icon__small" (click)="editLessonInDay(lesson, day)"><img src="../../assets/images/icons/edit.svg" alt=""></button> 
                 </div>
-  
               </th>
             </tr>
           </ng-container>
         </tbody>
       </table>
-      <button *ngIf="scheduleId != null" (click)="addNewScheduleDay()">Add day</button>
+      <button *ngIf="scheduleId != null && isAdmin" (click)="addNewScheduleDay()">Add day</button>
     </div>
     <ng-template #scheduleNotFound>
       <h3>Schedule not found</h3>

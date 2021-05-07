@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AddDayComponent } from '../add-day/add-day.component';
@@ -6,22 +6,20 @@ import { AddLessonDialogComponent } from '../add-lesson-dialog/add-lesson-dialog
 import { ScheduleDayDTO } from '../dto/schedule-day.dto';
 import { ScheduleDTO } from '../dto/schedule.dto';
 import { StudentGroupDTO } from '../dto/studentGroup.dto';
-import { SubjectTeacherGroupDTO } from '../dto/subjectTeacherGroup.dto';
+import { EditLessonComponent } from '../edit-lesson/edit-lesson.component';
+import { DateRangeFilter } from '../filters/date-range.filter';
 import { Lesson } from '../model/lesson.model';
 import { ScheduleDay } from '../model/schedule-day.model';
-import { StudentGroup } from '../model/studentGroup.model';
-import { SubjectTeacherGroup } from '../model/subjectTeacherGroup.model';
 import { LessonService } from '../service/lesson.service';
 import { ScheduleDayService } from '../service/schedule-day.service';
 import { ScheduleService } from '../service/schedule.service';
-import { StudentGroupService } from '../service/student-group.service';
-
+import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-schedule-table',
   templateUrl: './schedule-table.component.html',
   styleUrls: ['./schedule-table.component.scss']
 })
-export class ScheduleTableComponent implements OnInit, OnChanges, AfterContentInit {
+export class ScheduleTableComponent implements OnInit, OnChanges, AfterViewInit {
 
   public days: ScheduleDayDTO[];
   @Input("isAdmin") isAdmin: boolean = false;
@@ -30,11 +28,15 @@ export class ScheduleTableComponent implements OnInit, OnChanges, AfterContentIn
   public rangeFilter: boolean = false;
   public rangeGroup: FormGroup;
   public currentDay: ScheduleDay;
-  public schedule: ScheduleDTO;
+  private dateRange: DateRangeFilter;
+  private apiToExport: string;
+  @Input("schedule") schedule: ScheduleDTO;
+  @Output("showAllDays") showAllDays: EventEmitter<boolean> = new EventEmitter();
+  @Output("showDaysForWeek") showDaysForWeek: EventEmitter<boolean> = new EventEmitter();
+  @Output("showDaysByRange") showDaysByRange: EventEmitter<any> = new EventEmitter();
   constructor(private fb: FormBuilder, 
               private scheduleDayService: ScheduleDayService, 
               private lessonService: LessonService,
-              private scheduleDay: ScheduleDayService,
               private dialog: MatDialog,
               private scheduleService: ScheduleService) {}
 
@@ -42,51 +44,21 @@ export class ScheduleTableComponent implements OnInit, OnChanges, AfterContentIn
 
     this.generateRangeForm();
     this.updateLessonsInDay();
-    this.updateSchedule();
 
   }
 
   ngOnChanges(){
-    if(this.group != null){
-      this.getDaysForWeek();
-      this.getScheduleIdByGroup();
+    if(this.group != null && this.schedule != null){
+      this.days = this.schedule.days;
+      this.scheduleId = this.schedule.id;
     }
-
   }
   
-  ngAfterContentInit(){
-    
-  }
-
-  private getScheduleIdByGroup(){
-    this.scheduleService.getScheduleIdForGroup(this.group.id).subscribe(
-      res=>{
-        this.scheduleId = res;
-        
-      }
-    );
+  ngAfterViewInit(){
   }
 
 
-  public getScheduleForGroup(group: StudentGroupDTO = this.group) {
-    this.scheduleService.getScheduleForGroup(group.id).subscribe(
-      res => {
-        this.schedule = res;
-        this.days = res.days;
-        this.group = group;  
-      }
-    );
-  }
-  private updateSchedule() {
-    this.scheduleService.updateSchedule.subscribe(
-      res=>{
-        if(res){
-          this.getScheduleForGroup();
-        }
-        
-      }
-    );
-  }
+
 
   private updateLessonsInDay(){
     this.lessonService.lesson.subscribe(
@@ -110,12 +82,11 @@ export class ScheduleTableComponent implements OnInit, OnChanges, AfterContentIn
   }
 
   public filterByRange() {
-    this.scheduleDayService.getScheduleInRange(this.dayAfter, this.dayBefore, this.scheduleId).subscribe(
-      res => {
-        this.days = res;
-
-      }
-    );
+    this.dateRange = {
+      dayAfter: this.dayAfter,
+      dayBefore: this.dayBefore
+    };
+    this.showDaysByRange.emit(this.dateRange);
   }
 
 
@@ -128,7 +99,6 @@ export class ScheduleTableComponent implements OnInit, OnChanges, AfterContentIn
 
   public setCurrentDay(day: ScheduleDay) {
     this.currentDay = day;
-
     this.dialog.open(AddLessonDialogComponent, {
       data: {
         currentDay: this.currentDay,
@@ -147,8 +117,14 @@ export class ScheduleTableComponent implements OnInit, OnChanges, AfterContentIn
       }
       
   }
-  public editLessonInDay(lesson: Lesson){
-
+  public editLessonInDay(lesson: Lesson, day: ScheduleDayDTO){
+      this.dialog.open(EditLessonComponent, {
+        data: {
+          lesson: lesson,
+          group: this.group,
+          currentDay: day
+        }
+      });
   }
 
 
@@ -166,16 +142,14 @@ export class ScheduleTableComponent implements OnInit, OnChanges, AfterContentIn
   }
 
 
+  public getAllDays(api: string){
+    this.showAllDays.emit(true);
+    this.apiToExport = api;
+  }
 
-
-  public getDaysForWeek(){
-    this.scheduleDay.getDaysForWeek(this.group.id).subscribe(
-      res=>{
-
-        this.days = res;
-        
-      }
-    );
+  public getDaysForWeek(api: string){
+    this.apiToExport = api;
+    this.showDaysForWeek.emit(true);
   }
 
 
@@ -188,5 +162,12 @@ export class ScheduleTableComponent implements OnInit, OnChanges, AfterContentIn
       },
       panelClass:"create-day-modal"
     });
+  }
+  public exportPdf(){
+    this.scheduleService.downloadPDF(this.scheduleId, this.apiToExport).subscribe(
+        res=>{
+          saveAs(res, "schedule.pdf");
+        }
+    );
   }
 }

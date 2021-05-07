@@ -1,5 +1,13 @@
 <section>
     <div class="container">
-        <app-schedule-table [group]="group"></app-schedule-table>
+        <app-schedule-table 
+        *ngIf="group != null" 
+        (showDaysForWeek)="getDaysForWeek()"
+        (showAllDays)="getScheduleForGroup()"
+        (showDaysByRange)="filterByRange($event)"
+        [schedule]="schedule"
+        [group]="group">
+        </app-schedule-table>
+  
     </div>
 </section>

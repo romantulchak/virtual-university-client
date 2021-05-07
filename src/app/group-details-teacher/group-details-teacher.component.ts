@@ -10,6 +10,7 @@ import { FilterHelper } from '../helpers/filter.helper';
 import { Student } from '../model/student.model';
 import { StudentGroupGrade } from '../model/studentGroupGrade.model';
 import { Subject } from '../model/subject.model';
+import { ScheduleService } from '../service/schedule.service';
 import { StudentGroupService } from '../service/student-group.service';
 import { StudentGroupGradeService } from '../service/studentGroupGrade.service';
 import { TokenStorageService } from '../service/tokenStorage.service';
@@ -35,7 +36,8 @@ export class GroupDetailsTeacherComponent implements OnInit {
               private studentGroupService: StudentGroupService,
               private tokenStorageService: TokenStorageService, 
               private filterHelper: FilterHelper,
-              private studentGroupGradeService: StudentGroupGradeService) {
+              private studentGroupGradeService: StudentGroupGradeService,
+              private scheduleService: ScheduleService) {
 
       router.params.subscribe(
         res=>{
@@ -103,6 +105,8 @@ this.studentGroupGradeService.setGrade(this.studentGroupGrades).subscribe(
     );
   }
 
+
+  
   @ViewChild(MatPaginator) 
   set paginator(value: MatPaginator) {
       if(value != undefined){

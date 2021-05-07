@@ -2,7 +2,11 @@
     <div class="container">
         <div class="grid__tables">
             <div class="group__information_block" *ngIf="!loading; else loadingBlock">
-               <app-group-information [group]="groupDetais"></app-group-information>
+               <app-group-information class="information_block" [group]="groupDetais"></app-group-information>
+                <div>
+                    <h3>Semesters</h3>
+                    <button (click)="changeSemester()">Add semester</button>
+                </div>
             </div>
 
             <div class="group__students_block">

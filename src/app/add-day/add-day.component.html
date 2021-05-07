@@ -27,7 +27,10 @@
                                     [ngxTimepicker]="endTimeCreate" id="endTime-{{j}}" [format]="24" readonly>
                                   <ngx-material-timepicker #endTimeCreate></ngx-material-timepicker>
                                 </div>
-          
+                                <div>
+                                  <label for="roomNumber">Room Number</label>
+                                  <input type="text" id="roomNumber" formControlName = "roomNumber">
+                                </div>
                                 <div>
                                   <mat-form-field appearance="fill">
                                       <mat-label>Subject</mat-label>

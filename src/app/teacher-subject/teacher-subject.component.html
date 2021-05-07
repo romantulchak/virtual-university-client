@@ -1,13 +1,9 @@
 <section>
     <div class="container">
-        <div>
+        <div class="subjects__grid">
             <div *ngFor="let subject of subjects">
 
-                <div>
-                    <h3>{{subject.name}}</h3>
-                    <h4>{{subject.type}}</h4>
-                </div>
-                <hr>
+                <app-subject-card [subject]="subject" (selectedSubject)="selectedSubject($event)"></app-subject-card>
 
             </div>
         </div>

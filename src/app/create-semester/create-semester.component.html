@@ -7,7 +7,7 @@
             <input matInput placeholder="name" formControlName="name" required>
           </mat-form-field>
 
-          <mat-form-field appearance="fill">
+          <mat-form-field appearance="fill" *ngIf="showSpecializations">
             <mat-label>Specialization</mat-label>
             <mat-select formControlName="specialization">
               <mat-option *ngFor="let specialization of specializations" [value]="specialization">{{specialization.name}}</mat-option>

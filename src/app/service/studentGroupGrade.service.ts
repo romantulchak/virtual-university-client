@@ -30,11 +30,12 @@ export class StudentGroupGradeService{
         params = params.append('studentId', studentId.toString());
         return this.http.get<StudentGroupGradeDTO[]>(API_URL + 'student-group-grade/studentGrades', {params: params});
     }
-    public getGradeForStudentBySubject(groupId: number, subjectId: number, studentId: number):Observable<number>{
+    public getGradeForStudentBySubject(groupId: number, subjectId: number, studentId: number, semesterId: number):Observable<number>{
         let params = new HttpParams();
         params = params.append('groupId', groupId.toString())
                         .append('studentId', studentId.toString())
-                        .append('subjectId', subjectId.toString());
+                        .append('subjectId', subjectId.toString())
+                        .append('semesterId', semesterId.toString());
         return this.http.get<number>(API_URL + 'student-group-grade/findGradeForStudentBySubject', {params: params});
     }
 

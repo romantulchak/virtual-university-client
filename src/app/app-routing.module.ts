@@ -32,6 +32,8 @@ import { StudentGroupComponent } from './student-group/student-group.component';
 import { GroupDetailsTeacherComponent } from './group-details-teacher/group-details-teacher.component';
 import { SchedulePanelComponent } from './schedule-panel/schedule-panel.component';
 import { StudentGroupScheduleComponent } from './student-group-schedule/student-group-schedule.component';
+import { GroupDetailsTeacherLayoutComponent } from './group-details-teacher-layout/group-details-teacher-layout.component';
+import { TeacherScheduleComponent } from './teacher-schedule/teacher-schedule.component';
 
 
 const routes: Routes = [
@@ -49,7 +51,10 @@ const routes: Routes = [
       {path:'teacher-speicalizations', component: TeacherSpecializationsComponent},
       {path: 'subjects', component: TeacherSubjectComponent},
       {path: 'my-groups', component: TeacherGroupsComponent},
-      {path: 'group-details/:id', component: GroupDetailsTeacherComponent}
+      {path: 'group-details/:id', component:GroupDetailsTeacherLayoutComponent , children:[
+        {path: '', component: GroupDetailsTeacherComponent},
+        {path: 'schedule', component: TeacherScheduleComponent}
+      ]}
     ]}, 
     {path:'change-password', component: ChangePasswordComponent}
   ]},
