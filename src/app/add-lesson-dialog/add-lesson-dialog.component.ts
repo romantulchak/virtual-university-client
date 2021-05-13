@@ -20,9 +20,12 @@ export class AddLessonDialogComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private lessonService: LessonService,private groupService: StudentGroupService) { }
 
   ngOnInit(): void {
-    this.findSubjectsForGroup();
+    console.log(this.data);
+    
+      this.findSubjectsForGroup();
   }
 
+  
 
   public setTimeStart(time: string) {
     //this.lesson.dateStart = new Date(this.data.currentDay.day + " " + time);
@@ -49,7 +52,7 @@ export class AddLessonDialogComponent implements OnInit {
   }
 
   private findSubjectsForGroup(){
-    this.groupService.findSubjectsForGroup(this.data.group.id).subscribe(
+    this.groupService.findSubjectsForGroup(this.data.group.id, this.data.selectedSemester.id).subscribe(
       res=>{
         this.subjectTeacher = res;
       }

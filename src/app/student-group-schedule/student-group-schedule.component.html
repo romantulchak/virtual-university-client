@@ -1,12 +1,14 @@
 <section>
     <div class="container">
+        <app-group-semesters [group]="group" (semesterSelected)="getSemesterSelected($event)"></app-group-semesters>
         <app-schedule-table 
         *ngIf="group != null" 
         (showDaysForWeek)="getDaysForWeek()"
         (showAllDays)="getScheduleForGroup()"
         (showDaysByRange)="filterByRange($event)"
         [schedule]="schedule"
-        [group]="group">
+        [group]="group"
+        [selectedSemester]="selectedSemester">
         </app-schedule-table>
   
     </div>

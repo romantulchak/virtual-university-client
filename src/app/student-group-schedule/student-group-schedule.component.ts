@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ScheduleDayDTO } from '../dto/schedule-day.dto';
 import { ScheduleDTO } from '../dto/schedule.dto';
+import { SemesterDTO } from '../dto/semester.dto';
 import { StudentGroupDTO } from '../dto/studentGroup.dto';
 import { DateRangeFilter } from '../filters/date-range.filter';
 import { ScheduleDayService } from '../service/schedule-day.service';
@@ -23,22 +24,23 @@ export class StudentGroupScheduleComponent implements OnInit {
   public group: StudentGroupDTO;
   public schedule: ScheduleDTO;
   public scheduleId: number;
+  public selectedSemester: SemesterDTO;
   ngOnInit(): void {
    this.studentId = this.tokenStorageService.getUser().id;
-    this.getGroup();
+   this.getGroup();
+
   }
 
   private getGroup(){
-    this.studentGroupService.findStudentGroup(this.studentId).subscribe(
+    this.studentGroupService.findStudentGroup(this.studentId,).subscribe(
       res=>{
           this.group = res;
-          this.getScheduleIdByGroup();
       }
     );
   }
 
   private getScheduleIdByGroup(){
-    this.scheduleService.getScheduleIdForGroup(this.group.id).subscribe(
+    this.scheduleService.getScheduleIdForGroup(this.selectedSemester.id).subscribe(
       res=>{
         this.scheduleId = res;
         this.getDaysForWeek();
@@ -49,7 +51,7 @@ export class StudentGroupScheduleComponent implements OnInit {
 
 
   public getScheduleForGroup(group: StudentGroupDTO = this.group) {
-    this.scheduleService.getScheduleForGroup(group.id).subscribe(
+    this.scheduleService.getScheduleForGroup(this.selectedSemester.id).subscribe(
       res => {        
         this.schedule = res;
         this.group = group;  
@@ -58,7 +60,7 @@ export class StudentGroupScheduleComponent implements OnInit {
   }
 
   public getDaysForWeek(){
-    this.scheduleDayService.getDaysForWeek(this.group.id).subscribe(
+    this.scheduleDayService.getDaysForWeek(this.group.id, this.selectedSemester.id).subscribe(
       res=>{        
         this.schedule = this.intiSchedule(res, this.scheduleId);
 
@@ -80,6 +82,10 @@ export class StudentGroupScheduleComponent implements OnInit {
     }
     schedule.days = days
     return schedule;
+  }
+  public getSemesterSelected(semester: SemesterDTO){
+    this.selectedSemester = semester;
+    this.getScheduleIdByGroup();
   }
 
 }

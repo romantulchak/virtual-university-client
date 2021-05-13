@@ -7,7 +7,7 @@
                     <app-subject-card [subject]="subject.subject" (selectedSubject)="selectedSubject($event, subject.teacher)"></app-subject-card>
                 </ng-container>
             </div>
-
+            <app-group-semesters [group]="studentGroup" (semesterSelected)="getSemesterSelected($event)"></app-group-semesters>
             <div *ngIf="currentSubject.subject != null">
                 <h3>Subject {{currentSubject.subject.name}} details</h3>
                 <div class="subject__details" >

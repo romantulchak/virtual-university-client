@@ -68,6 +68,7 @@ import { EditLessonComponent } from './edit-lesson/edit-lesson.component';
 import { GroupDetailsTeacherLayoutComponent } from './group-details-teacher-layout/group-details-teacher-layout.component';
 import { TeacherScheduleComponent } from './teacher-schedule/teacher-schedule.component';
 import { ChangeSemesterComponent } from './change-semester/change-semester.component';
+import { GroupSemestersComponent } from './group-semesters/group-semesters.component';
 
 @NgModule({
   declarations: [
@@ -117,6 +118,7 @@ import { ChangeSemesterComponent } from './change-semester/change-semester.compo
     GroupDetailsTeacherLayoutComponent,
     TeacherScheduleComponent,
     ChangeSemesterComponent,
+    GroupSemestersComponent,
   ],
     imports: [
       BrowserModule,

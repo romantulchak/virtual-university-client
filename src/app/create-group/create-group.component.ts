@@ -39,7 +39,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
   private studentToGroup: Student[] = [];
   private subjectTeacherGroup: SubjectTeacherGroup[] = [];
 
-
+  public isCreateGroup: boolean = false;
 
   constructor(private formBuilder: FormBuilder,
               private semesterService: SemesterService,
@@ -91,24 +91,30 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
     this.studentToGroup = students;
   }
 
+  public createGroup(){
+    this.isCreateGroup = true;
+  }
 
-  public create() {
-    this.group.name = this.formGroup.get('name').value;
-    this.group.specialization = this.formGroup.get('specialization').value;
-    this.group.semester = this.formGroup.get('semester').value;
-    this.group.students = this.studentToGroup;
-    this.group.subjectTeacherGroups = this.subjectTeacherGroup;
-    this.studentGroupService.create(this.group).subscribe(
-      res => {
-        console.log('Ok');
-      }
-    );
+  public create(semester?:any) {
+    console.log(semester);
+    
+    if(semester != null && semester.isSemesterCreated){
+      this.group.name = this.formGroup.get('name').value;
+      this.group.specialization = this.formGroup.get('specialization').value;
+      this.group.semester = semester.data;
+      this.group.students = this.studentToGroup;
+      this.group.subjectTeacherGroups = this.subjectTeacherGroup;
+      this.studentGroupService.create(this.group).subscribe(
+        res => {
+          console.log('Ok');
+        }
+      );
+    }
 
   }
 
   public getDataForSpecialization(specialization: SpecializationDTO) {
     this.getSubjectsBySpecialiaztion(specialization.id);
-    this.getSemestersBySpecialization(specialization.id);
 
   }
 
@@ -122,16 +128,13 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
     );
   }
 
-  private getSemestersBySpecialization(id: number) {
-    this.semesterService.getSemestersForSpecialization(id).subscribe(
-      res => {
-        this.semesters = res;
-      }
-    );
+  public semesterCreated(semester:any){
+    if(semester.isSemesterCreated){
+      this.create();
+    }
   }
 
   public setTeacherForSubject(subjectTeacher: SubjectTeacherGroup[]) {
-    console.log(subjectTeacher);
     
     this.subjectTeacherGroup = subjectTeacher;
   }

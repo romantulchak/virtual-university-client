@@ -17,6 +17,7 @@ import { ScheduleService } from '../service/schedule.service';
 import { StudentGroupService } from '../service/student-group.service';
 import {DateRangeFilter} from '../filters/date-range.filter';
 import { ScheduleDayDTO } from '../dto/schedule-day.dto';
+import { SemesterDTO } from '../dto/semester.dto';
 @Component({
   selector: 'app-schedule-panel',
   templateUrl: './schedule-panel.component.html',
@@ -28,8 +29,8 @@ export class SchedulePanelComponent implements OnInit {
   public subjectTeacher: SubjectTeacherGroupDTO[];
   public groups: StudentGroupDTO[];
   public schedule: ScheduleDTO;
+  public selectedSemester: SemesterDTO;
   private scheduleId: number;
-
 
   constructor(private groupService: StudentGroupService,
               private scheduleService: ScheduleService,
@@ -42,7 +43,7 @@ export class SchedulePanelComponent implements OnInit {
 
 
   public getScheduleForGroup(group: StudentGroupDTO = this.currentGroup) {
-    this.scheduleService.getScheduleForGroup(group.id).subscribe(
+    this.scheduleService.getScheduleForGroup(this.selectedSemester.id).subscribe(
       res => {
         this.schedule = res;
         this.currentGroup = group;  
@@ -52,7 +53,8 @@ export class SchedulePanelComponent implements OnInit {
 
   public selectGroup(group: StudentGroupDTO){
     this.currentGroup = group;
-    this.getScheduleIdByGroup();
+    this.selectedSemester = group.semester;
+      this.getScheduleIdByGroup();
   }
 
   private getAllGroups(){
@@ -76,7 +78,7 @@ export class SchedulePanelComponent implements OnInit {
   }
 
   public getDaysForWeek(){
-    this.scheduleDayService.getDaysForWeek(this.currentGroup.id).subscribe(
+    this.scheduleDayService.getDaysForWeek(this.currentGroup.id, this.selectedSemester.id).subscribe(
       res=>{        
         this.schedule = this.intiSchedule(res, this.scheduleId);
       }
@@ -84,7 +86,7 @@ export class SchedulePanelComponent implements OnInit {
   }
 
   private getScheduleIdByGroup(){
-    this.scheduleService.getScheduleIdForGroup(this.currentGroup.id).subscribe(
+    this.scheduleService.getScheduleIdForGroup(this.selectedSemester.id).subscribe(
       res=>{
         this.scheduleId = res;
         this.getDaysForWeek();
@@ -109,5 +111,8 @@ export class SchedulePanelComponent implements OnInit {
       }
     );
   }
- 
+  public getSemesterSelected(semester: SemesterDTO){
+    this.selectedSemester = semester;
+    this.getDaysForWeek();
+  }
 }

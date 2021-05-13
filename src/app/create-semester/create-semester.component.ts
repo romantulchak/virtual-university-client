@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SpecializationDTO } from '../dto/specialization.dto';
 import { SubjectDTO } from '../dto/subject.dto';
@@ -14,28 +14,31 @@ import { SubjectService } from '../service/subject.service';
   templateUrl: './create-semester.component.html',
   styleUrls: ['./create-semester.component.scss']
 })
-export class CreateSemesterComponent implements OnInit {
+export class CreateSemesterComponent implements OnInit, OnChanges {
   public subjects: SubjectDTO[];
   public subjectFormControl = new FormControl();
   public semesterForm:FormGroup;
   public specializations: SpecializationDTO[];
   public semesterRange: FormGroup;
-  @Input("specialization") specialization: Specialization; 
   @Input("showSpecializations") showSpecializations: boolean = true;
-  @Output("createSemester") semester: EventEmitter<any> = new EventEmitter<any>();;
+  @Input("isCreate") isCreate: boolean;
+  @Output("createSemester") semester: EventEmitter<any> = new EventEmitter<any>();
   constructor(private formBuilder: FormBuilder, private semesterService: SemesterService, private specializationService: SpecializationService) { }
 
   ngOnInit(): void {
     this.initTable();
     if(this.showSpecializations){
-      this.getSpecializations();
+    }
+  }
+  ngOnChanges():void{
+    if(this.isCreate){
+      this.createSemester();
     }
   }
   private initTable() {
     this.semesterForm = this.formBuilder.group({
       name: ['', Validators.required],
       semesterNumber: [1, Validators.required],
-      specialization: ['', Validators.required]
     });
     this.semesterRange = this.formBuilder.group({
       start: ['', Validators.required],
@@ -52,6 +55,7 @@ export class CreateSemesterComponent implements OnInit {
           isSemesterCreated: true,
           data: res
         }
+        this.isCreate = false;
         this.semester.emit(semester);
       }
       
@@ -60,23 +64,12 @@ export class CreateSemesterComponent implements OnInit {
 
 
   private buildSemester(): Semester {
-    let specialization = this.semesterForm.get('specialization').value;
     return {
       name: this.semesterForm.get('name').value,
       semesterNumber: this.semesterForm.get('semesterNumber').value,
       startDate: this.semesterRange.get('start').value,
       endDate: this.semesterRange.get('end').value,
-      specialization: specialization == '' ? this.specialization : specialization
     };
   }
 
-  private getSpecializations(){
-    this.specializationService.getAllSpecializations().subscribe(
-      res=>{
-        this.specializations = res;
-        console.log(res);
-        
-      }
-    );
-  }
 }

@@ -1,22 +1,12 @@
 <section>
     <form action="" [formGroup]="semesterForm">
-        
         <div>
           <mat-form-field>
-            <mat-label>Name</mat-label>
+            <mat-label>Semester Name</mat-label>
             <input matInput placeholder="name" formControlName="name" required>
           </mat-form-field>
-
-          <mat-form-field appearance="fill" *ngIf="showSpecializations">
-            <mat-label>Specialization</mat-label>
-            <mat-select formControlName="specialization">
-              <mat-option *ngFor="let specialization of specializations" [value]="specialization">{{specialization.name}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-          
         </div>
         <div>
-
             <mat-form-field appearance="fill">
                 <mat-label>Semester number</mat-label>
                 <mat-select formControlName="semesterNumber">
@@ -45,7 +35,7 @@
               </mat-form-field>
         </div>
         
-        <button mat-button (click)="createSemester()">Create</button>
+        <!-- <button mat-button (click)="createSemester()">Create</button> -->
 
     </form>
 </section>
