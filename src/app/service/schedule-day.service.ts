@@ -25,7 +25,7 @@ export class ScheduleDayService{
     public deleteDayFromSchedule(dayId: number):Observable<any>{
         return this.http.delete(API_URL + 'schedule-day/delete/' + dayId);
     }
-    public getDaysForWeek(groupId: number):Observable<ScheduleDayDTO[]>{
-        return this.http.get<ScheduleDayDTO[]>(API_URL + 'schedule-day/findScheduleForTwoWeek/' + groupId);
+    public getDaysForWeek(groupId: number, semesterId: number):Observable<ScheduleDayDTO[]>{
+        return this.http.get<ScheduleDayDTO[]>(`${API_URL}schedule-day/findScheduleForTwoWeek/${groupId}/${semesterId}`);
     }
 }

@@ -26,4 +26,7 @@ export class SemesterService{
     public getSemestersForSpecialization(specializetionId: number): Observable<SemesterDTO[]>{
         return this.http.get<SemesterDTO[]>(API_URL + 'semester/findSemestersForSpecialization/' + specializetionId);
     }
+    public getSemestersForGroup(groupId: number):Observable<SemesterDTO[]>{
+        return this.http.get<SemesterDTO[]>(API_URL + 'semester/findSemestersForGroup/' + groupId);
+    }
 }

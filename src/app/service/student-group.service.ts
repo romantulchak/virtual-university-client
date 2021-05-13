@@ -53,8 +53,8 @@ export class StudentGroupService{
         params = params.append('groupId', groupId.toString()).append('studentId', studentId.toString());
         return this.http.delete(API_URL + 'student-group/deleteStudentFromGroup', {params: params});
     }
-    public findSubjectsForGroup(groupId: number):Observable<SubjectTeacherGroupDTO[]>{
-        return this.http.get<SubjectTeacherGroupDTO[]>(API_URL + 'student-group/findSubjectsForGroup/' + groupId);
+    public findSubjectsForGroup(groupId: number, semesterId: number):Observable<SubjectTeacherGroupDTO[]>{
+        return this.http.get<SubjectTeacherGroupDTO[]>(`${API_URL}student-group/findSubjectsForGroup/${groupId}/${semesterId}`);
     }
     public changeGroupSemester(groupId: number, semesterId: number, subjects: SubjectTeacherGroup[]):Observable<any>{
         let params = new HttpParams();

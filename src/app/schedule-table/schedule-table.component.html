@@ -86,8 +86,9 @@
           </ng-container>
         </tbody>
       </table>
-      <button *ngIf="scheduleId != null && isAdmin" (click)="addNewScheduleDay()">Add day</button>
+
     </div>
+    <button *ngIf="scheduleId != null && isAdmin" (click)="addNewScheduleDay()">Add day</button>
     <ng-template #scheduleNotFound>
       <h3>Schedule not found</h3>
     </ng-template>

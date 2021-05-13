@@ -16,18 +16,20 @@ export class ScheduleService{
     public create(schedule: Schedule):Observable<any>{
         return this.http.post(API_URL + 'schedule/create', schedule);
     }
-    public getScheduleForGroup(groupId: number):Observable<ScheduleDTO>{
-        return this.http.get<ScheduleDTO>(API_URL + 'schedule/findForGroup/' + groupId);
+    public getScheduleForGroup(semesterId:number):Observable<ScheduleDTO>{
+        return this.http.get<ScheduleDTO>(`${API_URL}schedule/findForGroup/${semesterId}`);
     }
-    public getScheduleIdForGroup(groupId: number):Observable<number>{
-        return this.http.get<number>(API_URL + 'schedule/findScheduleIdForGroup/' + groupId);
+    public getScheduleIdForGroup(semesterId: number):Observable<number>{
+        return this.http.get<number>(`${API_URL}schedule/findScheduleIdForGroup/${semesterId}`);
     }
-    public getScheduleForTeacherByGroup(teacherId: number, groupId: number): Observable<ScheduleDTO>{
+    public getScheduleForTeacherByGroup(teacherId: number, groupId: number, semesterId: number): Observable<ScheduleDTO>{
         let params = new HttpParams();
-        params = params.append("teacherId", teacherId.toString()).append("groupId", groupId.toString());
+        params = params.append("teacherId", teacherId.toString())
+                        .append("groupId", groupId.toString())
+                        .append("semesterId", semesterId.toString());
         return this.http.get<ScheduleDTO>(API_URL + 'schedule/findScheduleForTeacherByGroup', {params: params});
     }
-    public downloadPDF(scheduleId: number, api: string = 'exportPdf-w'): Observable<Blob>{
-        return this.http.get(API_URL + 'schedule/'+ api + '/' + scheduleId, {responseType: 'blob'});
+    public downloadPDF(scheduleId: number,semesterId: number, api: string = 'exportPdf-w'): Observable<Blob>{
+        return this.http.get(`${API_URL}schedule/${api}/${scheduleId}/${semesterId}`, {responseType: 'blob'});
     }
 }

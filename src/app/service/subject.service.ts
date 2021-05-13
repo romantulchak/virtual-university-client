@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { SubjectDTO } from "../dto/subject.dto";
+import { SubjectTeacherGroupDTO } from "../dto/subjectTeacherGroup.dto";
 import { SubjectFile } from "../model/subject-file.model";
 import { Subject } from "../model/subject.model";
 import { TokenStorageService } from "./tokenStorage.service";
@@ -56,5 +57,8 @@ export class SubjectService{
     }
     public findAllSubjectsWithTeachers():Observable<SubjectDTO[]>{
         return this.http.get<SubjectDTO[]>(API_URL + 'subject/findAllSubjectsWithTeachers');
+    }
+    public findSubjectsForGroupBySemester(semesterId: number, groupId: number): Observable<SubjectTeacherGroupDTO[]>{
+        return this.http.get<SubjectTeacherGroupDTO[]>(`${API_URL}subject/findSubjectsForGroupBySemester/${semesterId}/${groupId}`);
     }
 }

@@ -95,7 +95,7 @@ export class AddDayComponent implements OnInit {
 
 
   private findSubjectsForGroup(){
-    this.groupService.findSubjectsForGroup(this.data.currentGroup.id).subscribe(
+    this.groupService.findSubjectsForGroup(this.data.currentGroup.id, this.data.selecetedSemester.id).subscribe(
       res=>{
         this.subjectTeacher = res;
       }

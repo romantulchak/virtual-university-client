@@ -9,6 +9,7 @@ import { SubjectService } from '../service/subject.service';
 import { TokenStorageService } from '../service/tokenStorage.service';
 import { SubjectFile } from '../model/subject-file.model';
 import { saveAs } from 'file-saver';
+import { SemesterDTO } from '../dto/semester.dto';
 @Component({
   selector: 'app-student-group',
   templateUrl: './student-group.component.html',
@@ -22,6 +23,7 @@ export class StudentGroupComponent implements OnInit {
   public gradeForSubject: number;
   public currentSubject: SubjectTeacherGroupDTO = new SubjectTeacherGroupDTO();
   public subjectFiles: SubjectFile[];
+  private selectedSemester: SemesterDTO;
   constructor(private groupService: StudentGroupService, 
               private tokenStorageService: TokenStorageService,
               private groupGradeService: StudentGroupGradeService,
@@ -35,11 +37,21 @@ export class StudentGroupComponent implements OnInit {
   private getStudentGroup(){
     this.groupService.findStudentGroup(this.studentId).subscribe(
       res=>{
-        this.studentGroup = res;
+        this.studentGroup = res; 
       },
       err=>{
         console.log(err);
         
+      }
+    );
+  }
+
+  private getSubjectsForGroup(){
+    this.subjectService.findSubjectsForGroupBySemester(this.selectedSemester.id, this.studentGroup.id).subscribe(
+      res=>{
+        console.log(res);
+        
+        this.studentGroup.subjects = res;
       }
     );
   }
@@ -74,6 +86,11 @@ export class StudentGroupComponent implements OnInit {
       saveAs(res, filename)
         
     });
+  }
+
+  public getSemesterSelected(semester: SemesterDTO){
+    this.selectedSemester = semester;
+    this.getSubjectsForGroup();       
   }
 
 }

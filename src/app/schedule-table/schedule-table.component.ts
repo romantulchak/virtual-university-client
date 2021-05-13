@@ -14,6 +14,7 @@ import { LessonService } from '../service/lesson.service';
 import { ScheduleDayService } from '../service/schedule-day.service';
 import { ScheduleService } from '../service/schedule.service';
 import { saveAs } from 'file-saver';
+import { SemesterDTO } from '../dto/semester.dto';
 @Component({
   selector: 'app-schedule-table',
   templateUrl: './schedule-table.component.html',
@@ -24,6 +25,7 @@ export class ScheduleTableComponent implements OnInit, OnChanges, AfterViewInit 
   public days: ScheduleDayDTO[];
   @Input("isAdmin") isAdmin: boolean = false;
   @Input("group") group: StudentGroupDTO;
+  @Input("selectedSemester") selectedSemester: SemesterDTO;
   public scheduleId: number;
   public rangeFilter: boolean = false;
   public rangeGroup: FormGroup;
@@ -50,7 +52,7 @@ export class ScheduleTableComponent implements OnInit, OnChanges, AfterViewInit 
   ngOnChanges(){
     if(this.group != null && this.schedule != null){
       this.days = this.schedule.days;
-      this.scheduleId = this.schedule.id;
+      this.scheduleId = this.schedule.id;      
     }
   }
   
@@ -102,7 +104,8 @@ export class ScheduleTableComponent implements OnInit, OnChanges, AfterViewInit 
     this.dialog.open(AddLessonDialogComponent, {
       data: {
         currentDay: this.currentDay,
-        group: this.group
+        group: this.group,
+        selectedSemester: this.selectedSemester
       }
     });
   }
@@ -122,7 +125,8 @@ export class ScheduleTableComponent implements OnInit, OnChanges, AfterViewInit 
         data: {
           lesson: lesson,
           group: this.group,
-          currentDay: day
+          currentDay: day,
+          selectedSemester: this.selectedSemester
         }
       });
   }
@@ -158,13 +162,14 @@ export class ScheduleTableComponent implements OnInit, OnChanges, AfterViewInit 
     this.dialog.open(AddDayComponent, {
       data:{
         scheduleId: this.scheduleId,
-        currentGroup: this.group
+        currentGroup: this.group,
+        selecetedSemester:this.selectedSemester
       },
       panelClass:"create-day-modal"
     });
   }
   public exportPdf(){
-    this.scheduleService.downloadPDF(this.scheduleId, this.apiToExport).subscribe(
+    this.scheduleService.downloadPDF(this.scheduleId, this.selectedSemester.id, this.apiToExport).subscribe(
         res=>{
           saveAs(res, "schedule.pdf");
         }

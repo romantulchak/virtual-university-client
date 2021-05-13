@@ -14,13 +14,8 @@
                 </mat-select>
               </mat-form-field>
         </div>
-        <div *ngIf="semesters != null">
-            <mat-form-field appearance="fill">
-                <mat-label>Semester</mat-label>
-                <mat-select formControlName="semester">
-                  <mat-option *ngFor="let semester of semesters" [value]="semester">{{semester.name}}</mat-option>
-                </mat-select>
-              </mat-form-field>
+        <div>
+          <app-create-semester [isCreate]="isCreateGroup" (createSemester)="create($event)"></app-create-semester>
         </div>
     </form>
     <div>
@@ -43,7 +38,7 @@
                                 [showTecahers]="true"
                                 (getTeachers)="setTeacherForSubject($event)"
                                 [displayedColumns]="subjectsDisplayedColumns"></app-subjects-table>
-              <button (click)="create()">Create</button>
+              <button (click)="createGroup()">Create</button>
             </div>
 
         </div>  
