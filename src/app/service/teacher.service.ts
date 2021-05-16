@@ -6,6 +6,7 @@ import { SpecializationDTO } from "../dto/specialization.dto";
 import { SubjectDTO } from "../dto/subject.dto";
 import { TeacherDTO } from "../dto/teacher.dto";
 import { Teacher } from "../model/teacher.model";
+import { ResetPasswordRequest } from "../request/resetPasswordRequest.request";
 
 const API_URL = environment.api;
 
@@ -30,5 +31,8 @@ export class TeacherService{
     }
     public findTeachersBySubject(subjectId: number): Observable<TeacherDTO[]>{
         return this.http.get<TeacherDTO[]>(API_URL + 'teacher/findTeachersForSubject/' + subjectId);
+    }
+    public resetPassword(resetPasswordRequest: ResetPasswordRequest):Observable<any>{
+        return this.http.put(API_URL + 'teacher/resetPassword', requestAnimationFrame);
     }
 }

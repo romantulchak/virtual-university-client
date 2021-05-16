@@ -15,6 +15,8 @@ import { ScheduleDayService } from '../service/schedule-day.service';
 import { ScheduleService } from '../service/schedule.service';
 import { saveAs } from 'file-saver';
 import { SemesterDTO } from '../dto/semester.dto';
+import { StatusEnum } from '../model/enum/status.enum';
+import { NotificationService } from '../service/notification.service';
 @Component({
   selector: 'app-schedule-table',
   templateUrl: './schedule-table.component.html',
@@ -40,7 +42,8 @@ export class ScheduleTableComponent implements OnInit, OnChanges, AfterViewInit 
               private scheduleDayService: ScheduleDayService, 
               private lessonService: LessonService,
               private dialog: MatDialog,
-              private scheduleService: ScheduleService) {}
+              private scheduleService: ScheduleService,
+              private notificationService: NotificationService) {}
 
   ngOnInit(): void {
 
@@ -58,9 +61,6 @@ export class ScheduleTableComponent implements OnInit, OnChanges, AfterViewInit 
   
   ngAfterViewInit(){
   }
-
-
-
 
   private updateLessonsInDay(){
     this.lessonService.lesson.subscribe(
@@ -115,6 +115,10 @@ export class ScheduleTableComponent implements OnInit, OnChanges, AfterViewInit 
         this.lessonService.delete(lesson.id).subscribe(
           res=>{
             day.lessons = day.lessons.filter(x=>x.id != lesson.id);
+            this.notificationService.showNotification(`Lesson was deleted`, StatusEnum[StatusEnum.OK], StatusEnum["OK"]);
+          },
+          error=>{
+            this.notificationService.showNotification(error.error.message, error.statusText, error.status);
           }
         );
       }
@@ -138,7 +142,10 @@ export class ScheduleTableComponent implements OnInit, OnChanges, AfterViewInit 
       this.scheduleDayService.deleteDayFromSchedule(day.id).subscribe(
         res=>{
           this.days = this.days.filter(d => d.id != day.id);
-          
+          this.notificationService.showNotification(`Day: ${day.day} was deleted`, StatusEnum[StatusEnum.OK], StatusEnum["OK"]);
+        },
+        error=>{
+          this.notificationService.showNotification(error.error.message, error.statusText, error.status);
         }
       );
     }

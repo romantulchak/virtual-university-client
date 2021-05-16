@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Course } from '../model/course.model';
+import { StatusEnum } from '../model/enum/status.enum';
 import { CourseService } from '../service/course.service';
+import { NotificationService } from '../service/notification.service';
 
 @Component({
   selector: 'app-create-course',
@@ -9,7 +11,7 @@ import { CourseService } from '../service/course.service';
 })
 export class CreateCourseComponent implements OnInit {
 
-  constructor(private courseService: CourseService) { }
+  constructor(private courseService: CourseService, private notificationService: NotificationService) { }
 
   public course: Course = new Course();
   ngOnInit(): void {
@@ -19,8 +21,10 @@ export class CreateCourseComponent implements OnInit {
   public createCourse(): void{
     this.courseService.createCourse(this.course).subscribe(
       res => {
-        console.log('Create');
-
+        this.notificationService.showNotification(`Course: ${this.course.name} was created`, StatusEnum[StatusEnum.OK], StatusEnum["OK"]);
+      },
+      error=>{
+        this.notificationService.showNotification(error.error.message, error.statusText, error.status);
       }
     );
   }

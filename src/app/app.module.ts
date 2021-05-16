@@ -69,7 +69,8 @@ import { GroupDetailsTeacherLayoutComponent } from './group-details-teacher-layo
 import { TeacherScheduleComponent } from './teacher-schedule/teacher-schedule.component';
 import { ChangeSemesterComponent } from './change-semester/change-semester.component';
 import { GroupSemestersComponent } from './group-semesters/group-semesters.component';
-
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { NotificationComponent } from './notification/notification.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -119,6 +120,7 @@ import { GroupSemestersComponent } from './group-semesters/group-semesters.compo
     TeacherScheduleComponent,
     ChangeSemesterComponent,
     GroupSemestersComponent,
+    NotificationComponent,
   ],
     imports: [
       BrowserModule,
@@ -142,7 +144,8 @@ import { GroupSemestersComponent } from './group-semesters/group-semesters.compo
       MatCheckboxModule,
       MatSortModule,
       NgxMaterialTimepickerModule,
-      MatDialogModule
+      MatDialogModule,
+      MatSnackBarModule
     ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
