@@ -25,6 +25,12 @@ $errorMsg: #f70808;
 
   }
 }
+@mixin notification($bg, $color) {
+  background-color: $bg;
+  font-weight: 900;
+  font-family: $titleFont;
+  color: $color;
+}
 
 @include mat-core();
 $virtual-university-client-primary: mat-palette($mat-indigo);
@@ -105,4 +111,11 @@ a{
 .create-day-modal{
   width: 100vw !important;
   height: 90vh !important;
+}
+
+.error-notification{
+  @include notification(#dc675f, #fff)
+}
+.success-notification{
+  @include notification(#46a35e, #fff)
 }

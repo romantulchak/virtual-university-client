@@ -4,9 +4,11 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ScheduleDTO } from '../dto/schedule.dto';
 import { SubjectTeacherGroupDTO } from '../dto/subjectTeacherGroup.dto';
 import { DateConvertHelper } from '../helpers/date-convert.helper';
+import { StatusEnum } from '../model/enum/status.enum';
 import { ScheduleDay } from '../model/schedule-day.model';
 import { Schedule } from '../model/schedule.model';
 import { StudentGroup } from '../model/studentGroup.model';
+import { NotificationService } from '../service/notification.service';
 import { ScheduleDayService } from '../service/schedule-day.service';
 import { ScheduleService } from '../service/schedule.service';
 import { StudentGroupService } from '../service/student-group.service';
@@ -28,7 +30,8 @@ export class AddDayComponent implements OnInit {
               private fb: FormBuilder,
               private scheduleService: ScheduleService,
               private groupService: StudentGroupService, 
-              private scheduleDayService: ScheduleDayService) { }
+              private scheduleDayService: ScheduleDayService,
+              private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.resetForm();
@@ -50,6 +53,10 @@ export class AddDayComponent implements OnInit {
          this.scheduleService.updateSchedule.next(true);
          this.resetForm();
          this.addNewDay(0);
+         this.notificationService.showNotification(`Days created`, StatusEnum[StatusEnum.OK], StatusEnum["OK"]);
+        },
+      error=>{
+         this.notificationService.showNotification(error.error.message, error.statusText, error.status);
       }
     );
   }

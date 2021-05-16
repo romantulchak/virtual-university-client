@@ -4,8 +4,10 @@ import { Subject } from 'rxjs';
 import { CourseDTO } from '../dto/course.dto';
 import { SemesterDTO } from '../dto/semester.dto';
 import { SubjectDTO } from '../dto/subject.dto';
+import { StatusEnum } from '../model/enum/status.enum';
 import { Specialization } from '../model/specialization.model';
 import { CourseService } from '../service/course.service';
+import { NotificationService } from '../service/notification.service';
 import { SpecializationService } from '../service/specialization.service';
 import { SubjectService } from '../service/subject.service';
 
@@ -18,7 +20,8 @@ export class CreateSpecializationComponent implements OnInit {
 
   constructor(private courseService: CourseService, private formBuilder: FormBuilder,
               private specializationService: SpecializationService,
-              private subjectService: SubjectService) { }
+              private subjectService: SubjectService,
+              private notificationService: NotificationService) { }
   public courses: CourseDTO[];
   public firstFormGroup: FormGroup;
   public semesters: SemesterDTO[];
@@ -58,9 +61,11 @@ export class CreateSpecializationComponent implements OnInit {
       subjects: this.subjectsFormControl.value
     }
     this.specializationService.createSpecialization(specialization).subscribe(
-      res=>{
-        console.log("Ok");
-        
+      res => {
+        this.notificationService.showNotification(`Specialization: ${specialization.name} was created`, StatusEnum[StatusEnum.OK], StatusEnum["OK"]);
+      },
+      error=>{
+        this.notificationService.showNotification(error.error.message, error.statusText, error.status);
       }
     );
   }

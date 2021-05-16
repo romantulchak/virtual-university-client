@@ -1,8 +1,11 @@
 <section>
 
     <div class="container">
-        <div class="subjects">
-       
+      <div class="semester">
+          <app-group-semesters [group]="group" (semesterSelected)="getSemesterSelected($event)"></app-group-semesters>
+      </div>  
+      <div class="subjects">
+          
           <ng-container  *ngFor="let subject of group?.subjects">
             <app-subject-card [subject]="subject.subject" (selectedSubject)="selectSubject($event)"></app-subject-card>
           </ng-container>

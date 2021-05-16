@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
+import { SemesterDTO } from '../dto/semester.dto';
 import { StudentGroupGradeDTO } from '../dto/student-group-grade.dto';
 import { StudentDTO } from '../dto/student.dto';
 import { StudentGroupDTO } from '../dto/studentGroup.dto';
@@ -13,6 +14,7 @@ import { Subject } from '../model/subject.model';
 import { ScheduleService } from '../service/schedule.service';
 import { StudentGroupService } from '../service/student-group.service';
 import { StudentGroupGradeService } from '../service/studentGroupGrade.service';
+import { SubjectTeacherService } from '../service/subject-teacher.service';
 import { TokenStorageService } from '../service/tokenStorage.service';
 
 @Component({
@@ -21,23 +23,24 @@ import { TokenStorageService } from '../service/tokenStorage.service';
   styleUrls: ['./group-details-teacher.component.scss']
 })
 export class GroupDetailsTeacherComponent implements OnInit {
-  private groupId: number;
-  private teacherId: number;
+
   public group: StudentGroupDTO;
   public source: MatTableDataSource<StudentGroupGradeDTO>;
   public displayedColumns: string[] = ['id', 'firstName', 'lastName', 'grade'];
   public grades: number[] = [2, 3, 3.5, 4, 4.5, 5];
+  public loaded: boolean = true;
+  public selectedSemester: SemesterDTO;
+  private groupId: number;
+  private teacherId: number;
   private studentGroupGrades: StudentGroupGrade[] = [];
   private subject: Subject;
-  public loaded: boolean = true;
-
 
   constructor(private router: ActivatedRoute,
               private studentGroupService: StudentGroupService,
               private tokenStorageService: TokenStorageService, 
               private filterHelper: FilterHelper,
               private studentGroupGradeService: StudentGroupGradeService,
-              private scheduleService: ScheduleService) {
+              private subjectTeacherService: SubjectTeacherService) {
 
       router.params.subscribe(
         res=>{
@@ -53,11 +56,9 @@ export class GroupDetailsTeacherComponent implements OnInit {
   }
 
   private getGroupDetails(){
-    this.studentGroupService.findGroupByIdForTeacher(this.groupId, this.teacherId).subscribe(
+    this.studentGroupService.findGroup(this.groupId).subscribe(
       res=>{
-        console.log(res);
         this.group = res;
-        
       },
       error=>{
         console.log("You haven't access to this group");
@@ -105,7 +106,21 @@ this.studentGroupGradeService.setGrade(this.studentGroupGrades).subscribe(
     );
   }
 
+  private findSubjects(){
+    this.subjectTeacherService.findSubjectsForGroupByTeacherAndSemester(this.group.id, this.selectedSemester.id, this.teacherId).subscribe(
+      res=>{
+        console.log(res);
+        
+        this.group.subjects = res;
+      }
+    );
+  }
 
+  public getSemesterSelected(semester: SemesterDTO){
+    this.selectedSemester = semester;
+    this.findSubjects();
+    
+  }
   
   @ViewChild(MatPaginator) 
   set paginator(value: MatPaginator) {

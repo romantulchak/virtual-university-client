@@ -3,8 +3,10 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { SpecializationDTO } from '../dto/specialization.dto';
 import { SubjectDTO } from '../dto/subject.dto';
 import { SemesterEnum } from '../model/enum/semester.enum';
+import { StatusEnum } from '../model/enum/status.enum';
 import { Semester } from '../model/semester.model';
 import { Specialization } from '../model/specialization.model';
+import { NotificationService } from '../service/notification.service';
 import { SemesterService } from '../service/semester.service';
 import { SpecializationService } from '../service/specialization.service';
 import { SubjectService } from '../service/subject.service';
@@ -23,7 +25,7 @@ export class CreateSemesterComponent implements OnInit, OnChanges {
   @Input("showSpecializations") showSpecializations: boolean = true;
   @Input("isCreate") isCreate: boolean;
   @Output("createSemester") semester: EventEmitter<any> = new EventEmitter<any>();
-  constructor(private formBuilder: FormBuilder, private semesterService: SemesterService, private specializationService: SpecializationService) { }
+  constructor(private formBuilder: FormBuilder, private semesterService: SemesterService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.initTable();
@@ -57,6 +59,10 @@ export class CreateSemesterComponent implements OnInit, OnChanges {
         }
         this.isCreate = false;
         this.semester.emit(semester);
+        this.notificationService.showNotification(`Semester: ${res.name} was created`, StatusEnum[StatusEnum.OK], StatusEnum["OK"]);
+      },
+      error=>{
+        this.notificationService.showNotification(error.error.message, error.statusText, error.status);
       }
       
     );

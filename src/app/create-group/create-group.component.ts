@@ -8,11 +8,13 @@ import {SpecializationDTO} from '../dto/specialization.dto';
 import {StudentDTO} from '../dto/student.dto';
 import {SubjectDTO} from '../dto/subject.dto';
 import { FilterHelper } from '../helpers/filter.helper';
+import { StatusEnum } from '../model/enum/status.enum';
 import {Student} from '../model/student.model';
 import {StudentGroup} from '../model/studentGroup.model';
 import {Subject} from '../model/subject.model';
 import {SubjectTeacherGroup} from '../model/subjectTeacherGroup.model';
 import {Teacher} from '../model/teacher.model';
+import { NotificationService } from '../service/notification.service';
 import {SemesterService} from '../service/semester.service';
 import {SpecializationService} from '../service/specialization.service';
 import {StudentGroupService} from '../service/student-group.service';
@@ -42,11 +44,11 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
   public isCreateGroup: boolean = false;
 
   constructor(private formBuilder: FormBuilder,
-              private semesterService: SemesterService,
               private studentService: StudentService,
               private subjectService: SubjectService,
               private specializationService: SpecializationService,
-              private studentGroupService: StudentGroupService) {
+              private studentGroupService: StudentGroupService,
+              private notificationService: NotificationService) {
   }
 
   ngOnInit(): void {
@@ -72,7 +74,6 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
     this.studentService.getStudentsWithoutGroup().subscribe(
       res => {
         if (res != null) {
-
           this.dataSource = new MatTableDataSource(res);
         }
       }
@@ -106,7 +107,10 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
       this.group.subjectTeacherGroups = this.subjectTeacherGroup;
       this.studentGroupService.create(this.group).subscribe(
         res => {
-          console.log('Ok');
+          this.notificationService.showNotification(`Group: ${this.group.name} was created`, StatusEnum[StatusEnum.OK], StatusEnum["OK"]);
+        },
+        error=>{
+          this.notificationService.showNotification(error.error.message, error.statusText, error.status);
         }
       );
     }
@@ -121,8 +125,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
   private getSubjectsBySpecialiaztion(id: number) {
     this.subjectService.getAllForSpecialization(id).subscribe(
       res => {
-        console.log(res);
-        
+       
         this.subjectsSource = new MatTableDataSource(res);  
       }
     );
@@ -135,7 +138,6 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
   }
 
   public setTeacherForSubject(subjectTeacher: SubjectTeacherGroup[]) {
-    
     this.subjectTeacherGroup = subjectTeacher;
   }
 }

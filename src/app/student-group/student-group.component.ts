@@ -5,6 +5,7 @@ import { SubjectTeacherGroupDTO } from '../dto/subjectTeacherGroup.dto';
 import { TeacherDTO } from '../dto/teacher.dto';
 import { StudentGroupService } from '../service/student-group.service';
 import { StudentGroupGradeService } from '../service/studentGroupGrade.service';
+import { SubjectTeacherService } from '../service/subject-teacher.service';
 import { SubjectService } from '../service/subject.service';
 import { TokenStorageService } from '../service/tokenStorage.service';
 import { SubjectFile } from '../model/subject-file.model';
@@ -27,7 +28,8 @@ export class StudentGroupComponent implements OnInit {
   constructor(private groupService: StudentGroupService, 
               private tokenStorageService: TokenStorageService,
               private groupGradeService: StudentGroupGradeService,
-              private subjectService: SubjectService) { }
+              private subjectService: SubjectService,
+              private subjectTeacherService: SubjectTeacherService) { }
 
   ngOnInit(): void {
     this.studentId = this.tokenStorageService.getUser().id;
@@ -47,7 +49,7 @@ export class StudentGroupComponent implements OnInit {
   }
 
   private getSubjectsForGroup(){
-    this.subjectService.findSubjectsForGroupBySemester(this.selectedSemester.id, this.studentGroup.id).subscribe(
+    this.subjectTeacherService.findSubjectsForGroupBySemester(this.selectedSemester.id, this.studentGroup.id).subscribe(
       res=>{
         console.log(res);
         

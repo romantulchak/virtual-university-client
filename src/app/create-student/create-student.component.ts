@@ -19,6 +19,8 @@ import { TeacherSubjectStudentGradeLinks } from '../model/teacherSubjectStudentG
 import { SubjectDTO } from '../dto/subject.dto';
 import { TeacherDTO } from '../dto/teacher.dto';
 import { Teacher } from '../model/teacher.model';
+import { NotificationService } from '../service/notification.service';
+import { StatusEnum } from '../model/enum/status.enum';
 
 @Component({
   selector: 'app-create-student',
@@ -41,14 +43,13 @@ export class CreateStudentComponent implements OnInit {
 
   public currentSubjectId: number;
   public isChecked: boolean = false;
-  private student: StudentDTO;
-  private studentGrade: TeacherSubjectStudentGradeLinks[] = [];
   constructor(private formBuilder: FormBuilder, 
               private studentService: StudentService, 
               private courseService: CourseService, 
               private roleService: RoleService, 
               private semesterService: SemesterService,
-              private studentGradeService: StudentGradesService) { }
+              private studentGradeService: StudentGradesService,
+              private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -95,8 +96,20 @@ export class CreateStudentComponent implements OnInit {
     this.specializations = this.courses.filter(x=>x.id == id)[0].specializationDTO;
   }
   public createUser(stepper: MatStepper){
+    let student = this.initStudent();
+    this.studentService.createStudent(student).subscribe(
+      res=>{
+          this.notificationService.showNotification(`Student: ${student.firstName} ${student.lastName} was created`, StatusEnum[StatusEnum.OK], StatusEnum["OK"]);
+          stepper.reset();
+      },
+      error=>{
+        this.notificationService.showNotification(error.error.message, error.statusText, error.status);
+      }
+    );
+  }
 
-    let student:Student = {
+  private initStudent(){
+    return {
       firstName: this.firstFormGroup.get('firstName').value,
       lastName: this.firstFormGroup.get('lastName').value,
       login: this.firstFormGroup.get('login').value,
@@ -114,62 +127,10 @@ export class CreateStudentComponent implements OnInit {
         postalCode: this.secondFormGroup.get('postalCode').value,
         city: this.secondFormGroup.get('city').value
       },
-      specializations: [this.thridFormGroup.get('specialization').value],
       roles: this.rolesFormControl.value
     }
-    this.studentService.createStudent(student).subscribe(
-      res=>{
-        if(res != null){
-          this.student = res;
-          this.getSemesterForStudent(stepper);
-        }
-      }
-    );
-  }
-  private getSemesterForStudent(stepper: MatStepper){
-    this.semesterService.getSemesterForStudent(this.student.specializations[0].id, this.student.currentSemester).subscribe(
-      res=>{
-        if(res != null){
-          this.semester = res;
-          setTimeout(() => {
-            stepper.next();
-          }, 100);
-        }
-        
-      }
-    );
   }
 
-
-  public addStudentGradeToArray(semester:Semester, subject: SubjectDTO, teacher: Teacher){
-    this.currentSubjectId = subject.id;
-    this.isChecked = true;
-    
-    let stGrade: TeacherSubjectStudentGradeLinks ={
-      specialization: this.thridFormGroup.get('specialization').value,
-      subject: subject as unknown as Subject,
-      teacher: teacher,
-      student: this.student as unknown as Student,
-      semester: semester
-
-    }
-    // if(this.studentGrade.filter(x=>x.subject.id == subject.id)){
-    //   this.studentGrade = this.studentGrade.filter(x=>x.teacher.id != teacher.id); 
-    // }
-    this.studentGrade.push(stGrade);
-    console.log(this.studentGrade);
-    
-  }
-
-
-  public createStudentGrades(){
-    this.studentGradeService.createStudentGrades(this.studentGrade).subscribe(
-      res=>{
-        console.log("ok");
-        
-      }
-    );
-  }
   private getRoles(){
     this.roleService.getRoles().subscribe(
       res=>{
