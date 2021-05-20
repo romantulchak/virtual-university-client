@@ -1,0 +1,89 @@
+$linkColor: #28a745;
+@mixin bottom-line($scale, $visibility) {
+    content: "";
+    position: absolute;
+    height: 2px;
+    bottom: 7px;
+    left: 0;
+    right: 0;
+    background-color: $linkColor;
+    visibility: $visibility;
+    transform: scaleX($scale);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.sidebar {
+  height: 100%;
+  width: 0;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  position: relative;
+  box-sizing: border-box;
+  .sidebar__ul {
+    list-style-type: none;
+    position: relative;
+
+    li {
+      margin: 0 0 10px 0;
+      padding: 0;
+      list-style: none;
+      font-size: 22px;
+      font-weight: 400;
+      line-height: 1.5;
+      
+      .active-link{
+        color: $linkColor;
+        &::after {
+            @include bottom-line(1, visible);
+        }
+      }
+
+      a {
+        text-decoration: none;
+        position: relative;
+        padding: 10px 0;
+        color: #000;
+        transition: 0.3s;
+        white-space: nowrap;
+
+        &::after {
+          @include bottom-line(0, hidden);
+        }
+
+        &:hover::after {
+          visibility: visible;
+          transform: scaleX(1);
+        }
+      }
+    }
+  }
+
+  .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+    cursor: pointer;
+  }
+}
+
+.nav-open {
+  width: 300px;
+  padding: 3em 1em 0em 3em;
+}
+
+.open-nav-btn {
+  border: none;
+  background: none;
+  font-size: 31px;
+  position: absolute;
+  outline: none;
+  right: 15px;
+  top: 55px;
+}

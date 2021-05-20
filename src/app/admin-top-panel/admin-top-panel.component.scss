@@ -1,13 +1,14 @@
 .admin__top_panel{
     position: relative;
     .top__panel_visible{
-        height: 50px;
+        height: 25px;
         display: flex;
         align-items: center;
         justify-content: space-between;
         .panel__links{
             margin-left: 5em;
             a{
+                font-size: 14px;
                 color: #fff;
                 margin-right: 1em;
             }

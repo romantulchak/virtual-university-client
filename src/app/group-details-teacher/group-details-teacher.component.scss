@@ -1,26 +1,30 @@
-
-
 table {
+  width: 100%;
+
+  .mat-form-field {
+    font-size: 14px;
     width: 100%;
-    
-    .mat-form-field {
-        font-size: 14px;
-        width: 100%;
-      }
-      
-    td, th {
-        width: 25%;
-    } 
-}
-  
- 
+  }
 
-.subjects{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-gap: 2em;
+  td,
+  th {
+    width: 25%;
+  }
 }
 
 
-  
- 
+
+.subjects {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 2em;
+}
+
+
+
+.loading {
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

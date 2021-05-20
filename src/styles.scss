@@ -5,6 +5,10 @@
   font-family: TitleFont;
   src: url('assets/fonts/TitleFont.otf');
 }
+@font-face {
+  font-family: NavFont;
+  src: url('assets/fonts/nav-font.ttf');
+}
 
 $smallIcon: 15px;
 $mediumIcon: 25px;
@@ -54,7 +58,11 @@ $virtual-university-client-theme: mat-light-theme((
   padding: 0;
 }
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { 
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: #fafafa; 
+}
 a{
   text-decoration: none;
 }
@@ -113,9 +121,23 @@ a{
   height: 90vh !important;
 }
 
+
+
 .error-notification{
-  @include notification(#dc675f, #fff)
+  @include notification(#dc675f, #fff);
 }
 .success-notification{
-  @include notification(#46a35e, #fff)
+  @include notification(#46a35e, #fff);
+}
+.unauthorized-notification{
+  @include notification(#f9ab00ad, #000);
+}
+.nav__content{
+  display: flex;
+  height: 100%;
+  .content{
+      width: 100%;
+      background: #fafafa;
+      padding: 1em;
+  }
 }

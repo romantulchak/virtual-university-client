@@ -1,0 +1,6 @@
+<mat-form-field *ngIf="semesters != null" appearance="fill">
+    <mat-label>Choose semester</mat-label>
+    <mat-select [(ngModel)]="selectedSemester" (selectionChange)="selectSemester($event)">
+      <mat-option *ngFor="let semester of semesters" [value]="semester">{{semester.name}} | {{semester.semesterNumber}}</mat-option>
+    </mat-select>
+  </mat-form-field>

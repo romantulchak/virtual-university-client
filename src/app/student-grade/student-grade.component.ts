@@ -27,7 +27,9 @@ export class StudentGradeComponent implements OnInit {
   private getStudentGrades(){
     this.studentGroupGrade.getStudentGrades(this.studentId).subscribe(
       res=>{
-        this.averageGrade = res.map(x=> x.grade).reduce((previous, current) => previous + current) / res.length;
+        if(res != null){
+          this.averageGrade = res.map(x=> x.grade).reduce((previous, current) => previous + current) / res.length;
+        } 
        
         this.studentGrades = res;
       }

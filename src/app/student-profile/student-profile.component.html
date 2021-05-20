@@ -1,7 +1,7 @@
-<section>
-    <a routerLink="grades">Grades</a>
-    <a routerLink="my-group">My Group</a>
-    <a routerLink="schedule">Schedule</a>
-    <router-outlet></router-outlet>
+<section class="nav__content">
+    <app-nav-user [links]="links"></app-nav-user>
+    <div class="content">
+        <router-outlet></router-outlet>
+    </div>
        
 </section>
