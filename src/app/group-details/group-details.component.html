@@ -34,6 +34,7 @@
             <div class="group__add-subjects_block" *ngIf="subjectsSource != null; else loadingBlock">
                 <div class="table__legend">
                     <h3 class="table__title">Add Subjects to {{groupDetais?.name}}</h3>
+                    <app-all-subjects-button #allSubjectsButton [semesterId]="groupDetais.semester.id" (all-subjects)="findAllSubjects($event)"></app-all-subjects-button>
                     <app-subjects-table [source]="subjectsToAddSource"  [showTecahers]="true" (getTeachers)="setSubjectsToArray($event)" [displayedColumns]="subjectsToAddDisplayedColumns"></app-subjects-table>
                     <button *ngIf="subjectTeacherGroup.length != 0" (click)="addSubjectToGroup()" >Add</button>
                 </div>

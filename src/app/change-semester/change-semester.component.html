@@ -1,0 +1,10 @@
+<section>
+    <div class="container">
+        <app-create-semester (createSemester)="createSemester($event)" [isCreate]="isCreate" [showSpecializations]="false"></app-create-semester>
+        <app-all-subjects-button (all-subjects)="findAllSubjects($event)"></app-all-subjects-button>
+        <app-subjects-table [source]="subjectsSource"  
+        [showTecahers]="true" 
+        (getTeachers)="setSubjectsToArray($event)" [displayedColumns]="subjectsDisplayedColumns"></app-subjects-table>
+        <button (click)="create()">Change</button>
+    </div>
+</section>

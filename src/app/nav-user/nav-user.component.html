@@ -1,0 +1,14 @@
+<button *ngIf="!navOpen" class="open-nav-btn" (click)="openNav()">☰</button>
+<nav  id="mySidebar" class="sidebar" [class.nav-open]="navOpen">
+    <span (click)="closeNav()" class="closebtn">×</span> 
+    <ul class="sidebar__ul">
+        <ng-container *ngFor="let link of links">
+            <li><a routerLinkActive="active-link" class="link" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="link.route">{{link.name}}</a></li>
+            <ul>
+                <ng-container *ngFor="let child of link.children">
+                    <li><a [routerLink]="link.route">{{link.name}}</a></li>
+                </ng-container>
+            </ul>
+        </ng-container>        
+    </ul>
+</nav>

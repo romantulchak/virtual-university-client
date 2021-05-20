@@ -71,6 +71,8 @@ import { ChangeSemesterComponent } from './change-semester/change-semester.compo
 import { GroupSemestersComponent } from './group-semesters/group-semesters.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { NotificationComponent } from './notification/notification.component';
+import { AllSubjectsButtonComponent } from './all-subjects-button/all-subjects-button.component';
+import { NavUserComponent } from './nav-user/nav-user.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -121,6 +123,8 @@ import { NotificationComponent } from './notification/notification.component';
     ChangeSemesterComponent,
     GroupSemestersComponent,
     NotificationComponent,
+    AllSubjectsButtonComponent,
+    NavUserComponent,
   ],
     imports: [
       BrowserModule,

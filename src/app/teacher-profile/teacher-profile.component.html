@@ -1,8 +1,6 @@
-<section>
-    <a routerLink="teacher-speicalizations">Specializations</a>
-    <a routerLink="subjects">Subjects</a>
-    <a routerLink="my-groups">My groups</a>
-    
+<section class="nav__content">
+  <app-nav-user [links]="links"></app-nav-user>
+  <div class="content">
     <router-outlet></router-outlet>
-       
+  </div>
 </section>

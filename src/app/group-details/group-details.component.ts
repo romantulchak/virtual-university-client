@@ -1,19 +1,22 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
+import { AllSubjectsButtonComponent } from '../all-subjects-button/all-subjects-button.component';
 import { ChangeSemesterComponent } from '../change-semester/change-semester.component';
 import { StudentDTO } from '../dto/student.dto';
 import { StudentGroupDTO } from '../dto/studentGroup.dto';
 import { SubjectDTO } from '../dto/subject.dto';
 import { SubjectTeacherGroupDTO } from '../dto/subjectTeacherGroup.dto';
 import { TeacherDTO } from '../dto/teacher.dto';
+import { StatusEnum } from '../model/enum/status.enum';
 import { Student } from '../model/student.model';
 import { Subject } from '../model/subject.model';
 import { SubjectTeacherGroup } from '../model/subjectTeacherGroup.model';
 import { Teacher } from '../model/teacher.model';
+import { NotificationService } from '../service/notification.service';
 import { SemesterService } from '../service/semester.service';
 import { StudentGroupService } from '../service/student-group.service';
 import { StudentService } from '../service/student.service';
@@ -24,7 +27,7 @@ import { SubjectService } from '../service/subject.service';
   templateUrl: './group-details.component.html',
   styleUrls: ['./group-details.component.scss']
 })
-export class GroupDetailsComponent implements OnInit {
+export class GroupDetailsComponent implements OnInit, AfterViewInit {
   private groupId: number;
   public groupDetais: StudentGroupDTO;
   public loading: boolean = true;
@@ -46,12 +49,14 @@ export class GroupDetailsComponent implements OnInit {
   public studentToGroup: StudentDTO[] = [];
   public subjectTeacherGroup: SubjectTeacherGroup[] = [];
 
+  @ViewChild('allSubjectsButton') allSubjectsButton: AllSubjectsButtonComponent;
+
   constructor(private router: ActivatedRoute,
               private groupService: StudentGroupService,
               private studentService: StudentService,
               private subjectService: SubjectService,
-              private semesterService: SemesterService,
-              private dialog: MatDialog) { 
+              private dialog: MatDialog,
+              private notificationService: NotificationService) { 
     this.router.params.subscribe(
       res=>{
         this.groupId = res.id;
@@ -62,9 +67,10 @@ export class GroupDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.findGroupDetails();    
     this.findStudentsWithoutGroup();
-    this.getAvailableSubjectsForGroup();
   }
 
+  ngAfterViewInit(): void{
+  }
 
   private findGroupDetails(){
     this.groupService.findGroupById(this.groupId).subscribe(
@@ -74,6 +80,7 @@ export class GroupDetailsComponent implements OnInit {
           this.source = new MatTableDataSource<StudentDTO>(res.students);
           this.subjectsSource = new MatTableDataSource<SubjectTeacherGroup>(this.convetToSubjectSource(res.subjects));
           this.loading = false;
+          this.getAvailableSubjectsForGroup();
         }
       }
     );
@@ -94,7 +101,11 @@ export class GroupDetailsComponent implements OnInit {
   public getAvailableSubjectsForGroup(){
     this.subjectService.getAvailableSubjectsForGroup(this.groupId).subscribe(
       res=>{
-        this.subjectsToAddSource = new MatTableDataSource<SubjectDTO>(res);
+        if(res != null && res.length > 0){
+          this.subjectsToAddSource = new MatTableDataSource<SubjectDTO>(res);
+        }else{
+          this.allSubjectsButton.findSubjects(this.groupDetais.semester.id);
+        }
       }
     );
   }
@@ -103,17 +114,25 @@ export class GroupDetailsComponent implements OnInit {
       res=>{
         this.updateStudentsTableData();
         this.studentToGroup =[];
+        this.notificationService.showNotification('Student was added to group', StatusEnum[StatusEnum.OK], StatusEnum["OK"]);
+        this.groupDetais.studentsCount++;
+      },
+      error=>{
+        this.notificationService.showNotification(error.error.message,error.statusText, error.status);
       }
     );
   }
 
 
   public addSubjectToGroup(){
-    
     this.groupService.addSubjectsToGroup(this.subjectTeacherGroup, this.groupId).subscribe(
       res=>{
         this.updateSubjectsTableData();  
         this.subjectTeacherGroup = [];
+        this.notificationService.showNotification('Subject was added to group', StatusEnum[StatusEnum.OK], StatusEnum["OK"]);
+      },
+      error=>{
+        this.notificationService.showNotification(error.error.message,error.statusText, error.status);
       }
     );
   }
@@ -174,13 +193,17 @@ export class GroupDetailsComponent implements OnInit {
   public removeStudent(student: StudentDTO){
     this.groupService.deleteStudentFromGroup(this.groupId, student.id).subscribe(
       res=>{
-        
         if(this.source.data.filter(s=>s.id == student.id) != null){
           this.studentsToAddSource.data.push(student);
           this.studentsToAddSource = new MatTableDataSource<StudentDTO>(this.studentsToAddSource.data);
           this.source.data = this.source.data.filter(s => s.id != student.id);
           this.source = new MatTableDataSource(this.source.data);
         } 
+        this.notificationService.showNotification('Student was removed from group', StatusEnum[StatusEnum.OK], StatusEnum["OK"]);
+        this.groupDetais.studentsCount--;
+      },
+      error=>{
+        this.notificationService.showNotification(error.error.message,error.statusText, error.status);
       }
     );
   }
@@ -188,6 +211,9 @@ export class GroupDetailsComponent implements OnInit {
   public changeSemester(){
       this.dialog.open(ChangeSemesterComponent, {
         data: this.groupDetais
-      })
+      });
+  }
+  public findAllSubjects(subjects: SubjectDTO[]){
+    this.subjectsToAddSource = new MatTableDataSource(subjects);
   }
 }

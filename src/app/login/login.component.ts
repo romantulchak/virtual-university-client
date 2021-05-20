@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { StatusEnum } from '../model/enum/status.enum';
 import { LoginRequest } from '../request/loginRequest.request';
 import { AuthService } from '../service/auth.service';
+import { NotificationService } from '../service/notification.service';
 import { TokenStorageService } from '../service/tokenStorage.service';
 
 @Component({
@@ -12,7 +14,10 @@ import { TokenStorageService } from '../service/tokenStorage.service';
 export class LoginComponent implements OnInit {
 
   public loginRequest: LoginRequest = new LoginRequest();
-  constructor(private authService: AuthService, private tokenStorageService: TokenStorageService, private router: Router) { }
+  constructor(private authService: AuthService, 
+              private tokenStorageService: TokenStorageService, 
+              private router: Router,
+              private notificationService: NotificationService) { }
   public hide = true;
   ngOnInit(): void {
   }
@@ -28,6 +33,10 @@ export class LoginComponent implements OnInit {
         }else if(res.userType === 'ROLE_TEACHER'){
           this.router.navigate(['profile/teacher']);
         }
+        this.notificationService.showNotification('Login successful', StatusEnum[StatusEnum.OK], StatusEnum["OK"]);
+      },
+      error=>{
+        this.notificationService.showNotification('Login or password is incorrect', error.statusText, error.status);
       }
     );
   }

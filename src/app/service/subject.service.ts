@@ -58,5 +58,7 @@ export class SubjectService{
     public findAllSubjectsWithTeachers():Observable<SubjectDTO[]>{
         return this.http.get<SubjectDTO[]>(API_URL + 'subject/findAllSubjectsWithTeachers');
     }
-
+    public findAllSubjectsWithTeachersForSemester(semesterId: number){
+        return this.http.get<SubjectDTO[]>(API_URL + 'subject/findAllSubjectsWithTeachersForSemester/' + semesterId);
+    }
 }
