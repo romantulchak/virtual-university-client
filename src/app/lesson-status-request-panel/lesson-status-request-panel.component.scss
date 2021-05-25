@@ -1,0 +1,78 @@
+.statuses{
+    display: flex;
+    gap: 1em;
+    align-items: center;
+    .status{
+        padding: 1em;
+        border-radius: 4px;
+        background: rgb(0 0 0 / 12%);
+        position: relative;
+        min-width: 7em;
+        text-align: center;
+        span{
+            position: absolute;
+            top: -20px;
+            width: 100%;
+            left: 0;
+        }
+    }
+    .status__actual{
+        background: #a8dab5;
+    }
+    .arrow{
+        width: 15px;
+    }
+    .decision{
+        display: grid;
+        gap: 1em;
+        .decision__button{
+            cursor: pointer;
+            outline: none;
+            background: rgb(0 0 0 / 7%);
+            transition: .5s;
+            border: 1px solid rgb(0 0 0 / 18%);
+        }
+        .decision__button_reject{
+            &:hover{
+                background: #f96666;
+            }
+            &:disabled{
+                &:hover{
+                background: rgb(0 0 0 / 7%);
+                }
+            }
+        }
+        .decision__button_ok{
+            &:hover{
+                background: #a8dab5;
+            }
+            &:disabled{
+                &:hover{
+                background: rgb(0 0 0 / 7%);
+                }
+            }
+        }
+        .accepted{
+            &:disabled{
+                background: #a8dab5;
+                color: black;
+
+                &:hover{
+                    background: #a8dab5;
+
+                }
+            }
+        }
+        .rejected{
+            &:disabled{
+                background: #f96666;
+                color: black;
+
+                &:hover{
+                    background: #f96666;
+
+                }
+            }
+        }
+    }
+}

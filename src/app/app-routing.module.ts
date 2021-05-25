@@ -34,6 +34,7 @@ import { SchedulePanelComponent } from './schedule-panel/schedule-panel.componen
 import { StudentGroupScheduleComponent } from './student-group-schedule/student-group-schedule.component';
 import { GroupDetailsTeacherLayoutComponent } from './group-details-teacher-layout/group-details-teacher-layout.component';
 import { TeacherScheduleComponent } from './teacher-schedule/teacher-schedule.component';
+import { LessonStatusRequestPanelComponent } from './lesson-status-request-panel/lesson-status-request-panel.component';
 
 
 const routes: Routes = [
@@ -71,6 +72,7 @@ const routes: Routes = [
     {path: 'student-panel', component: StudentPanelComponent},
     {path: 'schedule-panel', component: SchedulePanelComponent},
     {path: 'specialization-panel', component: SpecializationPanelComponent},
+    {path: 'lesson-request', component: LessonStatusRequestPanelComponent},
     {path: 'group-panel', children:[
       {path: '', component: GroupPanelComponent},
       {path:'groups', component: GroupsComponent},

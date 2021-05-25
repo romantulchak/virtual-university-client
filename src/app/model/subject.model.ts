@@ -7,5 +7,6 @@ export class Subject{
     public name: string;
     public teacherSubjectStudentGradeLinks?: TeacherSubjectStudentGradeLinks[];
     public type: string;
+    public description: string;
     public teachers?: Teacher[];
 }

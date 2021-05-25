@@ -22,12 +22,21 @@ $table-font: TitleFont;
         display: block;
 
         th{
-            background: aliceblue;
             padding: 1em;
             border-radius: 5px;
             font-family: $table-font;
             text-align: left;
             width: 225px;
+        }
+
+        .lesson{
+            background: aliceblue;
+        }
+        .pending__status{
+            background: rgb(255 235 59 / 9%);
+        }
+        .discarded__status{
+            background: #d01b322b;
         }
     }
     .day__header_button{
@@ -48,4 +57,3 @@ $table-font: TitleFont;
         }
     }
 }
-

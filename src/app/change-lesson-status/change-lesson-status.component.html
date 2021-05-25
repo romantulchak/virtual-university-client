@@ -1,0 +1,16 @@
+<section>
+    <h3>Change Status</h3>
+    <form action="">
+        <mat-form-field appearance="fill">
+            <mat-label>Status</mat-label>
+            <mat-select [(value)]="scheduleLessonRequest.actualStatus">
+            <mat-option value="ACTIVE">Active</mat-option>
+            <mat-option value="DISCARDED">Discarded</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div>
+            <textarea name="message" [(ngModel)]="scheduleLessonRequest.message"></textarea>
+        </div>
+        <button (click)="sendRequest()">Send request</button>
+    </form>
+</section>

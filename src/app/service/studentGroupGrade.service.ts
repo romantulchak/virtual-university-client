@@ -25,9 +25,10 @@ export class StudentGroupGradeService{
                         .append('sbujectId', subjectId.toString());
         return this.http.get<StudentGroupGradeDTO[]>(API_URL + 'student-group-grade/findForTeacher', {params: params});
     }
-    public getStudentGrades(studentId: number):Observable<StudentGroupGradeDTO[]>{
+    public getStudentGrades(studentId: number, semesterId: number):Observable<StudentGroupGradeDTO[]>{
         let params = new HttpParams();
-        params = params.append('studentId', studentId.toString());
+        params = params.append('studentId', studentId.toString())
+                        .append('semesterId', semesterId.toString());
         return this.http.get<StudentGroupGradeDTO[]>(API_URL + 'student-group-grade/studentGrades', {params: params});
     }
     public getGradeForStudentBySubject(groupId: number, subjectId: number, studentId: number, semesterId: number):Observable<number>{
