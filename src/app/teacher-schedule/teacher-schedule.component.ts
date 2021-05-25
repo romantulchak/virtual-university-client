@@ -15,29 +15,30 @@ import {TokenStorageService} from '../service/tokenStorage.service';
   styleUrls: ['./teacher-schedule.component.scss']
 })
 export class TeacherScheduleComponent implements OnInit {
+  private teacherId: number;
+  public group: StudentGroupDTO;
+  public schedule: ScheduleDTO = new ScheduleDTO();
+  public scheduleId: number;
+  public selectedSemester: SemesterDTO;
+
+
   constructor(private studentGroupService: StudentGroupService,
     private tokenStorageService: TokenStorageService,
     private scheduleService: ScheduleService, private router: ActivatedRoute, private scheduleDayService: ScheduleDayService) {
       router.parent.params.subscribe(
         res=>{
           
-          
         }
       );
         
     }
-  private teacherId: number;
-  public group: StudentGroupDTO;
-  public schedule: ScheduleDTO;
-  public scheduleId: number;
-  public selectedSemester: SemesterDTO;
+
   ngOnInit(): void {
     this.teacherId = this.tokenStorageService.getUser().id;
     this.getGroup();
   }
 
   private getGroup() {
-    
     this.studentGroupService.teacherCurrentGroup.subscribe(
       res=>{
         if(res != null){
@@ -52,9 +53,9 @@ export class TeacherScheduleComponent implements OnInit {
   private getScheduleIdByGroup() {
     this.scheduleService.getScheduleIdForGroup(this.selectedSemester.id).subscribe(
       res => {
+        this.schedule = new ScheduleDTO();
         this.scheduleId = res;
-        this.getScheduleForGroup();
-
+        this.schedule.id = res;        
       }
     );
   }
@@ -72,6 +73,7 @@ export class TeacherScheduleComponent implements OnInit {
   public getDaysForWeek(){
     this.scheduleDayService.getDaysForWeek(this.group.id, this.selectedSemester.id).subscribe(
       res=>{        
+        this.getScheduleIdByGroup();
         this.schedule.days = res;
       }
     );

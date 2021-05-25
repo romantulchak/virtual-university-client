@@ -74,9 +74,8 @@ export class StudentGroupComponent implements OnInit {
     }
   }
 
-  //TODO: make select for semester
   private getGradeForSubject(subjectId: number){
-    this.groupGradeService.getGradeForStudentBySubject(this.studentGroup.id, subjectId, this.studentId, this.studentGroup.semester.id).subscribe(
+    this.groupGradeService.getGradeForStudentBySubject(this.studentGroup.id, subjectId, this.studentId, this.selectedSemester.id).subscribe(
       res=>{
         this.gradeForSubject = res;
       }

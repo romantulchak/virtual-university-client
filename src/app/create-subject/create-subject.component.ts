@@ -27,7 +27,8 @@ export class CreateSubjectComponent implements OnInit {
     this.getAllTeachers();
     this.firstFormGroup = this.formBuilder.group({
       name: ['', Validators.required],
-      type: ['', Validators.required]
+      type: ['', Validators.required],
+      description: ['', Validators.required]
     })
   }
 
@@ -42,10 +43,11 @@ export class CreateSubjectComponent implements OnInit {
   public createSubject(){
     this.subject.name = this.firstFormGroup.get('name').value;
     this.subject.type = this.firstFormGroup.get('type').value;
+    this.subject.description = this.firstFormGroup.get('description').value;
     this.subject.teachers = this.teacherFormControl.value;
     this.subjectService.createSubject(this.subject, this.files).subscribe(
       res => {
-        this.notificationService.showNotification(`Specialization: ${this.subject.name} was created`, StatusEnum[StatusEnum.OK], StatusEnum["OK"]);
+        this.notificationService.showNotification(`Subject: ${this.subject.name} was created`, StatusEnum[StatusEnum.OK], StatusEnum["OK"]);
       },
       error=>{
         this.notificationService.showNotification(error.error.message, error.statusText, error.status);

@@ -1,5 +1,6 @@
 <section>
     <div class="container">
+        <app-group-semesters [group]="group" (semesterSelected)="getSemesterSelected($event)"></app-group-semesters>
         <table class="group__information">
             <thead>
                 <tr>

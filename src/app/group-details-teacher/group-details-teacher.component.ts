@@ -59,6 +59,9 @@ export class GroupDetailsTeacherComponent implements OnInit {
     this.studentGroupService.findGroup(this.groupId).subscribe(
       res=>{
         this.group = res;
+        console.log(res);
+        
+        this.studentGroupService.teacherCurrentGroup.next(res);
       },
       error=>{
         console.log("You haven't access to this group");
@@ -85,7 +88,7 @@ export class GroupDetailsTeacherComponent implements OnInit {
   }
 
   public setGrade(){
-this.studentGroupGradeService.setGrade(this.studentGroupGrades).subscribe(
+    this.studentGroupGradeService.setGrade(this.studentGroupGrades).subscribe(
       res=>{
         //TODO: make it only on the client side
         this.findStudentGrades();
@@ -109,8 +112,6 @@ this.studentGroupGradeService.setGrade(this.studentGroupGrades).subscribe(
   private findSubjects(){
     this.subjectTeacherService.findSubjectsForGroupByTeacherAndSemester(this.group.id, this.selectedSemester.id, this.teacherId).subscribe(
       res=>{
-        console.log(res);
-        
         this.group.subjects = res;
       }
     );
@@ -119,7 +120,7 @@ this.studentGroupGradeService.setGrade(this.studentGroupGrades).subscribe(
   public getSemesterSelected(semester: SemesterDTO){
     this.selectedSemester = semester;
     this.findSubjects();
-    
+    this.source = null;
   }
   
   @ViewChild(MatPaginator) 

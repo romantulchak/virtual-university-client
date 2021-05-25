@@ -27,6 +27,6 @@ export class TeacherSubjectComponent implements OnInit {
     );
   }
   public selectedSubject(subject: SubjectDTO){
-
+    
   }
 }

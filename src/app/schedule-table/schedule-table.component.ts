@@ -17,6 +17,9 @@ import { saveAs } from 'file-saver';
 import { SemesterDTO } from '../dto/semester.dto';
 import { StatusEnum } from '../model/enum/status.enum';
 import { NotificationService } from '../service/notification.service';
+import { TokenStorageService } from '../service/tokenStorage.service';
+import { ChangeLessonStatusComponent } from '../change-lesson-status/change-lesson-status.component';
+import { RequestStatusEnum } from '../model/enum/request.enum';
 @Component({
   selector: 'app-schedule-table',
   templateUrl: './schedule-table.component.html',
@@ -25,16 +28,18 @@ import { NotificationService } from '../service/notification.service';
 export class ScheduleTableComponent implements OnInit, OnChanges, AfterViewInit {
 
   public days: ScheduleDayDTO[];
-  @Input("isAdmin") isAdmin: boolean = false;
-  @Input("group") group: StudentGroupDTO;
-  @Input("selectedSemester") selectedSemester: SemesterDTO;
   public scheduleId: number;
   public rangeFilter: boolean = false;
   public rangeGroup: FormGroup;
   public currentDay: ScheduleDay;
   private dateRange: DateRangeFilter;
   private apiToExport: string;
+  private teacherId: number;
   @Input("schedule") schedule: ScheduleDTO;
+  @Input("isAdmin") isAdmin: boolean = false;
+  @Input("isEditable") isEditable: boolean = false;
+  @Input("group") group: StudentGroupDTO;
+  @Input("selectedSemester") selectedSemester: SemesterDTO;
   @Output("showAllDays") showAllDays: EventEmitter<boolean> = new EventEmitter();
   @Output("showDaysForWeek") showDaysForWeek: EventEmitter<boolean> = new EventEmitter();
   @Output("showDaysByRange") showDaysByRange: EventEmitter<any> = new EventEmitter();
@@ -43,10 +48,10 @@ export class ScheduleTableComponent implements OnInit, OnChanges, AfterViewInit 
               private lessonService: LessonService,
               private dialog: MatDialog,
               private scheduleService: ScheduleService,
-              private notificationService: NotificationService) {}
+              private notificationService: NotificationService,
+              private tokenStorageService: TokenStorageService) {}
 
   ngOnInit(): void {
-
     this.generateRangeForm();
     this.updateLessonsInDay();
 
@@ -55,7 +60,8 @@ export class ScheduleTableComponent implements OnInit, OnChanges, AfterViewInit 
   ngOnChanges(){
     if(this.group != null && this.schedule != null){
       this.days = this.schedule.days;
-      this.scheduleId = this.schedule.id;      
+      this.scheduleId = this.schedule.id;     
+      this.teacherId = this.tokenStorageService.getUser().id;
     }
   }
   
@@ -181,5 +187,14 @@ export class ScheduleTableComponent implements OnInit, OnChanges, AfterViewInit 
           saveAs(res, "schedule.pdf");
         }
     );
+  }
+
+  public changeStatus(lesson: Lesson, day: ScheduleDay){
+    this.dialog.open(ChangeLessonStatusComponent, {
+      data: {
+        lesson: lesson,
+        currentDay: day,
+      }
+    });
   }
 }

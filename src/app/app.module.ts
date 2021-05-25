@@ -73,6 +73,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { NotificationComponent } from './notification/notification.component';
 import { AllSubjectsButtonComponent } from './all-subjects-button/all-subjects-button.component';
 import { NavUserComponent } from './nav-user/nav-user.component';
+import { ChangeLessonStatusComponent } from './change-lesson-status/change-lesson-status.component';
+import { LessonStatusRequestPanelComponent } from './lesson-status-request-panel/lesson-status-request-panel.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -125,6 +127,8 @@ import { NavUserComponent } from './nav-user/nav-user.component';
     NotificationComponent,
     AllSubjectsButtonComponent,
     NavUserComponent,
+    ChangeLessonStatusComponent,
+    LessonStatusRequestPanelComponent,
   ],
     imports: [
       BrowserModule,
