@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Link } from '../model/link.model';
+import { ServerNotificationService } from '../service/server-notification.service';
+import { TokenStorageService } from '../service/tokenStorage.service';
 
 @Component({
   selector: 'app-nav-user',
@@ -10,11 +12,14 @@ export class NavUserComponent implements OnInit {
   @Input('links') links: Link[];
   public isAdminPanelVisible:boolean;
   public navOpen: boolean = false;
-  constructor() { }
+  public counter: number = 0;
+  constructor(private serverNotificationService: ServerNotificationService,
+              private tokenStorageService: TokenStorageService) { }
 
   ngOnInit(): void {
     this.checkIfNavOpened();
     this.checkIfAdminPanelVisible();
+    this.getNotReadNotificationCount();
   }
 
   private checkIfAdminPanelVisible(){
@@ -31,10 +36,23 @@ export class NavUserComponent implements OnInit {
   public openNav(){
     this.navOpen = true;
     localStorage.setItem('navOpened', "true");
+    this.getNotReadNotificationCount();
   }
 
   public closeNav(){
     localStorage.setItem('navOpened', "false");
     this.navOpen = false;
+  }
+  public getNotReadNotificationCount(){
+    this.serverNotificationService.getNotReadNotificationCount().subscribe(
+      res=>{
+        this.counter = res;
+      }
+    );
+  }
+
+  public exit(){
+    this.tokenStorageService.clearStorage();
+    window.location.href = "/";
   }
 }

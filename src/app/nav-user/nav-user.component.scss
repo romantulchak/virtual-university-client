@@ -27,7 +27,31 @@ $linkColor: #28a745;
   .sidebar__ul {
     list-style-type: none;
     position: relative;
-
+    
+    .exit__notification_block{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 1em;
+      .icon__medium{
+        position: relative;
+        .notification__counter{
+          position: absolute;
+          background: #46a35e;
+          border-radius: 40px;
+          width: 18px;
+          height: 18px;
+          left: 18px;
+          text-align: center;
+          display: flex;
+          top: -7px;
+          color: #fff;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+    }
+    
     li {
       margin: 0 0 10px 0;
       padding: 0;

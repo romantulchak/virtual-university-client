@@ -18,11 +18,12 @@ export class StudentGroupGradeService{
     public setGrade(studentGroupGrades: StudentGroupGrade[]): Observable<any>{
         return this.http.post(API_URL + 'student-group-grade/setGrade', studentGroupGrades);
     }
-    public getStudentGradesBySubjectAndGroupForTeacher(groupId: number, subjectId: number, teacherId: number):Observable<StudentGroupGradeDTO[]>{
+    public getStudentGradesBySubjectAndGroupForTeacher(groupId: number, subjectId: number, teacherId: number, semesterId: number):Observable<StudentGroupGradeDTO[]>{
         let params = new HttpParams();
         params = params.append('teacherId', teacherId.toString())
                         .append('groupId', groupId.toString())
-                        .append('sbujectId', subjectId.toString());
+                        .append('subjectId', subjectId.toString())
+                        .append('semesterId', semesterId.toString());
         return this.http.get<StudentGroupGradeDTO[]>(API_URL + 'student-group-grade/findForTeacher', {params: params});
     }
     public getStudentGrades(studentId: number, semesterId: number):Observable<StudentGroupGradeDTO[]>{
