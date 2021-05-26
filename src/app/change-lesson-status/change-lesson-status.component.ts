@@ -33,6 +33,8 @@ export class ChangeLessonStatusComponent implements OnInit {
           this.notificationService.showNotification('The request has been sent', StatusEnum[StatusEnum.OK], StatusEnum["OK"]);
         },
         error=>{
+          console.log(error);
+          
           this.notificationService.showNotification(error.error.message, error.statusText, error.status);
         }
       );
