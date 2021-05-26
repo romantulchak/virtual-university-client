@@ -99,7 +99,7 @@ export class GroupDetailsTeacherComponent implements OnInit {
 
   private findStudentGrades(){
     this.loaded = false;
-    this.studentGroupGradeService.getStudentGradesBySubjectAndGroupForTeacher(this.groupId, this.subject.id, this.teacherId).subscribe(
+    this.studentGroupGradeService.getStudentGradesBySubjectAndGroupForTeacher(this.groupId, this.subject.id, this.teacherId, this.selectedSemester.id).subscribe(
       res=>{
         if(res != null){
           this.source = new MatTableDataSource(res);

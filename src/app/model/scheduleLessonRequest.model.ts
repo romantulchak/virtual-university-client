@@ -6,4 +6,5 @@ export class ScheduleLessonRequest{
     public message: string;
     public lesson: Lesson;
     public previousStatus: string;
+    public decision: string;
 }
