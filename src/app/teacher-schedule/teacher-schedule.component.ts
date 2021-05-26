@@ -73,8 +73,9 @@ export class TeacherScheduleComponent implements OnInit {
   public getDaysForWeek(){
     this.scheduleDayService.getDaysForWeek(this.group.id, this.selectedSemester.id).subscribe(
       res=>{        
-        this.getScheduleIdByGroup();
-        this.schedule.days = res;
+        // this.getScheduleIdByGroup();
+        this.schedule = new ScheduleDTO();
+        this.schedule.days = res;        
       }
     );
   }

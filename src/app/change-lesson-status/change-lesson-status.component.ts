@@ -28,7 +28,6 @@ export class ChangeLessonStatusComponent implements OnInit {
   public sendRequest(){
     if(this.teacherId != undefined){
       this.scheduleLessonRequest.lesson = this.data.lesson;
-      this.scheduleLessonRequest.message.trim();
       this.lessonService.changeLessonStatus(this.teacherId, this.scheduleLessonRequest).subscribe(
         res=>{
           this.notificationService.showNotification('The request has been sent', StatusEnum[StatusEnum.OK], StatusEnum["OK"]);
