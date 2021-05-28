@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { RxStompService } from '@stomp/ng2-stompjs';
 import { Link } from '../model/link.model';
 import { ServerNotificationService } from '../service/server-notification.service';
 import { TokenStorageService } from '../service/tokenStorage.service';
@@ -13,13 +14,25 @@ export class NavUserComponent implements OnInit {
   public isAdminPanelVisible:boolean;
   public navOpen: boolean = false;
   public counter: number = 0;
+  public isNotificationBoxOpened: boolean = false;
   constructor(private serverNotificationService: ServerNotificationService,
-              private tokenStorageService: TokenStorageService) { }
+              private tokenStorageService: TokenStorageService,
+              private rxStompService: RxStompService) { }
 
   ngOnInit(): void {
     this.checkIfNavOpened();
     this.checkIfAdminPanelVisible();
     this.getNotReadNotificationCount();
+    this.observeNotificationCounter();
+  }
+
+
+  private observeNotificationCounter(){
+    this.rxStompService.watch(`/user/${this.tokenStorageService.getUser().username}/queue/notification`).subscribe(
+      res=>{
+        this.counter = Number.parseInt(res.body);
+      }
+    );
   }
 
   private checkIfAdminPanelVisible(){
@@ -50,7 +63,9 @@ export class NavUserComponent implements OnInit {
       }
     );
   }
-
+  public openNotificationBox(){
+    this.isNotificationBoxOpened = true;
+  }
   public exit(){
     this.tokenStorageService.clearStorage();
     window.location.href = "/";

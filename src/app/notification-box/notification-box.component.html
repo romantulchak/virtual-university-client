@@ -1,0 +1,14 @@
+<section class="notification__box">
+    <div
+    class="notification__scroll"
+    infinite-scroll
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="5"
+    [scrollWindow]="false"
+    (scrolled)="scrollNotificationsBox()"
+  >
+      <div class="notification" *ngFor="let notification of notifications">
+          <h3>{{notification.message}}</h3>
+      </div>
+    </div>
+</section>

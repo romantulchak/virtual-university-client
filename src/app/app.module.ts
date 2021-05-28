@@ -75,6 +75,10 @@ import { AllSubjectsButtonComponent } from './all-subjects-button/all-subjects-b
 import { NavUserComponent } from './nav-user/nav-user.component';
 import { ChangeLessonStatusComponent } from './change-lesson-status/change-lesson-status.component';
 import { LessonStatusRequestPanelComponent } from './lesson-status-request-panel/lesson-status-request-panel.component';
+import { InjectableRxStompConfig, InjectableRxStompRpcConfig, RxStompService, rxStompServiceFactory } from '@stomp/ng2-stompjs';
+import { RxStompConfig } from './config/rxStomp.config';
+import { NotificationBoxComponent } from './notification-box/notification-box.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 @NgModule({
   declarations: [
     AppComponent,
@@ -129,6 +133,8 @@ import { LessonStatusRequestPanelComponent } from './lesson-status-request-panel
     NavUserComponent,
     ChangeLessonStatusComponent,
     LessonStatusRequestPanelComponent,
+    NotificationBoxComponent,
+    
   ],
     imports: [
       BrowserModule,
@@ -153,9 +159,20 @@ import { LessonStatusRequestPanelComponent } from './lesson-status-request-panel
       MatSortModule,
       NgxMaterialTimepickerModule,
       MatDialogModule,
-      MatSnackBarModule
+      MatSnackBarModule,
+      InfiniteScrollModule
     ],
-  providers: [authInterceptorProviders],
+  providers: [authInterceptorProviders,
+    {
+      provide: InjectableRxStompConfig,
+      useValue: RxStompConfig
+    },
+    {
+      provide: RxStompService,
+      useFactory: rxStompServiceFactory,
+      deps: [InjectableRxStompConfig]
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
