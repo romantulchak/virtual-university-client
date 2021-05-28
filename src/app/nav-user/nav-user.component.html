@@ -1,18 +1,22 @@
 <button *ngIf="!navOpen" class="open-nav-btn" (click)="openNav()">☰</button>
-<nav  id="mySidebar" class="sidebar" [class.nav-open]="navOpen">
-    <span (click)="closeNav()" class="closebtn">×</span> 
-    <ul class="sidebar__ul">
-        <ng-container *ngFor="let link of links">
-            <li><a routerLinkActive="active-link" class="link" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="link.route">{{link.name}}</a></li>
-            <ul>
-                <ng-container *ngFor="let child of link.children">
-                    <li><a [routerLink]="link.route">{{link.name}}</a></li>
-                </ng-container>
-            </ul>
-        </ng-container>        
-        <li class="exit__notification_block">
-            <button class="icon__medium"><img src="../../assets/images/icons/notification.svg"  alt=""><span class="notification__counter">{{counter}}</span></button>
-            <button class="icon__medium" (click)="exit()"><img src="../../assets/images/icons/exit.svg"  alt=""></button>
-        </li>
-    </ul>
-</nav>
+<section id="mySidebar" class="sidebar" [class.nav-open]="navOpen">
+    <nav>
+        <span (click)="closeNav()" class="closebtn">×</span> 
+        <ul class="sidebar__ul">
+            <ng-container *ngFor="let link of links">
+                <li><a routerLinkActive="active-link" class="link" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="link.route">{{link.name}}</a></li>
+                <ul>
+                    <ng-container *ngFor="let child of link.children">
+                        <li><a [routerLink]="link.route">{{link.name}}</a></li>
+                    </ng-container>
+                </ul>
+            </ng-container>        
+            <li class="exit__notification_block">
+                <button class="icon__medium" (click)="openNotificationBox()"><img src="../../assets/images/icons/notification.svg"  alt=""><span class="notification__counter">{{counter}}</span></button>
+                <button class="icon__medium" (click)="exit()"><img src="../../assets/images/icons/exit.svg"  alt=""></button>
+            </li>
+        </ul>
+        <app-notification-box *ngIf="isNotificationBoxOpened"></app-notification-box>
+    </nav>
+</section>
+

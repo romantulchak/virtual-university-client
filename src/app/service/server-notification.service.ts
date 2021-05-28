@@ -12,10 +12,11 @@ const API_URL = environment.api;
 export class ServerNotificationService{
     constructor(private http: HttpClient){}
 
-    public findAllNotificationsForUser(userId: number):Observable<ServerNotificationDTO[]>{
-        return this.http.get<ServerNotificationDTO[]>(API_URL + 'notification');
+    public findAllNotificationsForUser(page: number):Observable<ServerNotificationDTO[]>{
+        return this.http.get<ServerNotificationDTO[]>(API_URL + 'notification/' + page);
     }
     public getNotReadNotificationCount():Observable<number>{
         return this.http.get<number>(API_URL + 'notification/notificationCounter');
     }
+
 }
