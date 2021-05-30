@@ -91,7 +91,7 @@ a{
       top: -18px;
       font-family: $titleFont;
       font-size: 21px;
-      background: white;
+      background: #fafafa;
       color: #4f9a7a;
     }
 }
@@ -120,8 +120,21 @@ a{
   height: 90vh !important;
 }
 
+.closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+  cursor: pointer;
+}
 
-
+.loading {
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .error-notification{
   @include notification(#dc675f, #fff);
 }

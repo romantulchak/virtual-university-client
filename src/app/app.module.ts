@@ -79,6 +79,7 @@ import { InjectableRxStompConfig, InjectableRxStompRpcConfig, RxStompService, rx
 import { RxStompConfig } from './config/rxStomp.config';
 import { NotificationBoxComponent } from './notification-box/notification-box.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+
 @NgModule({
   declarations: [
     AppComponent,

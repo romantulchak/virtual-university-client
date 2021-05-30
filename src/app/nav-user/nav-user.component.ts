@@ -70,4 +70,9 @@ export class NavUserComponent implements OnInit {
     this.tokenStorageService.clearStorage();
     window.location.href = "/";
   }
+
+  public closeNotificationBox(isClose: boolean){
+    this.isNotificationBoxOpened = isClose;
+    this.getNotReadNotificationCount();
+  }
 }

@@ -18,11 +18,20 @@ export class AppComponent implements OnInit{
   ngOnInit(): void{
     this.isAdmin = this.isUserAdmin();
     this.observeNotification();
+    this.observeScheduleChange();
   }
 
   private observeNotification(){
     this.rxStompService.watch(`/user/${this.tokenStorageService.getUser().username}/queue/notification-snac`).subscribe(
       res=>{ 
+        this.notificationService.showNotification(res.body, StatusEnum[StatusEnum.OK], StatusEnum["OK"]);
+      }
+    );
+  }
+
+  private observeScheduleChange(){
+    this.rxStompService.watch(`/user/${this.tokenStorageService.getUser().username}/queue/schedule-changed`).subscribe(
+      res=>{
         this.notificationService.showNotification(res.body, StatusEnum[StatusEnum.OK], StatusEnum["OK"]);
       }
     );
