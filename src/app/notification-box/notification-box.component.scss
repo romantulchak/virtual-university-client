@@ -1,20 +1,58 @@
-.notification__box{
-    position: absolute;
-    height: 100vh;
-    top: 0;
-    background: #fff;
-    width: 100%;
-    left: 0;
+.notification__box {
+  position: absolute;
+  height: 100vh;
+  top: 0;
+  background: #fff;
+  width: 100%;
+  left: 0;
+  .notRead {
+    background: beige;
 
-    .notification__scroll{
-        height: 99%;
-        overflow-y: scroll;
-    
-    .notification{
-        padding: 1em;
-        background: beige;
-        margin-bottom: .5em;
-        margin-top: .5em;
+  }
+  .notification__scroll {
+    height: 99%;
+    overflow-y: scroll;
+
+    .notification {
+      padding: 1em;
+      margin-bottom: 0.5em;
+      margin-top: 0.5em;
+      width: 235px;
+      box-shadow: 0 1px 4px 0 rgb(0 0 0 / 30%);
+      margin-left: 1em; 
+      .date{
+        text-align: right;
+        margin-top: 5px;
+        span{
+          font-size: 13px;
+          font-weight: 900;
+          font-family: sans-serif;
+          letter-spacing: 1px;
+        }
+      }
+      h3{
+        font-family: NavFont;
+        font-size: 14px;
+      }
     }
+  }
+
 }
-}
+::-webkit-scrollbar {
+    width: 3px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #bebbbb; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #bebbbb; 
+  }

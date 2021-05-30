@@ -1,49 +1,64 @@
 <section>
-    <div class="container">
-        <div class="grid__tables">
-            <div class="group__information_block" *ngIf="!loading; else loadingBlock">
-               <app-group-information class="information_block" [group]="groupDetais"></app-group-information>
-                <div>
-                    <h3>Semesters</h3>
-                    <button (click)="changeSemester()">Add semester</button>
-                </div>
-            </div>
+  <div class="container">
+    <div class="grid__tables">
+      <div class="group__information_block">
+        <ng-container *ngIf="!loading; else loadingBlock">
+          <app-group-information class="information_block" [group]="groupDetais"></app-group-information>
+          <div>
+            <h3>Semesters</h3>
+            <button (click)="changeSemester()">Add semester</button>
+          </div>
+        </ng-container>
+      </div>
 
-            <div class="group__students_block">
-                <div class="table__legend">
-                    <h3 class="table__title">Students in Group {{groupDetais?.name}}</h3>
-                    <app-students-table [source]="source" [displayedColumns]="displayedColumns" [showDeleteButton]="true" (studentToRemove)="removeStudent($event)"></app-students-table>
-                </div>
-            </div>
-
-            <div class="group__subjects_block" *ngIf="source != null; else loadingBlock">
-                <div class="table__legend">
-                    <h3 class="table__title">Group Subjects</h3>
-                    <app-subjects-table [source]="subjectsSource" [showTeacherDetails]="true" [displayedColumns]="subjectsDisplayedColumns"></app-subjects-table>
-                </div>
-            </div>
-            
-            <div class="group__subjects_block" *ngIf="subjectsSource != null; else loadingBlock">
-                <div class="table__legend">
-                    <h3 class="table__title">Add Student to {{groupDetais?.name}}</h3>
-                    <app-students-table [source]="studentsToAddSource" (studentToArray)="addStudentToArray($event)" [showAddButton]="true" [displayedColumns]="studentsToAddDisplayedColumns"></app-students-table>
-                    <button (click)="addStudentsToGroup()" *ngIf="studentToGroup?.length != 0">Add</button>
-                </div>
-            </div>
-
-            <div class="group__add-subjects_block" *ngIf="subjectsSource != null; else loadingBlock">
-                <div class="table__legend">
-                    <h3 class="table__title">Add Subjects to {{groupDetais?.name}}</h3>
-                    <app-all-subjects-button #allSubjectsButton [semesterId]="groupDetais.semester.id" (all-subjects)="findAllSubjects($event)"></app-all-subjects-button>
-                    <app-subjects-table [source]="subjectsToAddSource"  [showTecahers]="true" (getTeachers)="setSubjectsToArray($event)" [displayedColumns]="subjectsToAddDisplayedColumns"></app-subjects-table>
-                    <button *ngIf="subjectTeacherGroup.length != 0" (click)="addSubjectToGroup()" >Add</button>
-                </div>
-            </div>
-
+      <div class="group__students_block">
+        <div class="table__legend">
+          <h3 class="table__title">Students in Group {{groupDetais?.name}}</h3>
+          <app-students-table [source]="source" [displayedColumns]="displayedColumns" [showDeleteButton]="true"
+            (studentToRemove)="removeStudent($event)"></app-students-table>
         </div>
+      </div>
+
+      <div class="group__subjects_block">
+        <ng-container *ngIf="source != null; else loadingBlock">
+          <div class="table__legend">
+            <h3 class="table__title">Group Subjects</h3>
+            <app-subjects-table [source]="subjectsSource" [showTeacherDetails]="true"
+              [displayedColumns]="subjectsDisplayedColumns"></app-subjects-table>
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="group__subjects_block">
+        <ng-container *ngIf="subjectsSource != null; else loadingBlock">
+          <div class="table__legend">
+            <h3 class="table__title">Add Student to {{groupDetais?.name}}</h3>
+            <app-students-table [source]="studentsToAddSource" (studentToArray)="addStudentToArray($event)"
+              [showAddButton]="true" [displayedColumns]="studentsToAddDisplayedColumns"></app-students-table>
+            <button (click)="addStudentsToGroup()" *ngIf="studentToGroup?.length != 0">Add</button>
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="group__add-subjects_block">
+        <ng-container *ngIf="subjectsSource != null; else loadingBlock">
+          <div class="table__legend">
+            <h3 class="table__title">Add Subjects to {{groupDetais?.name}}</h3>
+            <app-all-subjects-button #allSubjectsButton [semesterId]="groupDetais.semester.id"
+              (all-subjects)="findAllSubjects($event)"></app-all-subjects-button>
+            <app-subjects-table [source]="subjectsToAddSource" [showTecahers]="true"
+              (getTeachers)="setSubjectsToArray($event)" [displayedColumns]="subjectsToAddDisplayedColumns">
+            </app-subjects-table>
+            <button *ngIf="subjectTeacherGroup.length != 0" (click)="addSubjectToGroup()">Add</button>
+          </div>
+        </ng-container>
+      </div>
     </div>
-    <ng-template #loadingBlock>
-        <h3>Loading...</h3>
-    </ng-template>
+  </div>
+  <ng-template #loadingBlock>
+    <div class="loading">
+      <img src="../../assets/images/icons/loader.gif" alt="">
+    </div>
+  </ng-template>
 
 </section>

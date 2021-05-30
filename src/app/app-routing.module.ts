@@ -35,8 +35,6 @@ import { StudentGroupScheduleComponent } from './student-group-schedule/student-
 import { GroupDetailsTeacherLayoutComponent } from './group-details-teacher-layout/group-details-teacher-layout.component';
 import { TeacherScheduleComponent } from './teacher-schedule/teacher-schedule.component';
 import { LessonStatusRequestPanelComponent } from './lesson-status-request-panel/lesson-status-request-panel.component';
-
-
 const routes: Routes = [
   {path:'', component:LoginComponent, canActivate:[LoginGuard, ProfileGuard]},
   {path:'login', component: LoginComponent},

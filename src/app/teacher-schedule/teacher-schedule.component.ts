@@ -70,6 +70,7 @@ export class TeacherScheduleComponent implements OnInit {
     );
   }
 
+  //TODO: get days for week for teacher
   public getDaysForWeek(){
     this.scheduleDayService.getDaysForWeek(this.group.id, this.selectedSemester.id).subscribe(
       res=>{        

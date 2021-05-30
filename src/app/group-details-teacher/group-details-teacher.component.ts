@@ -59,8 +59,6 @@ export class GroupDetailsTeacherComponent implements OnInit {
     this.studentGroupService.findGroup(this.groupId).subscribe(
       res=>{
         this.group = res;
-        console.log(res);
-        
         this.studentGroupService.teacherCurrentGroup.next(res);
       },
       error=>{
