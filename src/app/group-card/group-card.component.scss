@@ -1,0 +1,83 @@
+$background: #FFFFFF;
+$color: black;
+
+.group-card {
+  background: $background;
+  color: $color;
+  position: relative;
+  height: 12rem;
+  width: 300px;
+  border-radius: 25px;
+
+  .multi-button {
+    z-index: 0;
+    position: absolute;
+    top: 1.25rem;
+    left: 1.25rem;
+    border-radius: 100%;
+    width: 0rem;
+    height: 0rem;
+    transform: translate(-50%, -50%);
+    transition: .25s cubic-bezier(0.25, 0, 0, 1);
+
+    button {
+      display: grid;
+      place-items: center;
+      position: absolute;
+      width: 2rem;
+      height: 2rem;
+      border: none;
+      border-radius: 100%;
+      background: $background;
+      color: $color;
+      z-index: 99999999999;
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+      transition: .25s cubic-bezier(0.25, 0, 0, 1);
+      box-shadow: 1px 1px 7px 2px #8a888857;
+
+      img {
+        width: 20px;
+      }
+
+      &:hover {
+        box-shadow: 1px 1px 7px 2px rgb(63, 63, 63);
+      }
+
+      &:first-child:nth-last-child(1),
+      &:first-child:nth-last-child(1)~* {
+        &:nth-child(1) {
+            left:25%;
+            top:25%;
+        }
+      }
+    }
+  }
+
+  .group-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 1rem;
+    background: $background;
+    color: $color;
+    font-family: TitleFont;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: capitalize;
+    transition: .5s;
+    box-shadow: 1px 1px 7px 2px #8a888857;
+    &:hover{
+        box-shadow: none;
+        background: #28a745;
+        color: #fff;
+      }
+  }
+
+  &:hover .multi-button,
+  .multi-button:focus-within {
+    width: 10rem;
+    height: 10rem;
+  }
+}

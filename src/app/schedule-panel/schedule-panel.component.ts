@@ -78,7 +78,7 @@ export class SchedulePanelComponent implements OnInit {
   }
 
   public getDaysForWeek(){
-    this.scheduleDayService.getDaysForWeek(this.currentGroup.id, this.selectedSemester.id).subscribe(
+    this.scheduleDayService.getDaysForWeek(this.selectedSemester.id).subscribe(
       res=>{        
         this.schedule = this.intiSchedule(res, this.scheduleId);
       }

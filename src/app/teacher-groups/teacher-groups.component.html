@@ -1,12 +1,9 @@
 <section>
     <div class="container">
-        <div *ngFor="let group of studentGroups">
-            <div class="group__card">
-                
-                <h3><a routerLink="../group-details/{{group.id}}" (click)="selectGroup(group)">{{group.name}}</a></h3>
-                <h3>{{group.semester.name}}</h3>    
+        <div class="groups">
+            <div *ngFor="let group of studentGroups">
+                <app-group-card [group]="group"></app-group-card>
             </div>
-            <hr>
         </div>
     </div>
 </section>
