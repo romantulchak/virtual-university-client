@@ -1,0 +1,10 @@
+<a routerLink="../group-details/{{group.id}}" (click)="selectGroup(group)">
+  <div *ngIf="group != null" class="group-card">
+    <div class="multi-button">
+      <button><img src="../../assets/images/icons/paperclip.svg" alt=""></button>
+    </div>
+    <div class="group-container">
+      <h2>{{group.name}}</h2>
+    </div>
+  </div>
+</a>

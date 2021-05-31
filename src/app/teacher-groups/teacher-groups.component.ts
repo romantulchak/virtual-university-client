@@ -26,7 +26,5 @@ export class TeacherGroupsComponent implements OnInit {
       }
     );
   }
-  public selectGroup(group: StudentGroupDTO){
-    this.studentGroupService.teacherCurrentGroup.next(group);
-  }
+
 }

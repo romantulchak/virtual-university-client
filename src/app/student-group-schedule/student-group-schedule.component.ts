@@ -60,7 +60,7 @@ export class StudentGroupScheduleComponent implements OnInit {
   }
 
   public getDaysForWeek(){
-    this.scheduleDayService.getDaysForWeek(this.group.id, this.selectedSemester.id).subscribe(
+    this.scheduleDayService.getDaysForWeek(this.selectedSemester.id).subscribe(
       res=>{        
         this.schedule = this.intiSchedule(res, this.scheduleId);
 
