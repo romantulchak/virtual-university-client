@@ -1,4 +1,5 @@
-import { RequestStatusEnum } from "../model/enum/request.enum";
+import { RequestDecisionEnum } from "../model/enum/request.enum";
+import { Request } from "../model/request.model";
 import { LessonDTO } from "./lesson.dto";
 
 export class ScheduleLessonRequestDTO{
@@ -6,5 +7,6 @@ export class ScheduleLessonRequestDTO{
     public status: string;
     public message: string;
     public lesson: LessonDTO;
-    public decision: RequestStatusEnum;
+    public decision: RequestDecisionEnum;
+    public info: Request;
 }

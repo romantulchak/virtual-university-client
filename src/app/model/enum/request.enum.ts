@@ -1,3 +1,3 @@
-export enum RequestStatusEnum{
+export enum RequestDecisionEnum{
     ACCEPTED, REJECTED
 }
