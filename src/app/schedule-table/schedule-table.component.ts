@@ -19,7 +19,7 @@ import { StatusEnum } from '../model/enum/status.enum';
 import { NotificationService } from '../service/notification.service';
 import { TokenStorageService } from '../service/tokenStorage.service';
 import { ChangeLessonStatusComponent } from '../change-lesson-status/change-lesson-status.component';
-import { RequestStatusEnum } from '../model/enum/request.enum';
+
 @Component({
   selector: 'app-schedule-table',
   templateUrl: './schedule-table.component.html',
