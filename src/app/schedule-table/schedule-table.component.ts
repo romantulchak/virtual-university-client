@@ -62,6 +62,8 @@ export class ScheduleTableComponent implements OnInit, OnChanges, AfterViewInit 
       this.days = this.schedule.days;
       this.scheduleId = this.schedule.id;     
       this.teacherId = this.tokenStorageService.getUser().id;
+      console.log(this.days);
+      
     }
   }
   

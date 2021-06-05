@@ -20,6 +20,12 @@ $table-font: TitleFont;
     tbody{
         width: 100%;
         display: block;
+        position: relative;
+        .lesson__comment{
+            position: absolute;
+            right: -8px;
+            top: -10px;
+        }
 
         th{
             padding: 1em;

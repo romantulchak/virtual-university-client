@@ -7,6 +7,7 @@ import { ScheduleLessonRequestDTO } from '../dto/scheduleLessonRequest.dto';
 import { RequestDecisionEnum } from '../model/enum/request.enum';
 import { Lesson } from '../model/lesson.model';
 import { ScheduleLessonRequest } from '../model/scheduleLessonRequest.model';
+import { ChangeDecisionRequest } from '../request/changeDecisionRequest.request';
 import { ChangeStatusRequest } from '../request/changeStatusRequest.request';
 
 const API_URL = environment.api;
@@ -36,11 +37,8 @@ export class LessonService{
         params = params.append('page', page.toString());
         return this.http.get<ScheduleLessonRequestDTO[]>(API_URL + 'lesson/getLessonRequests', {params: params});
     }
-    public changeRequestDecision(requestId: number, decision: RequestDecisionEnum): Observable<any>{
-        let params = new HttpParams();
-        params = params.append('requestId', requestId.toString())
-                        .append('decision', decision.toString());
-        return this.http.put(API_URL + 'lesson/changeRequestDecision',null ,{params: params});
+    public changeRequestDecision(changeDecisionRequest: ChangeDecisionRequest): Observable<any>{
+        return this.http.put(API_URL + 'lesson/changeRequestDecision',changeDecisionRequest);
     }
 
     public changeRequestStatus(request: ChangeStatusRequest): Observable<any>{

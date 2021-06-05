@@ -18,6 +18,8 @@
       margin-bottom: 0.5em;
       margin-top: 0.5em;
       width: 235px;
+      min-height: 75px;
+      transition: .5s;
       box-shadow: 0 1px 4px 0 rgb(0 0 0 / 30%);
       margin-left: 1em; 
       .date{
@@ -42,17 +44,14 @@
     width: 3px;
   }
   
-  /* Track */
   ::-webkit-scrollbar-track {
     background: #f1f1f1; 
   }
    
-  /* Handle */
   ::-webkit-scrollbar-thumb {
     background: #bebbbb; 
   }
   
-  /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
     background: #bebbbb; 
   }

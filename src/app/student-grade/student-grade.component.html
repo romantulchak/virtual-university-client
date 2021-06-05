@@ -1,36 +1,48 @@
 <section>
-    <div class="container">
-        <app-group-semesters [group]="group" (semesterSelected)="getSemesterSelected($event)"></app-group-semesters>
-        <table class="group__information">
-            <thead>
-                <tr>
-                    <th class="table__number">No.</th>
-                    <th>Subject</th>
-                    <th>Type</th>
-                    <th>Teacher</th>
-                    <th>Grade</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let grade of studentGrades; let i = index">
-                        <td class="table__number">{{i+1}}</td>
-                        <td>{{grade.subjectTeacherGroup.subject.name}}</td>
-                        <td>{{grade.subjectTeacherGroup.subject.type}}</td>
-                        <td><a routerLink="teacher-profile/{{grade.subjectTeacherGroup.teacher.id}}">{{grade.subjectTeacherGroup.teacher.firstName}} {{grade.subjectTeacherGroup.teacher.lastName}}</a></td>
-                        <td>
-                            <span class="grade" *ngIf="grade.grade != 0" 
-                                  [class.best-grade]="grade.grade == 5"
-                                  [class.good-grade]="grade.grade == 4.5"
-                                  [class.bad-grade]="grade.grade == 2"
-                                  >{{grade.grade}}</span>
-                        </td>
-                    </tr>
-                 <tr>
-            </tbody>
-        </table>
+  <div class="container">
+    <ng-container *ngIf="loaded; else loading">
+      <app-group-semesters [group]="group" (semesterSelected)="getSemesterSelected($event)"></app-group-semesters>
+      <table class="group__information">
+        <thead>
+          <tr>
+            <th class="table__number">No.</th>
+            <th>Subject</th>
+            <th>Type</th>
+            <th>Teacher</th>
+            <th>Grade</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let grade of studentGrades; let i = index">
+            <td class="table__number">{{i+1}}</td>
+            <td>{{grade.subjectTeacherGroup.subject.name}}</td>
+            <td>{{grade.subjectTeacherGroup.subject.type}}</td>
+            <td><a
+                routerLink="teacher-profile/{{grade.subjectTeacherGroup.teacher.id}}">{{grade.subjectTeacherGroup.teacher.firstName}}
+                {{grade.subjectTeacherGroup.teacher.lastName}}</a></td>
+            <td>
+              <span class="grade" *ngIf="grade.grade != 0" [class.best-grade]="grade.grade == 5"
+                [class.good-grade]="grade.grade == 4.5" [class.bad-grade]="grade.grade == 2">{{grade.grade}}</span>
+            </td>
+          </tr>
+          <tr>
+        </tbody>
+      </table>
 
-        <div class="avarage__grade" *ngIf="averageGrade > 0">
-            <h3>Average grade: {{averageGrade}}</h3>
-        </div>
-    </div>
+      <div class="avarage__grade" *ngIf="averageGrade > 0">
+        <h3>Average grade: {{averageGrade}}</h3>
+      </div>
+      <div class="pie__chart" *ngIf="gradeData.length != 0">
+        <canvas baseChart [data]="gradeData" [labels]="gradeLabels" [chartType]="pieChartType"
+          [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend">
+          >
+        </canvas>
+      </div>
+    </ng-container>
+    <ng-template #loading>
+      <div class="loading">
+        <img src="../../assets/images/icons/loader.gif" alt="">
+      </div>
+    </ng-template>
+  </div>
 </section>

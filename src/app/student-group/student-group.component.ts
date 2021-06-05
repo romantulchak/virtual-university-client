@@ -20,10 +20,11 @@ export class StudentGroupComponent implements OnInit {
 
 
   public studentGroup: StudentGroupDTO;
-  private studentId: number;
   public gradeForSubject: number;
   public currentSubject: SubjectTeacherGroupDTO = new SubjectTeacherGroupDTO();
   public subjectFiles: SubjectFile[];
+  public loaded: boolean = false;
+  private studentId: number;
   private selectedSemester: SemesterDTO;
   constructor(private groupService: StudentGroupService, 
               private tokenStorageService: TokenStorageService,
@@ -40,6 +41,9 @@ export class StudentGroupComponent implements OnInit {
     this.groupService.findStudentGroup(this.studentId).subscribe(
       res=>{
         this.studentGroup = res; 
+        setTimeout(() => {
+          this.loaded = true;
+        }, 500);
       },
       err=>{
         console.log(err);

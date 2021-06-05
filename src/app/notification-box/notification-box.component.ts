@@ -14,8 +14,8 @@ import { TokenStorageService } from '../service/tokenStorage.service';
        transition('void => active', [
          style({ height: '0', opacity: '0', transform: 'translateY(20px)' }),
          sequence([
-           animate(".5s ease", style({ height: '*', opacity: '.2', transform: 'translateY(20px)' })),
-           animate(".95s ease", style({ height: '*', opacity: 1, transform: 'translateY(0)', 'box-shadow': '0 1px 4px 0 rgba(0, 0, 0, 0.3)'  }))
+           animate(".5s ease", style({ height: '100px', opacity: '.2', transform: 'translateY(20px)' })),
+           animate(".95s ease", style({ height: '75px', opacity: 1, transform: 'translateY(0)', 'box-shadow': '0 1px 4px 0 rgba(0, 0, 0, 0.3)'  }))
          ])
        ])
    ])
