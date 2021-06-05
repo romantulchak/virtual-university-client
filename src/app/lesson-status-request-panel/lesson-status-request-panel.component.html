@@ -1,55 +1,4 @@
 <section>
-
-    <!-- <div *ngFor="let request of requests" class="col">
-        <div class="card card-6 stacked--up-right">
-            <div class="content">
-                <h2>Date: {{request.lesson.dateStart | date: 'dd-MM-yyyy'}}</h2>
-                <div>
-                    <h3>Lesson</h3>
-                    <h3>Date start: {{request.lesson.dateStart | date: 'HH:mm'}}</h3>
-                    <h3>Date end: {{request.lesson.dateEnd | date: 'HH:mm'}}</h3>
-                </div>
-                <h3>{{request.message}}</h3>
-                <div class="statuses">
-                    <div class="status" [class.status__actual]="request.decision == requestDecision[requestDecision.REJECTED]">
-                        <span>Previous status</span>
-                        {{request.previousStatus}}
-                    </div>
-                    <div class="arrow">
-                        <img src="../../assets/images/icons/arrow.svg" alt="">
-                    </div>
-                    <div class="status" [class.status__actual]="'PENDING' && request.decision == null">
-                        PENDING
-                    </div>
-                    <div class="arrow">
-                        <img src="../../assets/images/icons/arrow.svg" alt="">
-                    </div>
-                    <div class="status"  [class.status__actual]="request.decision == requestDecision[requestDecision.ACCEPTED]">
-                        <span>Exptected status</span>
-                        {{request.actualStatus}}
-                    </div>
-                    <div *ngIf="request != null && request.info && request?.info?.username == this.currentUsername && request.info.requestStatus == requestStatus[requestStatus.CHECK_IN]" class="arrow__buttons">
-                        <div class="arrow arrow_with_buttons">
-                            <img src="../../assets/images/icons/arrow.svg" alt="">
-                        </div>
-                        <div class="decision">
-                            <button class="status decision__button decision__button_ok" (click)="setStatus(requestDecision[requestDecision.ACCEPTED], request)" [class.accepted]="request.decision === 'ACCEPTED'" [disabled]="request.decision != null">
-                                ACCEPT
-                            </button>
-                            <button class="status decision__button decision__button_reject" (click)="setStatus(requestDecision[requestDecision.REJECTED], request) && request.decision == null" [class.rejected]="request.decision === 'REJECTED'" [disabled]="request.decision != null">
-                                REJECT
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div *ngIf="request.decision == null &&  request?.info?.username == this.currentUsername || request.info.requestStatus == requestStatus[requestStatus.CHECK_OUT]">
-                    <button [disabled]="request.info.requestStatus == requestStatus[requestStatus.CHECK_OUT]" (click)="checkout(request)">Checkout</button>
-                    <button [disabled]="request.info.requestStatus == requestStatus[requestStatus.CHECK_IN]" (click)="checkin(request)">Checkin</button>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
     <div>
         <div *ngFor="let request of requests">
             <h2>Date: {{request.lesson.dateStart | date: 'dd-MM-yyyy'}}</h2>
@@ -61,7 +10,7 @@
             <h3>{{request.message}}</h3>
             <div class="statuses">
                 <div class="status" [class.status__actual]="request.decision == requestDecision[requestDecision.REJECTED]">
-                    <span>Previous status</span>
+                    <span class="block__status_text">Previous status</span>
                     {{request.previousStatus}}
                 </div>
                 <div class="arrow">
@@ -74,10 +23,19 @@
                     <img src="../../assets/images/icons/arrow.svg" alt="">
                 </div>
                 <div class="status"  [class.status__actual]="request.decision == requestDecision[requestDecision.ACCEPTED]">
-                    <span>Exptected status</span>
+                    <span class="block__status_text">Exptected status</span>
                     {{request.actualStatus}}
                 </div>
-                <div *ngIf="request != null && request.info && request?.info?.username == this.currentUsername && request.info.requestStatus == requestStatus[requestStatus.CHECK_IN]" class="arrow__buttons">
+                <div *ngIf="request.decision != null || (request != null && request.info && request?.info?.username == this.currentUsername && request.info.requestStatus == requestStatus[requestStatus.CHECK_IN])" class="comment arrow__buttons">
+                    <div class="arrow arrow_with_buttons">
+                        <img src="../../assets/images/icons/arrow.svg" alt="">
+                    </div>
+                    <div>
+                        <span class="block__status_text">Comment</span>
+                        <textarea [disabled]="request.decision != null" name="comment" [(ngModel)]="request.lesson.comment" id="" cols="30" rows="10"></textarea>
+                    </div>
+                </div>
+                <div *ngIf="request.decision != null || (request != null && request.info && request?.info?.username == this.currentUsername && request.info.requestStatus == requestStatus[requestStatus.CHECK_IN])" class="arrow__buttons">
                     <div class="arrow arrow_with_buttons">
                         <img src="../../assets/images/icons/arrow.svg" alt="">
                     </div>
@@ -91,11 +49,11 @@
                     </div>
                 </div>
             </div>
-            <div *ngIf="request.decision == null &&  request?.info?.username == this.currentUsername || request.info.requestStatus == requestStatus[requestStatus.CHECK_OUT]">
+            <div *ngIf="(request.decision == null) &&  (request?.info?.username == this.currentUsername || request.info.requestStatus == requestStatus[requestStatus.CHECK_OUT])">
                 <button [disabled]="request.info.requestStatus == requestStatus[requestStatus.CHECK_OUT]" (click)="checkout(request)">Checkout</button>
                 <button [disabled]="request.info.requestStatus == requestStatus[requestStatus.CHECK_IN]" (click)="checkin(request)">Checkin</button>
             </div>
-            <div *ngIf="request.info.requestStatus == requestStatus[requestStatus.CHECK_IN]">
+            <div *ngIf="request.decision == null && request.info.requestStatus == requestStatus[requestStatus.CHECK_IN]">
                 <img title="Checkin by: {{request.info.userFullName}}" class="icon__medium" src="../../assets/images/icons/checkin.svg" alt="">
             </div>
         </div>

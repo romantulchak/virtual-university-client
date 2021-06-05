@@ -15,19 +15,19 @@ import {TokenStorageService} from '../service/tokenStorage.service';
   styleUrls: ['./teacher-schedule.component.scss']
 })
 export class TeacherScheduleComponent implements OnInit {
-  private teacherId: number;
   public group: StudentGroupDTO;
   public schedule: ScheduleDTO = new ScheduleDTO();
   public scheduleId: number;
   public selectedSemester: SemesterDTO;
-
+  private teacherId: number;
+  private groupId: number;
 
   constructor(private studentGroupService: StudentGroupService,
     private tokenStorageService: TokenStorageService,
     private scheduleService: ScheduleService, private router: ActivatedRoute, private scheduleDayService: ScheduleDayService) {
       router.parent.params.subscribe(
         res=>{
-          
+          this.groupId = res.id;
         }
       );
         
@@ -36,6 +36,10 @@ export class TeacherScheduleComponent implements OnInit {
   ngOnInit(): void {
     this.teacherId = this.tokenStorageService.getUser().id;
     this.getGroup();
+
+    if(this.group == null){
+      location.href = `profile/teacher/group-details/${this.groupId}`;
+    }
   }
 
   private getGroup() {
@@ -43,8 +47,9 @@ export class TeacherScheduleComponent implements OnInit {
       res=>{
         if(res != null){
           this.group = res;
-          if(this.selectedSemester != null)
+          if(this.selectedSemester != null){
             this.getScheduleForGroup();
+          }
         }
       }
     );

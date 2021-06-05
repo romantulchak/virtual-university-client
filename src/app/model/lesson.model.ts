@@ -9,4 +9,5 @@ export class Lesson{
     public scheduleDay: ScheduleDay;
     public status: string;
     public roomNumber: string;
+    public comment: string;
 }

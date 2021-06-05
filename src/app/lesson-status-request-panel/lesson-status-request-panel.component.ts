@@ -5,6 +5,7 @@ import { RequestStatusEnum } from '../model/enum/request-status.enum';
 import { RequestDecisionEnum } from '../model/enum/request.enum';
 import { StatusEnum } from '../model/enum/status.enum';
 import { Request } from '../model/request.model';
+import { ChangeDecisionRequest } from '../request/changeDecisionRequest.request';
 import { ChangeStatusRequest } from '../request/changeStatusRequest.request';
 import { ChangeStatusResponse } from '../response/changeStatusResponse.responce';
 import { LessonService } from '../service/lesson.service';
@@ -45,7 +46,8 @@ export class LessonStatusRequestPanelComponent implements OnInit {
   }
 
   public setStatus(decision: RequestDecisionEnum, request: ScheduleLessonRequestDTO){
-    this.lessonService.changeRequestDecision(request.id, decision).subscribe(
+    let changeDecisionRequest = new ChangeDecisionRequest(request.id, decision, request.lesson.comment);
+    this.lessonService.changeRequestDecision(changeDecisionRequest).subscribe(
       res=>{
         this.notificationService.showNotification('Request statust changed', StatusEnum[StatusEnum.OK], StatusEnum["OK"]);
         request.decision = decision;
@@ -54,7 +56,6 @@ export class LessonStatusRequestPanelComponent implements OnInit {
         this.notificationService.showNotification(error.error.message, error.statusText, error.status);
       }
     );
-    
   }
 
   public checkout(request: ScheduleLessonRequestDTO){
@@ -69,8 +70,6 @@ export class LessonStatusRequestPanelComponent implements OnInit {
 
   public checkin(request: ScheduleLessonRequestDTO){
     let changeStatusRequest = new ChangeStatusRequest(request.id, RequestStatusEnum[RequestStatusEnum.CHECK_IN]);
-    console.log(changeStatusRequest);
-    
     this.lessonService.changeRequestStatus(changeStatusRequest).subscribe(
       res=>{
          this.notificationService.showNotification('Checkin', StatusEnum[StatusEnum.OK], StatusEnum["OK"]);         

@@ -80,7 +80,7 @@ import { RxStompConfig } from './config/rxStomp.config';
 import { NotificationBoxComponent } from './notification-box/notification-box.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { GroupCardComponent } from './group-card/group-card.component';
-
+import { ChartsModule } from 'ng2-charts';
 @NgModule({
   declarations: [
     AppComponent,
@@ -163,7 +163,8 @@ import { GroupCardComponent } from './group-card/group-card.component';
       NgxMaterialTimepickerModule,
       MatDialogModule,
       MatSnackBarModule,
-      InfiniteScrollModule
+      InfiniteScrollModule,
+      ChartsModule
     ],
   providers: [authInterceptorProviders,
     {

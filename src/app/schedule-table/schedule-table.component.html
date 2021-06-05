@@ -68,6 +68,9 @@
         </div>
         <tbody>
           <ng-container *ngFor="let lesson of day.lessons">
+            <div class="lesson__comment" *ngIf="lesson.comment != null">
+              <img [title]="lesson.comment" class="icon__medium" src="../../assets/images/icons/caution.svg" alt="">
+            </div>
             <tr class="lesson" [class.discarded__status]="lesson.status == 'DISCARDED'" [class.pending__status]="teacherId == lesson.subjectTeacher.teacher.id && lesson.status == 'PENDING'">
               <th [ngStyle]="{'width': isAdmin ? '225px' : '230px'}">{{lesson.dateStart | date: "HH:mm"}}</th>
               <th [ngStyle]="{'width': isAdmin ? '225px' : '230px'}">{{lesson.dateEnd | date: "HH:mm"}}</th>
