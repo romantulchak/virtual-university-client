@@ -1,36 +1,35 @@
-<div>
-  <button (click)="exportPdf()">Export PDF</button>
+<div class="schedule">
+  <div class=schedule__table_header>
     <div class="schedule__filters">
-        <div>
-          <label for="allDays">All days</label>
-          <input type="radio" id="allDays" name="option" (change)="getAllDays('exportPdf-f')" >
+        <div class="inputGroup">
+          <input class="input__radio" type="radio" id="allDays" name="option" (change)="getAllDays('exportPdf-f')" >
+          <label class="label__radio" for="allDays">All days</label>
         </div>
-        <div>
-          <label for="thisWeek">For this week</label>
-          <input type="radio" id="thisWeek" name="option" (change)="getDaysForWeek('exportPdf-w')" checked>
+        <div class="inputGroup">
+          <input class="input__radio" type="radio" id="thisWeek" name="option" (change)="getDaysForWeek('exportPdf-w')" checked>
+          <label class="label__radio" for="thisWeek">For this week</label>
         </div>
-        <div>
-          <label for="range">Range</label>
-          <input type="radio" id="range" name="option" (change)="setFilterOption()">
+        <div class="inputGroup">
+          <input class="input__radio" type="radio" id="range" name="option" (change)="setFilterOption()">
+          <label class="label__radio" for="range">Range</label>
         </div>
-        <div *ngIf="rangeFilter">
-            <form action="" [formGroup]="rangeGroup" (ngSubmit)="filterByRange()">
-              <div>
-                <label for="from">From</label>
-                <input type="date" formControlName="dayAfter" required>
-              </div>
-              <div>
-                <label for="to">To</label>
-                <input type="date" formControlName="dayBefore" required>
-              </div>
-              <button type="submit">Search</button>
-
-            </form>
-        </div>
-        
     </div>
-
-    <div  *ngIf="days != null && days.length != 0;else scheduleNotFound">
+    <button class="icon__medium export__pdf" title="Export to PDF" (click)="exportPdf()"><img src="../../assets/images/icons/pdf.svg" alt=""></button>
+  </div>
+  <div class="inputGroup" *ngIf="rangeFilter">
+    <form action="" [formGroup]="rangeGroup" (ngSubmit)="filterByRange()">
+      <div>
+        <label for="from">From</label>
+        <input type="date" formControlName="dayAfter" required>
+      </div>
+      <div>
+        <label for="to">To</label>
+        <input type="date" formControlName="dayBefore" required>
+      </div>
+      <button type="submit">Search</button>
+    </form>
+</div>
+    <div *ngIf="days != null && days.length != 0;else scheduleNotFound">
       <table class="table__header_days">
         <thead>
           <tr>
@@ -90,11 +89,12 @@
           </ng-container>
         </tbody>
       </table>
-
     </div>
     <button *ngIf="scheduleId != null && isAdmin" (click)="addNewScheduleDay()">Add day</button>
     <ng-template #scheduleNotFound>
-      <h3>Schedule not found</h3>
+      <div class="schedule__not_found">
+        <h2>Schedule not found</h2>
+      </div>
     </ng-template>
   </div>
 

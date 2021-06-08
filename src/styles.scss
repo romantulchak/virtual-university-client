@@ -91,7 +91,7 @@ a{
       font-family: $titleFont;
       font-size: 21px;
       background: #fafafa;
-      color: #4f9a7a;
+      color: #2d9266;
     }
 }
 
@@ -150,5 +150,23 @@ a{
       width: 100%;
       background: #fafafa;
       padding: 1em;
+  }
+}
+.pagination{
+  display: flex;
+  justify-content: center;
+  margin-top: 3em;
+  .pagination__list{
+    display: flex;
+    list-style-type: none;
+    gap: 1em;
+
+    .page__number{
+      padding: 1em;
+      cursor: pointer;
+    }
+    .active{
+      color: #2d9266;
+    }
   }
 }

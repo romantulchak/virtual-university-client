@@ -34,7 +34,7 @@ export class GroupDetailsTeacherComponent implements OnInit {
   private teacherId: number;
   private studentGroupGrades: StudentGroupGrade[] = [];
   private subject: Subject;
-
+  public studentGrades: StudentGroupGradeDTO[];
   constructor(private router: ActivatedRoute,
               private studentGroupService: StudentGroupService,
               private tokenStorageService: TokenStorageService, 
@@ -102,6 +102,7 @@ export class GroupDetailsTeacherComponent implements OnInit {
         if(res != null){
           this.source = new MatTableDataSource(res);
           this.loaded = true;
+          this.studentGrades = res;
         }
       }
     );

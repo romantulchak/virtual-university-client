@@ -1,0 +1,7 @@
+<div class="pie__chart" *ngIf="gradeData.length != 0">
+    <canvas baseChart [data]="gradeData" [labels]="gradeLabels" [chartType]="pieChartType"
+      [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend"
+      [colors]="chartColors"
+      >
+    </canvas>
+  </div>

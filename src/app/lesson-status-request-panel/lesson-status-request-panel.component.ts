@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RxStompService } from '@stomp/ng2-stompjs';
 import { ScheduleLessonRequestDTO } from '../dto/scheduleLessonRequest.dto';
@@ -10,6 +11,7 @@ import { ChangeStatusRequest } from '../request/changeStatusRequest.request';
 import { ChangeStatusResponse } from '../response/changeStatusResponse.responce';
 import { LessonService } from '../service/lesson.service';
 import { NotificationService } from '../service/notification.service';
+import { ScheduleDayService } from '../service/schedule-day.service';
 import { TokenStorageService } from '../service/tokenStorage.service';
 
 @Component({
@@ -23,26 +25,34 @@ export class LessonStatusRequestPanelComponent implements OnInit {
   public requestDecision = RequestDecisionEnum;
   public requestStatus = RequestStatusEnum;
   public currentUsername: string;
+  public totalPages: number[];
+  public currentPage: number;
   private currentRequest: ScheduleLessonRequestDTO;
   constructor(private lessonService: LessonService, 
               private notificationService: NotificationService,
               private rxStompService: RxStompService,
-              private tokenStorageService: TokenStorageService) { }
+              private tokenStorageService: TokenStorageService,
+              private scheduleDayService: ScheduleDayService,
+              private datePipe: DatePipe) { }
 
   ngOnInit(): void {
-    this.findLessonRequests();
+    this.findLessonRequests(1);
     this.observeLessonRequests();
     this.currentUsername = this.tokenStorageService.getUser().username;
   }
 
-  private findLessonRequests(){
-    this.lessonService.findLessonRequests(0).subscribe(
-      res=>{
-        console.log(res);
-        
-        this.requests = res;
-      }
-    );
+  public findLessonRequests(page: number){
+    if(page != this.currentPage){
+      this.lessonService.findLessonRequests(page).subscribe(
+        res=>{
+          this.totalPages = Array.from(new Array(res.totalPages), (x, i) => i+1);
+          this.requests = res.data;
+          this.currentPage = res.currentPage;
+          console.log(res);
+          
+        }
+      );
+    }
   }
 
   public setStatus(decision: RequestDecisionEnum, request: ScheduleLessonRequestDTO){
@@ -89,4 +99,13 @@ export class LessonStatusRequestPanelComponent implements OnInit {
     );
   }
 
+  public getDayLessons(request: ScheduleLessonRequestDTO){
+    let date = this.datePipe.transform(request.lesson.dateStart, 'yyyy-MM-dd');
+    this.scheduleDayService.getDayByDateAndGroupName(date, request.lesson.groupName).subscribe(
+      res=>{
+        console.log(res);
+        
+      }
+    );
+  }
 }

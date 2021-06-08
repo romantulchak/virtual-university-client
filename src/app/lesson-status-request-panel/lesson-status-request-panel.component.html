@@ -56,11 +56,17 @@
             <div *ngIf="request.decision == null && request.info.requestStatus == requestStatus[requestStatus.CHECK_IN]">
                 <img title="Checkin by: {{request.info.userFullName}}" class="icon__medium" src="../../assets/images/icons/checkin.svg" alt="">
             </div>
+
+            <button (click)="getDayLessons(request)">Show lesson day</button>
+        </div>
+
+        <div class="pagination">
+            <ul class="pagination__list">
+                <li class="page__number" *ngFor="let page of totalPages" (click)="findLessonRequests(page)" [class.active]="currentPage == page">{{page}}</li>
+            </ul>
         </div>
     </div>
 </section>
-
-
 
 <ng-template #checkinBlock>
 </ng-template>

@@ -32,12 +32,7 @@
       <div class="avarage__grade" *ngIf="averageGrade > 0">
         <h3>Average grade: {{averageGrade}}</h3>
       </div>
-      <div class="pie__chart" *ngIf="gradeData.length != 0">
-        <canvas baseChart [data]="gradeData" [labels]="gradeLabels" [chartType]="pieChartType"
-          [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend">
-          >
-        </canvas>
-      </div>
+      <app-pie-chart *ngIf="studentGrades != null" [studentGrades]="studentGrades"></app-pie-chart>
     </ng-container>
     <ng-template #loading>
       <div class="loading">
