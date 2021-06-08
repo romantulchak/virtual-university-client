@@ -35,4 +35,8 @@ export class ScheduleDayService{
         return this.http.get<ScheduleDayDTO[]>(API_URL + 'schedule-day/findScheduleForTeacherForWeek', {params: params});
     }
 
+    public getDayByDateAndGroupName(day: string, groupName: string):Observable<ScheduleDayDTO>{
+        return this.http.get<ScheduleDayDTO>(`${API_URL}schedule-day/getDayLessons/${day}/${groupName}`);
+    }
+
 }

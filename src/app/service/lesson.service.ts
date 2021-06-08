@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { LessonDTO } from '../dto/lesson.dto';
+import { PageableDTO } from '../dto/pageable/pageable.dto';
 import { ScheduleLessonRequestDTO } from '../dto/scheduleLessonRequest.dto';
 import { RequestDecisionEnum } from '../model/enum/request.enum';
 import { Lesson } from '../model/lesson.model';
@@ -32,10 +33,10 @@ export class LessonService{
         return this.http.post(`${API_URL}lesson/change-status-request/${scheduleLessonRequest.lesson.id}/${teacherId}`, scheduleLessonRequest);
     }
     
-    public findLessonRequests(page: number):Observable<ScheduleLessonRequestDTO[]>{
+    public findLessonRequests(page: number):Observable<PageableDTO<ScheduleLessonRequestDTO[]>>{
         let params = new HttpParams();
         params = params.append('page', page.toString());
-        return this.http.get<ScheduleLessonRequestDTO[]>(API_URL + 'lesson/getLessonRequests', {params: params});
+        return this.http.get<PageableDTO<ScheduleLessonRequestDTO[]>>(API_URL + 'lesson/getLessonRequests', {params: params});
     }
     public changeRequestDecision(changeDecisionRequest: ChangeDecisionRequest): Observable<any>{
         return this.http.put(API_URL + 'lesson/changeRequestDecision',changeDecisionRequest);

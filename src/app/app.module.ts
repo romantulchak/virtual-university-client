@@ -81,6 +81,8 @@ import { NotificationBoxComponent } from './notification-box/notification-box.co
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { GroupCardComponent } from './group-card/group-card.component';
 import { ChartsModule } from 'ng2-charts';
+import { PieChartComponent } from './pie-chart/pie-chart.component';
+import { DatePipe } from '@angular/common';
 @NgModule({
   declarations: [
     AppComponent,
@@ -137,6 +139,7 @@ import { ChartsModule } from 'ng2-charts';
     LessonStatusRequestPanelComponent,
     NotificationBoxComponent,
     GroupCardComponent,
+    PieChartComponent,
     
   ],
     imports: [
@@ -175,7 +178,8 @@ import { ChartsModule } from 'ng2-charts';
       provide: RxStompService,
       useFactory: rxStompServiceFactory,
       deps: [InjectableRxStompConfig]
-    }
+    },
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })
