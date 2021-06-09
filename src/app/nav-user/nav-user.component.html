@@ -16,6 +16,7 @@
                 <button class="icon__medium" (click)="exit()"><img src="../../assets/images/icons/exit.svg"  alt=""></button>
             </li>
         </ul>
+        <button routerLink="../settings" class="icon__medium user__settings"><img src="../../assets/images/icons/user-settings.svg" alt=""></button>
         <app-notification-box (closeNotificationBox)="closeNotificationBox($event)" *ngIf="isNotificationBoxOpened"></app-notification-box>
     </nav>
 </section>

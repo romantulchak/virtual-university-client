@@ -75,7 +75,7 @@ import { AllSubjectsButtonComponent } from './all-subjects-button/all-subjects-b
 import { NavUserComponent } from './nav-user/nav-user.component';
 import { ChangeLessonStatusComponent } from './change-lesson-status/change-lesson-status.component';
 import { LessonStatusRequestPanelComponent } from './lesson-status-request-panel/lesson-status-request-panel.component';
-import { InjectableRxStompConfig, InjectableRxStompRpcConfig, RxStompService, rxStompServiceFactory } from '@stomp/ng2-stompjs';
+import { InjectableRxStompConfig, RxStompService, rxStompServiceFactory } from '@stomp/ng2-stompjs';
 import { RxStompConfig } from './config/rxStomp.config';
 import { NotificationBoxComponent } from './notification-box/notification-box.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -83,6 +83,10 @@ import { GroupCardComponent } from './group-card/group-card.component';
 import { ChartsModule } from 'ng2-charts';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
 import { DatePipe } from '@angular/common';
+import { LessonTableCardComponent } from './lesson-table-card/lesson-table-card.component';
+import { SettingsComponent } from './settings/settings.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -140,6 +144,8 @@ import { DatePipe } from '@angular/common';
     NotificationBoxComponent,
     GroupCardComponent,
     PieChartComponent,
+    LessonTableCardComponent,
+    SettingsComponent,
     
   ],
     imports: [
@@ -167,7 +173,8 @@ import { DatePipe } from '@angular/common';
       MatDialogModule,
       MatSnackBarModule,
       InfiniteScrollModule,
-      ChartsModule
+      ChartsModule,
+      MatSlideToggleModule
     ],
   providers: [authInterceptorProviders,
     {

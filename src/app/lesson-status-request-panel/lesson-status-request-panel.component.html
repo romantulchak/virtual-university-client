@@ -1,72 +1,119 @@
 <section>
-    <div>
-        <div *ngFor="let request of requests">
-            <h2>Date: {{request.lesson.dateStart | date: 'dd-MM-yyyy'}}</h2>
-            <div>
-                <h3>Lesson</h3>
-                <h3>Date start: {{request.lesson.dateStart | date: 'HH:mm'}}</h3>
-                <h3>Date end: {{request.lesson.dateEnd | date: 'HH:mm'}}</h3>
-            </div>
-            <h3>{{request.message}}</h3>
-            <div class="statuses">
-                <div class="status" [class.status__actual]="request.decision == requestDecision[requestDecision.REJECTED]">
-                    <span class="block__status_text">Previous status</span>
-                    {{request.previousStatus}}
-                </div>
-                <div class="arrow">
-                    <img src="../../assets/images/icons/arrow.svg" alt="">
-                </div>
-                <div class="status" [class.status__actual]="'PENDING' && request.decision == null">
-                    PENDING
-                </div>
-                <div class="arrow">
-                    <img src="../../assets/images/icons/arrow.svg" alt="">
-                </div>
-                <div class="status"  [class.status__actual]="request.decision == requestDecision[requestDecision.ACCEPTED]">
-                    <span class="block__status_text">Exptected status</span>
-                    {{request.actualStatus}}
-                </div>
-                <div *ngIf="request.decision != null || (request != null && request.info && request?.info?.username == this.currentUsername && request.info.requestStatus == requestStatus[requestStatus.CHECK_IN])" class="comment arrow__buttons">
-                    <div class="arrow arrow_with_buttons">
-                        <img src="../../assets/images/icons/arrow.svg" alt="">
-                    </div>
-                    <div>
-                        <span class="block__status_text">Comment</span>
-                        <textarea [disabled]="request.decision != null" name="comment" [(ngModel)]="request.lesson.comment" id="" cols="30" rows="10"></textarea>
-                    </div>
-                </div>
-                <div *ngIf="request.decision != null || (request != null && request.info && request?.info?.username == this.currentUsername && request.info.requestStatus == requestStatus[requestStatus.CHECK_IN])" class="arrow__buttons">
-                    <div class="arrow arrow_with_buttons">
-                        <img src="../../assets/images/icons/arrow.svg" alt="">
-                    </div>
-                    <div class="decision">
-                        <button class="status decision__button decision__button_ok" (click)="setStatus(requestDecision[requestDecision.ACCEPTED], request)" [class.accepted]="request.decision === 'ACCEPTED'" [disabled]="request.decision != null">
-                            ACCEPT
-                        </button>
-                        <button class="status decision__button decision__button_reject" (click)="setStatus(requestDecision[requestDecision.REJECTED], request) && request.decision == null" [class.rejected]="request.decision === 'REJECTED'" [disabled]="request.decision != null">
-                            REJECT
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div *ngIf="(request.decision == null) &&  (request?.info?.username == this.currentUsername || request.info.requestStatus == requestStatus[requestStatus.CHECK_OUT])">
-                <button [disabled]="request.info.requestStatus == requestStatus[requestStatus.CHECK_OUT]" (click)="checkout(request)">Checkout</button>
-                <button [disabled]="request.info.requestStatus == requestStatus[requestStatus.CHECK_IN]" (click)="checkin(request)">Checkin</button>
-            </div>
-            <div *ngIf="request.decision == null && request.info.requestStatus == requestStatus[requestStatus.CHECK_IN]">
-                <img title="Checkin by: {{request.info.userFullName}}" class="icon__medium" src="../../assets/images/icons/checkin.svg" alt="">
-            </div>
-
-            <button (click)="getDayLessons(request)">Show lesson day</button>
+  <div>
+    <div *ngFor="let request of requests">
+      <h2>Date: {{request.lesson.dateStart | date: 'dd-MM-yyyy'}}</h2>
+      <div>
+        <h3>Lesson</h3>
+        <h3>Date start: {{request.lesson.dateStart | date: 'HH:mm'}}</h3>
+        <h3>Date end: {{request.lesson.dateEnd | date: 'HH:mm'}}</h3>
+      </div>
+      <h3>{{request.message}}</h3>
+      <div class="statuses">
+        <div class="status" [class.status__actual]="request.decision == requestDecision[requestDecision.REJECTED]">
+          <span class="block__status_text">Previous status</span>
+          {{request.previousStatus}}
         </div>
-
-        <div class="pagination">
-            <ul class="pagination__list">
-                <li class="page__number" *ngFor="let page of totalPages" (click)="findLessonRequests(page)" [class.active]="currentPage == page">{{page}}</li>
-            </ul>
+        <div class="arrow">
+          <img src="../../assets/images/icons/arrow.svg" alt="">
         </div>
+        <div class="status" [class.status__actual]="'PENDING' && request.decision == null">
+          PENDING
+        </div>
+        <div class="arrow">
+          <img src="../../assets/images/icons/arrow.svg" alt="">
+        </div>
+        <div class="status" [class.status__actual]="request.decision == requestDecision[requestDecision.ACCEPTED]">
+          <span class="block__status_text">Exptected status</span>
+          {{request.actualStatus}}
+        </div>
+        <div
+          *ngIf="request.decision != null || (request != null && request.info && request?.info?.username == this.currentUsername && request.info.requestStatus == requestStatus[requestStatus.CHECK_IN])"
+          class="comment arrow__buttons">
+          <div class="arrow arrow_with_buttons">
+            <img src="../../assets/images/icons/arrow.svg" alt="">
+          </div>
+          <div>
+            <span class="block__status_text">Comment</span>
+            <textarea [disabled]="request.decision != null" name="comment" [(ngModel)]="request.lesson.comment" id=""
+              cols="30" rows="10"></textarea>
+          </div>
+        </div>
+        <div
+          *ngIf="request.decision != null || (request != null && request.info && request?.info?.username == this.currentUsername && request.info.requestStatus == requestStatus[requestStatus.CHECK_IN])"
+          class="arrow__buttons">
+          <div class="arrow arrow_with_buttons">
+            <img src="../../assets/images/icons/arrow.svg" alt="">
+          </div>
+          <div class="decision">
+            <button class="status decision__button decision__button_ok"
+              (click)="setStatus(requestDecision[requestDecision.ACCEPTED], request)"
+              [class.accepted]="request.decision === 'ACCEPTED'" [disabled]="request.decision != null">
+              ACCEPT
+            </button>
+            <button class="status decision__button decision__button_reject"
+              (click)="setStatus(requestDecision[requestDecision.REJECTED], request) && request.decision == null"
+              [class.rejected]="request.decision === 'REJECTED'" [disabled]="request.decision != null">
+              REJECT
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        *ngIf="(request.decision == null) &&  (request?.info?.username == this.currentUsername || request.info.requestStatus == requestStatus[requestStatus.CHECK_OUT])">
+        <button [disabled]="request.info.requestStatus == requestStatus[requestStatus.CHECK_OUT]"
+          (click)="checkout(request)">Checkout</button>
+        <button [disabled]="request.info.requestStatus == requestStatus[requestStatus.CHECK_IN]"
+          (click)="checkin(request)">Checkin</button>
+      </div>
+      <div *ngIf="request.decision == null && request.info.requestStatus == requestStatus[requestStatus.CHECK_IN]">
+        <img title="Checkin by: {{request.info.userFullName}}" class="icon__medium"
+          src="../../assets/images/icons/checkin.svg" alt="">
+      </div>
+
+      <button (click)="getDayLessons(request)">Show lesson day</button>
     </div>
+
+    <div class="pagination">
+      <ul class="pagination__list">
+        <li class="page__number" *ngFor="let page of totalPages" (click)="findLessonRequests(page)"
+          [class.active]="currentPage == page">{{page}}</li>
+      </ul>
+    </div>
+  </div>
 </section>
 
-<ng-template #checkinBlock>
+<ng-template #lessonCompare>
+  <div class="compare">
+    <h3>Day: {{selectedDay}}</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Time from</th>
+          <th>Time to</th>
+          <th>Teacher</th>
+          <th>Subject</th>
+          <th>Type</th>
+          <th>Group</th>
+          <th>Room</th>
+          <th *ngIf="isAdmin || isEditable">Edit</th>
+        </tr>
+      </thead>
+    </table>
+    <div class="version actual__version">
+      <h3>Actual version</h3>
+      <table>
+        <ng-container *ngFor="let lesson of actualVersionOfLessons">
+          <app-lesson-table-card [lesson]="lesson"></app-lesson-table-card>
+        </ng-container>
+      </table>
+    </div>
+    <div class="version expected__version">
+      <h3>Expected version</h3>
+      <table>
+        <ng-container *ngFor="let lesson of expectedVersionOfLessons">
+          <app-lesson-table-card [lesson]="lesson"></app-lesson-table-card>
+        </ng-container>
+      </table>
+    </div>
+  </div>
 </ng-template>

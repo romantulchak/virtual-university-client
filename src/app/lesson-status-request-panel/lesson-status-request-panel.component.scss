@@ -1,120 +1,166 @@
 $bg-color: #eeeeee;
-.statuses{
+$table-font: TitleFont;
+
+.statuses {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+  height: 85px;
+  padding: 10px;
+
+  .comment {
+    position: relative;
+  }
+
+  .arrow__buttons {
     display: flex;
-    gap: 1em;
     align-items: center;
-    height: 85px;
-    padding: 10px;
-    .comment{
-        position: relative;
-    }
+  }
 
-    .arrow__buttons{
-        display: flex;
-        align-items: center;
-    }
-    .status{
-        padding: 1em;
-        border-radius: 4px;
-        background: rgb(0 0 0 / 12%);
-        position: relative;
-        min-width: 7em;
-        text-align: center;
-    }
-    .status__actual{
-        background: #a8dab5;
-    }
-    .arrow{
-        width: 15px;
-    }
-    .decision{
-        display: grid;
-        gap: 1em;
-        .decision__button{
-            cursor: pointer;
-            outline: none;
-            background: rgb(0 0 0 / 7%);
-            transition: .5s;
-            border: 1px solid rgb(0 0 0 / 18%);
-        }
-        .decision__button_reject{
-            &:hover{
-                background: #f96666;
-            }
-            &:disabled{
-                &:hover{
-                background: rgb(0 0 0 / 7%);
-                }
-            }
-        }
-        .decision__button_ok{
-            &:hover{
-                background: #a8dab5;
-            }
-            &:disabled{
-                &:hover{
-                background: rgb(0 0 0 / 7%);
-                }
-            }
-        }
-        .accepted{
-            &:disabled{
-                background: #a8dab5;
-                color: black;
-
-                &:hover{
-                    background: #a8dab5;
-
-                }
-            }
-        }
-        .rejected{
-            &:disabled{
-                background: #f96666;
-                color: black;
-
-                &:hover{
-                    background: #f96666;
-
-                }
-            }
-        }
-    }
-}
-
-.arrow_with_buttons{
-    margin-right: 20px;
-}
-.block__status_text{
-    position: absolute;
-    top: -25px;
-    width: 100%;
+  .status {
+    padding: 1em;
+    border-radius: 4px;
+    background: rgb(0 0 0 / 12%);
+    position: relative;
+    min-width: 7em;
     text-align: center;
-    left: 0;
+  }
+
+  .status__actual {
+    background: #a8dab5;
+  }
+
+  .arrow {
+    width: 15px;
+  }
+
+  .decision {
+    display: grid;
+    gap: 1em;
+
+    .decision__button {
+      cursor: pointer;
+      outline: none;
+      background: rgb(0 0 0 / 7%);
+      transition: .5s;
+      border: 1px solid rgb(0 0 0 / 18%);
+    }
+
+    .decision__button_reject {
+      &:hover {
+        background: #f96666;
+      }
+
+      &:disabled {
+        &:hover {
+          background: rgb(0 0 0 / 7%);
+        }
+      }
+    }
+
+    .decision__button_ok {
+      &:hover {
+        background: #a8dab5;
+      }
+
+      &:disabled {
+        &:hover {
+          background: rgb(0 0 0 / 7%);
+        }
+      }
+    }
+
+    .accepted {
+      &:disabled {
+        background: #a8dab5;
+        color: black;
+
+        &:hover {
+          background: #a8dab5;
+
+        }
+      }
+    }
+
+    .rejected {
+      &:disabled {
+        background: #f96666;
+        color: black;
+
+        &:hover {
+          background: #f96666;
+
+        }
+      }
+    }
+  }
 }
 
-textarea{
-    resize: none;
-    border-radius: 5px;
-    border: none;
-    box-shadow: 0px 0px 4px rgb(0 0 0 / 12%);
-    padding: 10px;
-    box-sizing: border-box;
-    height: 115px;
-    outline: none;
-    &::-webkit-scrollbar {
-        width: 3px;
+.arrow_with_buttons {
+  margin-right: 20px;
+}
+
+.block__status_text {
+  position: absolute;
+  top: -25px;
+  width: 100%;
+  text-align: center;
+  left: 0;
+}
+
+textarea {
+  resize: none;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 0px 0px 4px rgb(0 0 0 / 12%);
+  padding: 10px;
+  box-sizing: border-box;
+  height: 115px;
+  outline: none;
+
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #bebbbb;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #bebbbb;
+  }
+}
+
+.compare {
+  table {
+    thead {
+      tr {
+        th {
+          text-align: left;
+          padding: 1em;
+          width: 250px;
+          background: #c2ffcd;
+          border-radius: 4px;
+        }
       }
-      
-      &::-webkit-scrollbar-track {
-        background: #f1f1f1; 
-      }
-       
-      &::-webkit-scrollbar-thumb {
-        background: #bebbbb; 
-      }
-      
-      &::-webkit-scrollbar-thumb:hover {
-        background: #bebbbb; 
-      }
+    }
+  }
+
+  .version {
+    display: grid;
+
+    h3 {
+      text-align: center;
+      align-self: center;
+      height: 50px;
+      font-family: $table-font;
+      display: grid;
+      align-items: center;
+    }
+  }
+
 }
