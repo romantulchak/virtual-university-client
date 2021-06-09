@@ -1,0 +1,32 @@
+$table-font: TitleFont;
+
+.lesson__comment {
+  position: absolute;
+  right: -8px;
+  top: -10px;
+}
+
+th {
+  padding: 1em;
+  border-radius: 5px;
+  font-family: $table-font;
+  text-align: left;
+  width: 225px;
+  min-width: 175px;
+}
+
+.lesson {
+  background: aliceblue;
+
+  .th__min_width {
+    min-width: 155px;
+  }
+}
+
+.pending__status {
+  background: rgb(255 235 59 / 9%);
+}
+
+.discarded__status {
+  background: #d01b322b;
+}

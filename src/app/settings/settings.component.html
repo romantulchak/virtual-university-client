@@ -1,0 +1,20 @@
+<section class="nav__content">
+  <app-nav-user [links]="links"></app-nav-user>
+  <div class="content">
+    <h2 class="title">Settings</h2>
+
+    <div class="settings__section">
+      <h3>Notification</h3>
+      <ul class="options">
+        <li><mat-slide-toggle [(ngModel)]="settings.isNotificationEnable">Enable Wifi</mat-slide-toggle></li>
+      </ul>
+    </div>
+    <div class="settings__section">
+      <h3>Language</h3>
+      <ul class="options">
+        <li>{{settings.language}}</li>
+      </ul>
+    </div>
+    <button (click)="saveSettings()">Save</button>
+  </div>
+</section>

@@ -21,6 +21,11 @@ $table-font: TitleFont;
         font-family: $table-font;
     }
 }
+.table__min_width{
+    th{
+        min-width: 155px;
+    }
+}
 
 .table_day{
     display: block;

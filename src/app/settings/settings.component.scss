@@ -1,0 +1,15 @@
+$titleFont: TitleFont;
+
+.content{
+    .title{
+        font-family: $titleFont;
+    }
+
+    .settings__section{
+        padding: 1em;
+        .options{
+            list-style-type: none;
+            padding: 2em;
+        }   
+    }
+}

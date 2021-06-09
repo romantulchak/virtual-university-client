@@ -1,0 +1,19 @@
+<div class="lesson__comment" *ngIf="lesson.comment != null">
+    <img [title]="lesson.comment" class="icon__medium" src="../../assets/images/icons/caution.svg" alt="">
+  </div>
+  <tr class="lesson" [class.discarded__status]="lesson.status == 'DISCARDED'" [class.pending__status]="teacherId == lesson.subjectTeacher.teacher.id && lesson.status == 'PENDING'">
+    <th [class.th__min_width]="isAdmin || isEditable" [ngStyle]="{'width': isAdmin || isEditable ? '225px' : '230px'}">{{lesson.dateStart | date: "HH:mm"}}</th>
+    <th [class.th__min_width]="isAdmin || isEditable" [ngStyle]="{'width': isAdmin || isEditable ? '225px' : '230px'}">{{lesson.dateEnd | date: "HH:mm"}}</th>
+    <th [class.th__min_width]="isAdmin || isEditable" [ngStyle]="{'width': isAdmin || isEditable ? '225px' : '230px'}">{{lesson.subjectTeacher.teacher.firstName}} {{lesson.subjectTeacher.teacher.lastName}}</th>
+    <th [class.th__min_width]="isAdmin || isEditable" [ngStyle]="{'width': isAdmin || isEditable ? '225px' : '230px'}">{{lesson.subjectTeacher.subject.name}}</th>
+    <th [class.th__min_width]="isAdmin || isEditable" [ngStyle]="{'width': isAdmin || isEditable ? '225px' : '230px'}">{{lesson.subjectTeacher.subject.type}}</th>
+    <th [class.th__min_width]="isAdmin || isEditable" [ngStyle]="{'width': isAdmin || isEditable ? '225px' : '230px'}">{{lesson.groupName}}</th>
+    <th [class.th__min_width]="isAdmin || isEditable" [ngStyle]="{'width': isAdmin || isEditable ? '225px' : '230px'}">{{lesson.roomNumber |slice: 0: 5}}</th>
+    <th [class.th__min_width]="isAdmin || isEditable" [ngStyle]="{'width': isAdmin || isEditable ? '225px' : '230px'}" *ngIf="isAdmin || isEditable">
+      <div>
+        <button *ngIf="isAdmin" title="Remove {{lesson.subjectTeacher.subject.name}}" class="icon__small" (click)="deleteLessonFromDay(lesson, day)"><img src="../../assets/images/icons/delete.svg" alt=""></button> 
+        <button *ngIf="isAdmin" title="Edit {{lesson.subjectTeacher.subject.name}}" class="icon__small" (click)="editLessonInDay(lesson, day)"><img src="../../assets/images/icons/edit.svg" alt=""></button> 
+        <button *ngIf="(isAdmin || teacherId == lesson.subjectTeacher.teacher.id) && lesson.status != 'PENDING'" title="Change status" class="icon__small" (click)="changeStatus(lesson, day)"><img src="../../assets/images/icons/settings.svg" alt=""></button>
+      </div>
+    </th>
+  </tr>

@@ -1,11 +1,13 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { RxStompService } from '@stomp/ng2-stompjs';
+import { LessonDTO } from '../dto/lesson.dto';
 import { ScheduleLessonRequestDTO } from '../dto/scheduleLessonRequest.dto';
 import { RequestStatusEnum } from '../model/enum/request-status.enum';
 import { RequestDecisionEnum } from '../model/enum/request.enum';
 import { StatusEnum } from '../model/enum/status.enum';
-import { Request } from '../model/request.model';
+import { Schedule } from '../model/schedule.model';
 import { ChangeDecisionRequest } from '../request/changeDecisionRequest.request';
 import { ChangeStatusRequest } from '../request/changeStatusRequest.request';
 import { ChangeStatusResponse } from '../response/changeStatusResponse.responce';
@@ -27,13 +29,20 @@ export class LessonStatusRequestPanelComponent implements OnInit {
   public currentUsername: string;
   public totalPages: number[];
   public currentPage: number;
+  public actualVersionOfLessons: LessonDTO[] = [];
+  public expectedVersionOfLessons: LessonDTO[] = [];
+  public selectedDay: string;
   private currentRequest: ScheduleLessonRequestDTO;
+
+  @ViewChild('lessonCompare', {static:true}) lessonCompareDialog: TemplateRef<any>;
+
   constructor(private lessonService: LessonService, 
               private notificationService: NotificationService,
               private rxStompService: RxStompService,
               private tokenStorageService: TokenStorageService,
               private scheduleDayService: ScheduleDayService,
-              private datePipe: DatePipe) { }
+              private datePipe: DatePipe,
+              private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.findLessonRequests(1);
@@ -103,9 +112,17 @@ export class LessonStatusRequestPanelComponent implements OnInit {
     let date = this.datePipe.transform(request.lesson.dateStart, 'yyyy-MM-dd');
     this.scheduleDayService.getDayByDateAndGroupName(date, request.lesson.groupName).subscribe(
       res=>{
-        console.log(res);
-        
+        this.initPreviousAndActualLessons(JSON.stringify(res.lessons), request);
+        this.selectedDay = this.datePipe.transform(request.lesson.dateStart, 'dd-MM-yyyy');
+        this.dialog.open(this.lessonCompareDialog);
+
       }
     );
+  }
+  private initPreviousAndActualLessons(response: string, request: ScheduleLessonRequestDTO){
+    this.actualVersionOfLessons =  JSON.parse(response);
+    this.expectedVersionOfLessons = JSON.parse(response);
+    this.actualVersionOfLessons.find(lesson => lesson.id === request.lesson.id).status = request.lesson.previousStatus;
+    this.expectedVersionOfLessons.find(lesson => lesson.id === request.lesson.id).status = request.actualStatus;
   }
 }

@@ -30,7 +30,7 @@
     </form>
 </div>
     <div *ngIf="days != null && days.length != 0;else scheduleNotFound">
-      <table class="table__header_days">
+      <table [class.table__min_width]="isAdmin || isEditable" class="table__header_days">
         <thead>
           <tr>
             <th>Time from</th>
@@ -65,27 +65,17 @@
           
           </div>
         </div>
-        <tbody>
+        <tbody *ngIf="day.lessons.length != 0 || isAdmin">
           <ng-container *ngFor="let lesson of day.lessons">
-            <div class="lesson__comment" *ngIf="lesson.comment != null">
-              <img [title]="lesson.comment" class="icon__medium" src="../../assets/images/icons/caution.svg" alt="">
-            </div>
-            <tr class="lesson" [class.discarded__status]="lesson.status == 'DISCARDED'" [class.pending__status]="teacherId == lesson.subjectTeacher.teacher.id && lesson.status == 'PENDING'">
-              <th [ngStyle]="{'width': isAdmin ? '225px' : '230px'}">{{lesson.dateStart | date: "HH:mm"}}</th>
-              <th [ngStyle]="{'width': isAdmin ? '225px' : '230px'}">{{lesson.dateEnd | date: "HH:mm"}}</th>
-              <th [ngStyle]="{'width': isAdmin ? '225px' : '230px'}">{{lesson.subjectTeacher.teacher.firstName}} {{lesson.subjectTeacher.teacher.lastName}}</th>
-              <th [ngStyle]="{'width': isAdmin ? '225px' : '230px'}">{{lesson.subjectTeacher.subject.name}}</th>
-              <th [ngStyle]="{'width': isAdmin ? '225px' : '230px'}">{{lesson.subjectTeacher.subject.type}}</th>
-              <th [ngStyle]="{'width': isAdmin ? '225px' : '230px'}">{{lesson.groupName}}</th>
-              <th [ngStyle]="{'width': isAdmin ? '225px' : '230px'}">{{lesson.roomNumber}}</th>
-              <th [ngStyle]="{'width': isAdmin ? '225px' : '230px'}" *ngIf="isAdmin || isEditable">
-                <div>
-                  <button *ngIf="isAdmin" title="Remove {{lesson.subjectTeacher.subject.name}}" class="icon__small" (click)="deleteLessonFromDay(lesson, day)"><img src="../../assets/images/icons/delete.svg" alt=""></button> 
-                  <button *ngIf="isAdmin" title="Edit {{lesson.subjectTeacher.subject.name}}" class="icon__small" (click)="editLessonInDay(lesson, day)"><img src="../../assets/images/icons/edit.svg" alt=""></button> 
-                  <button *ngIf="(isAdmin || teacherId == lesson.subjectTeacher.teacher.id) && lesson.status != 'PENDING'" title="Change status" class="icon__small" (click)="changeStatus(lesson, day)"><img src="../../assets/images/icons/settings.svg" alt=""></button>
-                </div>
-              </th>
-            </tr>
+            <app-lesson-table-card [lesson]="lesson" 
+                                   [isAdmin]="isAdmin" 
+                                   [isEditable]="isEditable" 
+                                   [teacherId]="teacherId"
+                                   [day]="day"
+                                   (deleteLesson)="deleteLessonFromDay($event)"
+                                   (editLesson)="editLessonInDay($event)"
+                                   (changeStatusOfLesson)="changeStatus($event)"
+            ></app-lesson-table-card>
           </ng-container>
         </tbody>
       </table>

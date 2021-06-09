@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { RxStompService } from '@stomp/ng2-stompjs';
 import { StatusEnum } from './model/enum/status.enum';
+import { Settings } from './model/settings.model';
 import { NotificationService } from './service/notification.service';
+import { SettingsService } from './service/settings.service';
 import { TokenStorageService } from './service/tokenStorage.service';
 
 @Component({
@@ -14,11 +16,13 @@ export class AppComponent implements OnInit{
   public isAdmin: boolean;
   constructor(private tokenStorageService: TokenStorageService, 
               private rxStompService: RxStompService,
-              private notificationService: NotificationService){}
+              private notificationService: NotificationService,
+              private settingsService: SettingsService){}
   ngOnInit(): void{
     this.isAdmin = this.isUserAdmin();
     this.observeNotification();
     this.observeScheduleChange();
+    this.initSettings();
   }
 
   private observeNotification(){
@@ -45,4 +49,11 @@ export class AppComponent implements OnInit{
     return false;
   }
   
+
+  private initSettings(){
+      if(this.settingsService.getSettings() == null){
+        let settings = new Settings(true, 'English');
+        this.settingsService.setSettings(settings);
+      }
+  }
 }

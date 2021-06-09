@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { AfterContentInit, Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SubjectTeacherGroupDTO } from '../dto/subjectTeacherGroup.dto';
 import { StudentGroupService } from '../service/student-group.service';
@@ -8,7 +8,7 @@ import { StudentGroupService } from '../service/student-group.service';
   templateUrl: './edit-lesson.component.html',
   styleUrls: ['./edit-lesson.component.scss']
 })
-export class EditLessonComponent implements OnInit {
+export class EditLessonComponent implements OnInit,AfterContentInit {
 
   public subjectTeacher: SubjectTeacherGroupDTO[];
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private groupService: StudentGroupService) {
@@ -17,9 +17,8 @@ export class EditLessonComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.data);
-    
-    
+  }
+  ngAfterContentInit(){
     this.findSubjectsForGroup();
   }
 

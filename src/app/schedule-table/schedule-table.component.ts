@@ -19,6 +19,7 @@ import { StatusEnum } from '../model/enum/status.enum';
 import { NotificationService } from '../service/notification.service';
 import { TokenStorageService } from '../service/tokenStorage.service';
 import { ChangeLessonStatusComponent } from '../change-lesson-status/change-lesson-status.component';
+import { LessonDTO } from '../dto/lesson.dto';
 
 @Component({
   selector: 'app-schedule-table',
@@ -116,8 +117,14 @@ export class ScheduleTableComponent implements OnInit, OnChanges, AfterViewInit 
     });
   }
 
-  public deleteLessonFromDay(lesson: Lesson, day: ScheduleDay){
+   /**
+    * This method remove lesson from day
+    * @param obj lesson: LessonDTO, day: ScheduleDayDTO
+    */
+  public deleteLessonFromDay(obj: any){
       if(window.confirm('Are you sure you want to delete this lesson?')){
+        let lesson = obj.lesson;
+        let day = obj.day;
         this.lessonService.delete(lesson.id).subscribe(
           res=>{
             day.lessons = day.lessons.filter(x=>x.id != lesson.id);
@@ -128,14 +135,17 @@ export class ScheduleTableComponent implements OnInit, OnChanges, AfterViewInit 
           }
         );
       }
-      
   }
-  public editLessonInDay(lesson: Lesson, day: ScheduleDayDTO){
+     /**
+    * This method allow to edit lesson in day
+    * @param obj lesson: LessonDTO, day: ScheduleDayDTO
+    */
+  public editLessonInDay(obj: any){
       this.dialog.open(EditLessonComponent, {
         data: {
-          lesson: lesson,
+          lesson: obj.lesson,
           group: this.group,
-          currentDay: day,
+          currentDay: obj.day,
           selectedSemester: this.selectedSemester
         }
       });
@@ -191,11 +201,15 @@ export class ScheduleTableComponent implements OnInit, OnChanges, AfterViewInit 
     );
   }
 
-  public changeStatus(lesson: Lesson, day: ScheduleDay){
+  /**
+   * This method allow to change status of lesson
+   * @param obj lesson: LessonDTO, day: ScheduleDayDTO
+   */
+  public changeStatus(obj: any){
     this.dialog.open(ChangeLessonStatusComponent, {
       data: {
-        lesson: lesson,
-        currentDay: day,
+        lesson: obj.lesson,
+        currentDay: obj.day,
       }
     });
   }

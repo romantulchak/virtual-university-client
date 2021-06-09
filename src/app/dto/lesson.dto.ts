@@ -11,4 +11,5 @@ export class LessonDTO{
     public groupName: string;
     public roomNumber: string;
     public comment: string;
+    public previousStatus: string;
 }
