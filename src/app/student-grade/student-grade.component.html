@@ -9,6 +9,7 @@
             <th>Subject</th>
             <th>Type</th>
             <th>Teacher</th>
+            <th>ETCS</th>
             <th>Grade</th>
           </tr>
         </thead>
@@ -20,6 +21,7 @@
             <td><a
                 routerLink="teacher-profile/{{grade.subjectTeacherGroup.teacher.id}}">{{grade.subjectTeacherGroup.teacher.firstName}}
                 {{grade.subjectTeacherGroup.teacher.lastName}}</a></td>
+            <td>{{grade.subjectTeacherGroup.subject.ects}}</td>
             <td>
               <span class="grade" *ngIf="grade.grade != 0" [class.best-grade]="grade.grade == 5"
                 [class.good-grade]="grade.grade == 4.5" [class.bad-grade]="grade.grade == 2">{{grade.grade}}</span>

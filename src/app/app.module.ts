@@ -86,6 +86,7 @@ import { DatePipe } from '@angular/common';
 import { LessonTableCardComponent } from './lesson-table-card/lesson-table-card.component';
 import { SettingsComponent } from './settings/settings.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { PaginationComponent } from './pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -146,6 +147,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     PieChartComponent,
     LessonTableCardComponent,
     SettingsComponent,
+    PaginationComponent,
     
   ],
     imports: [

@@ -27,6 +27,8 @@ export class SettingsComponent implements OnInit {
 
   private getSettings(){
     this.settings = this.settingsService.getSettings();
+
+    
   }
 
   public saveSettings(){

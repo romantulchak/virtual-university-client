@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { SubjectDTO } from '../dto/subject.dto';
 import { TeacherDTO } from '../dto/teacher.dto';
+import { StatusEnum } from '../model/enum/status.enum';
+import { NotificationService } from '../service/notification.service';
 import { SubjectService } from '../service/subject.service';
 import { TeacherService } from '../service/teacher.service';
 
@@ -12,7 +14,9 @@ import { TeacherService } from '../service/teacher.service';
 })
 export class SubjectsPanelComponent implements OnInit {
 
-  constructor(private teacherService: TeacherService, private subjectService: SubjectService) { }
+  constructor(private teacherService: TeacherService, 
+              private subjectService: SubjectService,
+              private notificationService: NotificationService) { }
   public teachers: TeacherDTO[];
   public subjects: SubjectDTO[];
   public subjectsFormControl: FormControl = new FormControl();
@@ -33,9 +37,7 @@ export class SubjectsPanelComponent implements OnInit {
     this.subjectService.getAvailableSubjects(id).subscribe(
       res=>{
         this.subjects = res;
-        console.log(res);
         this.currentTeacherId = id;
-        
       }
     );
   }
@@ -43,8 +45,10 @@ export class SubjectsPanelComponent implements OnInit {
   public addSubject(){
     this.teacherService.addSubjectsToTeacher(this.currentTeacherId, this.subjectsFormControl.value).subscribe(
       res=>{
-        console.log("Ok");
-        
+        this.notificationService.showNotification('Subject was add for teacher', StatusEnum[StatusEnum.OK], StatusEnum["OK"]);
+      },
+      error=>{
+        this.notificationService.showNotification(error.error.message, error.statusText, error.status);
       }
     );
   }

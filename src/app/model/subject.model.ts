@@ -9,4 +9,5 @@ export class Subject{
     public type: string;
     public description: string;
     public teachers?: Teacher[];
+    public ects: number;
 }

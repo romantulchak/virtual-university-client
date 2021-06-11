@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
+import { PageableDTO } from "../dto/pageable/pageable.dto";
 import { SubjectDTO } from "../dto/subject.dto";
 import { SubjectTeacherGroupDTO } from "../dto/subjectTeacherGroup.dto";
 import { SubjectFile } from "../model/subject-file.model";
@@ -36,8 +37,8 @@ export class SubjectService{
     public getAvailableSubjects(teacherId: number): Observable<SubjectDTO[]>{
         return this.http.get<SubjectDTO[]>(API_URL + 'subject/availableSubjects/' + teacherId);
     }
-    public getSubjectsForTeacher(teacherId: number):Observable<SubjectDTO[]>{
-        return this.http.get<SubjectDTO[]>(API_URL + 'subject/findTeacherSubjects/' + teacherId);
+    public getSubjectsForTeacher(teacherId: number, page: number):Observable<PageableDTO<SubjectDTO[]>>{
+        return this.http.get<PageableDTO<SubjectDTO[]>>(`${API_URL}subject/findTeacherSubjects/${teacherId}/${page}`);
     }
     public getAllForSpecialization(semesterId: number):Observable<SubjectDTO[]>{
         return this.http.get<SubjectDTO[]>(API_URL + 'subject/findAllForSpecialization/' + semesterId);

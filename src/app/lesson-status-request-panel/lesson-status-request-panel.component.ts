@@ -27,7 +27,7 @@ export class LessonStatusRequestPanelComponent implements OnInit {
   public requestDecision = RequestDecisionEnum;
   public requestStatus = RequestStatusEnum;
   public currentUsername: string;
-  public totalPages: number[];
+  public totalPages: number;
   public currentPage: number;
   public actualVersionOfLessons: LessonDTO[] = [];
   public expectedVersionOfLessons: LessonDTO[] = [];
@@ -54,11 +54,8 @@ export class LessonStatusRequestPanelComponent implements OnInit {
     if(page != this.currentPage){
       this.lessonService.findLessonRequests(page).subscribe(
         res=>{
-          this.totalPages = Array.from(new Array(res.totalPages), (x, i) => i+1);
+          this.totalPages = res.totalPages;
           this.requests = res.data;
-          this.currentPage = res.currentPage;
-          console.log(res);
-          
         }
       );
     }
@@ -110,12 +107,14 @@ export class LessonStatusRequestPanelComponent implements OnInit {
 
   public getDayLessons(request: ScheduleLessonRequestDTO){
     let date = this.datePipe.transform(request.lesson.dateStart, 'yyyy-MM-dd');
-    this.scheduleDayService.getDayByDateAndGroupName(date, request.lesson.groupName).subscribe(
+    this.scheduleDayService.getDayByDateAndGroupName(date, request.lesson.groupName, request.semester).subscribe(
       res=>{
         this.initPreviousAndActualLessons(JSON.stringify(res.lessons), request);
         this.selectedDay = this.datePipe.transform(request.lesson.dateStart, 'dd-MM-yyyy');
         this.dialog.open(this.lessonCompareDialog);
-
+      },
+      error=>{
+        this.notificationService.showNotification(error.error.message, error.statusText, error.status);
       }
     );
   }

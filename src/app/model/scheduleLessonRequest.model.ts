@@ -1,3 +1,4 @@
+import { SemesterDTO } from "../dto/semester.dto";
 import { Lesson } from "./lesson.model";
 
 export class ScheduleLessonRequest{
@@ -7,4 +8,5 @@ export class ScheduleLessonRequest{
     public lesson: Lesson;
     public previousStatus: string;
     public decision: string;
+    public semesterId: number;
 }

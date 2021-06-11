@@ -120,6 +120,7 @@ export class GroupDetailsTeacherComponent implements OnInit {
     this.selectedSemester = semester;
     this.findSubjects();
     this.source = null;
+    this.studentGrades = null;
   }
   
   @ViewChild(MatPaginator) 
