@@ -6,10 +6,15 @@ import { Settings } from "../model/settings.model";
     providedIn:'root'
 })
 export class SettingsService{
+    private settings: Settings = new Settings(true, "English");
     constructor(){
 
     }
     public getSettings(): Settings{
+        let settings = JSON.parse(localStorage.getItem('settings'));
+        if(settings == null){
+            this.setSettings(this.settings);
+        }
        return JSON.parse(localStorage.getItem('settings'));
     }
 

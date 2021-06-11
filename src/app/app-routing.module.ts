@@ -63,7 +63,7 @@ const routes: Routes = [
     {path:'create-student', component: CreateStudentComponent},
     {path: 'create-group', component: CreateGroupComponent},
     {path: 'create-course', component: CreateCourseComponent},
-    {path:'create-specialization', component: CreateSpecializationComponent},
+    {path: 'create-specialization', component: CreateSpecializationComponent},
     {path: 'create-semester', component: CreateSemesterComponent},
     {path: 'create-subject', component: CreateSubjectComponent},
     {path: 'create-teacher', component: CreateTeacherComponent},

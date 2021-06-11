@@ -13,16 +13,17 @@ export class TeacherSubjectComponent implements OnInit {
   constructor(private subjectService: SubjectService, private tokenStorageService: TokenStorageService) { }
   private teacherId: number;
   public subjects: SubjectDTO[];
+  public totalPages: number;
   ngOnInit(): void {
     this.teacherId = this.tokenStorageService.getUser().id;
-    this.getTeacherSubjects();
+    this.getTeacherSubjects(1);
   }
 
-  private getTeacherSubjects(){
-    this.subjectService.getSubjectsForTeacher(this.teacherId).subscribe(
+  public getTeacherSubjects(page: number){
+    this.subjectService.getSubjectsForTeacher(this.teacherId, page).subscribe(
       res=>{
-        this.subjects = res;
-        
+        this.totalPages = res.totalPages;
+        this.subjects = res.data;
       }
     );
   }

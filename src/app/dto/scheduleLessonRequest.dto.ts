@@ -9,4 +9,5 @@ export class ScheduleLessonRequestDTO{
     public lesson: LessonDTO;
     public decision: RequestDecisionEnum;
     public info: Request;
+    public semester: number;
 }

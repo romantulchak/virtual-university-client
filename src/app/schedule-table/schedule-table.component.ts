@@ -210,6 +210,7 @@ export class ScheduleTableComponent implements OnInit, OnChanges, AfterViewInit 
       data: {
         lesson: obj.lesson,
         currentDay: obj.day,
+        semester: this.selectedSemester
       }
     });
   }

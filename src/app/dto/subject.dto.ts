@@ -5,4 +5,5 @@ export class SubjectDTO{
     public name: string;
     public type: string;
     public teachers: TeacherDTO[];
+    public ects: number;
 }

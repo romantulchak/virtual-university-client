@@ -1,0 +1,6 @@
+<div class="pagination">
+  <ul class="pagination__list">
+    <li class="page__number" *ngFor="let page of pages" (click)="findOnPage(page)"
+      [class.active]="currentPage == page">{{page}}</li>
+  </ul>
+</div>

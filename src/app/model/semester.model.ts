@@ -1,3 +1,4 @@
+import { ScheduleLessonRequest } from "./scheduleLessonRequest.model";
 import { Specialization } from "./specialization.model";
 import { Subject } from "./subject.model";
 
@@ -8,5 +9,4 @@ export class Semester{
     public semesterNumber: number;
     public startDate:Date;
     public endDate: Date;
-
 }

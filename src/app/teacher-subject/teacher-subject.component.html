@@ -2,10 +2,9 @@
     <div class="container">
         <div class="subjects__grid">
             <div *ngFor="let subject of subjects">
-
                 <app-subject-card [subject]="subject" (selectedSubject)="selectedSubject($event)"></app-subject-card>
-
             </div>
         </div>
+        <app-pagination [totalPages]="totalPages" (findDataOnPage)="getTeacherSubjects($event)"></app-pagination>
     </div>
 </section>
