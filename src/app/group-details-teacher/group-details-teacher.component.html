@@ -9,7 +9,15 @@
       </ng-container>
     </div>
     <ng-container *ngIf="loaded;else loading">
-      <div class="students" *ngIf="source != null;">
+
+      <ng-container *ngIf="source != null;">
+        <div>
+          <h3>Upload files</h3>
+          <input type="file" (change)="selectFiles($event)" multiple>
+          <button (click)="upload()">Upload</button>
+        </div>
+
+      <div class="students">
         <mat-form-field>
           <mat-label>Filter</mat-label>
           <input matInput (keyup)="filter($event, source)" placeholder="Adam Kowalski" #input>
@@ -56,6 +64,7 @@
         </div>
         <button (click)="setGrade()">Ok</button>
       </div>
+      </ng-container>
     </ng-container>
     <app-pie-chart *ngIf="studentGrades" [studentGrades]="studentGrades"></app-pie-chart>
   </div>

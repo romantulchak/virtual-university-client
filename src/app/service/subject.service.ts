@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
@@ -28,9 +28,7 @@ export class SubjectService{
         let data = new FormData();
         let headers = new HttpHeaders();
         headers.append('Content-Type','multipart/form-data');
-        for (let file of files) {            
-            data.append('file', file);
-        }
+        this.appendFiles(files, data);
         data.append('subject', JSON.stringify(subject));
         return this.http.post(API_URL + 'subject/createSubject', data, {headers: headers});
     }
@@ -61,5 +59,30 @@ export class SubjectService{
     }
     public findAllSubjectsWithTeachersForSemester(semesterId: number){
         return this.http.get<SubjectDTO[]>(API_URL + 'subject/findAllSubjectsWithTeachersForSemester/' + semesterId);
+    }
+    public uploadTeacherFiles(files: File[], subjectId: number, groupId: number, semesterId: number):Observable<any>{
+        let params = new HttpParams();
+        params = params.append('subjectId', subjectId.toString())
+                        .append('groupId', groupId.toString())
+                        .append('semesterId', semesterId.toString());
+        let data = new FormData();
+        this.appendFiles(files, data);
+        let headers = new HttpHeaders();
+        headers.append('Content-Type','multipart/form-data');
+        return this.http.post(API_URL + 'subject/uploadTeacherFile', data, {headers: headers, params: params});
+    }
+
+    public findTeacherFilesForSubject(subjectId: number, groupId: number, semesterId: number):Observable<any>{
+        let params = new HttpParams();
+        params = params.append('subjectId', subjectId.toString())
+                        .append('groupId', groupId.toString())
+                        .append('semesterId', semesterId.toString())
+        return this.http.get<any>(API_URL + 'subject/findTeacherFiles', {params: params});
+    }
+
+    private appendFiles(files: File[], data:FormData){
+        for (let file of files) {            
+            data.append('file', file);
+        }
     }
 }
