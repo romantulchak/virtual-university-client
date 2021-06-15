@@ -15,6 +15,7 @@ import { ScheduleService } from '../service/schedule.service';
 import { StudentGroupService } from '../service/student-group.service';
 import { StudentGroupGradeService } from '../service/studentGroupGrade.service';
 import { SubjectTeacherService } from '../service/subject-teacher.service';
+import { SubjectService } from '../service/subject.service';
 import { TokenStorageService } from '../service/tokenStorage.service';
 
 @Component({
@@ -30,17 +31,19 @@ export class GroupDetailsTeacherComponent implements OnInit {
   public grades: number[] = [2, 3, 3.5, 4, 4.5, 5];
   public loaded: boolean = true;
   public selectedSemester: SemesterDTO;
+  public files: File[];
+  public studentGrades: StudentGroupGradeDTO[];
   private groupId: number;
   private teacherId: number;
   private studentGroupGrades: StudentGroupGrade[] = [];
   private subject: Subject;
-  public studentGrades: StudentGroupGradeDTO[];
   constructor(private router: ActivatedRoute,
               private studentGroupService: StudentGroupService,
               private tokenStorageService: TokenStorageService, 
               private filterHelper: FilterHelper,
               private studentGroupGradeService: StudentGroupGradeService,
-              private subjectTeacherService: SubjectTeacherService) {
+              private subjectTeacherService: SubjectTeacherService,
+              private subjectService: SubjectService) {
 
       router.params.subscribe(
         res=>{
@@ -70,10 +73,21 @@ export class GroupDetailsTeacherComponent implements OnInit {
 
   public selectSubject(subject: Subject){
     this.subject = subject;
+    this.getTeacherFiles();
     this.findStudentGrades();
    
       
   }
+
+  private getTeacherFiles(){
+    this.subjectService.findTeacherFilesForSubject(this.subject.id, this.group.id, this.selectedSemester.id).subscribe(
+      res=>{
+        console.log(res);
+        
+      }
+    );    
+  }
+
   public filter(e: any, source: any){
     this.filterHelper.filter(e, source);
   }
@@ -128,6 +142,21 @@ export class GroupDetailsTeacherComponent implements OnInit {
       if(value != undefined){
         this.source.paginator = value;
       }
+  }
+
+  public selectFiles(event: any){
+    this.files = [];
+    this.files = event.target.files;  
+      
+  }
+
+  public upload(){
+    this.subjectService.uploadTeacherFiles(this.files, this.subject.id, this.group.id, this.selectedSemester.id).subscribe(
+      res=>{
+        console.log("Ok");
+        
+      }
+    );
   }
 
 }
