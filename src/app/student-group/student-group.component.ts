@@ -9,7 +9,6 @@ import { SubjectTeacherService } from '../service/subject-teacher.service';
 import { SubjectService } from '../service/subject.service';
 import { TokenStorageService } from '../service/tokenStorage.service';
 import { SubjectFile } from '../model/subject-file.model';
-import { saveAs } from 'file-saver';
 import { SemesterDTO } from '../dto/semester.dto';
 @Component({
   selector: 'app-student-group',
@@ -63,20 +62,23 @@ export class StudentGroupComponent implements OnInit {
   }
 
   public selectedSubject(subject: SubjectDTO, teacher: TeacherDTO){
-    
-    
     if(this.currentSubject.subject != subject){
       this.currentSubject.subject = subject;
       this.currentSubject.teacher = teacher;
       this.getGradeForSubject(subject.id);
-      this.subjectService.getFilesForSubject(subject.id).subscribe(
-        res=>{
-          this.subjectFiles = res;
-          
-        }
-      )
+      this.getFilesForSubject(subject.id, teacher.id);
     }
   }
+
+  private getFilesForSubject(subjectId: number, teacherId: number){
+    this.subjectService.getFilesForSubject(subjectId, this.studentGroup.id, this.selectedSemester.id, teacherId).subscribe(
+      res=>{
+        this.subjectFiles = res;
+        
+      }
+    )
+  }
+
 
   private getGradeForSubject(subjectId: number){
     this.groupGradeService.getGradeForStudentBySubject(this.studentGroup.id, subjectId, this.studentId, this.selectedSemester.id).subscribe(
@@ -85,13 +87,7 @@ export class StudentGroupComponent implements OnInit {
       }
     );
   }
-  
-  public downloadFile(filename: string){
-    this.subjectService.downloadFile(filename).subscribe(res=>{
-      saveAs(res, filename)
-        
-    });
-  }
+
 
   public getSemesterSelected(semester: SemesterDTO){
     this.selectedSemester = semester;

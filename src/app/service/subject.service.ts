@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { timeout } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { PageableDTO } from "../dto/pageable/pageable.dto";
 import { SubjectDTO } from "../dto/subject.dto";
@@ -47,12 +48,17 @@ export class SubjectService{
     public getAvailableSubjectsForGroup(groupId: number):Observable<SubjectDTO[]>{
         return this.http.get<SubjectDTO[]>(`${API_URL}subject/availableSubjectForGroup/${groupId}`);
     }
-    public getFilesForSubject(subjectId: number):Observable<SubjectFile[]>{
-        return this.http.get<SubjectFile[]>(API_URL + 'subject/getFilesForSubject/' + subjectId);
+    public getFilesForSubject(subjectId: number, groupId: number, semesterId: number, teacherId: number):Observable<SubjectFile[]>{
+        let params = new HttpParams();
+        params = params.append('subjectId', subjectId.toString())
+                        .append('groupId', groupId.toString())
+                        .append('semesterId', semesterId.toString())
+                        .append('teacherId', teacherId.toString());
+        return this.http.get<SubjectFile[]>(API_URL + 'subject/getFilesForSubject', {params: params});
     }
 
     public downloadFile(filename: string): Observable<Blob>{
-        return this.http.get(API_URL + 'subject/getFile/' + filename, {responseType: 'blob'});
+        return this.http.get(API_URL + 'subject/downloadFile/' + filename, {responseType: 'blob'});
     }
     public findAllSubjectsWithTeachers():Observable<SubjectDTO[]>{
         return this.http.get<SubjectDTO[]>(API_URL + 'subject/findAllSubjectsWithTeachers');

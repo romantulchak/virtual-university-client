@@ -8,9 +8,12 @@ import { StudentDTO } from '../dto/student.dto';
 import { StudentGroupDTO } from '../dto/studentGroup.dto';
 import { SubjectDTO } from '../dto/subject.dto';
 import { FilterHelper } from '../helpers/filter.helper';
+import { StatusEnum } from '../model/enum/status.enum';
 import { Student } from '../model/student.model';
 import { StudentGroupGrade } from '../model/studentGroupGrade.model';
+import { SubjectFile } from '../model/subject-file.model';
 import { Subject } from '../model/subject.model';
+import { NotificationService } from '../service/notification.service';
 import { ScheduleService } from '../service/schedule.service';
 import { StudentGroupService } from '../service/student-group.service';
 import { StudentGroupGradeService } from '../service/studentGroupGrade.service';
@@ -33,6 +36,8 @@ export class GroupDetailsTeacherComponent implements OnInit {
   public selectedSemester: SemesterDTO;
   public files: File[];
   public studentGrades: StudentGroupGradeDTO[];
+  public subjectFiles: SubjectFile[];
+  public gradesNotZero: boolean = true;
   private groupId: number;
   private teacherId: number;
   private studentGroupGrades: StudentGroupGrade[] = [];
@@ -43,7 +48,8 @@ export class GroupDetailsTeacherComponent implements OnInit {
               private filterHelper: FilterHelper,
               private studentGroupGradeService: StudentGroupGradeService,
               private subjectTeacherService: SubjectTeacherService,
-              private subjectService: SubjectService) {
+              private subjectService: SubjectService,
+              private notificationService: NotificationService) {
 
       router.params.subscribe(
         res=>{
@@ -72,18 +78,17 @@ export class GroupDetailsTeacherComponent implements OnInit {
   }
 
   public selectSubject(subject: Subject){
-    this.subject = subject;
-    this.getTeacherFiles();
-    this.findStudentGrades();
-   
-      
+    if(this.subject != subject){
+      this.subject = subject;
+      this.getTeacherFiles();
+      this.findStudentGrades();
+    }
   }
 
   private getTeacherFiles(){
     this.subjectService.findTeacherFilesForSubject(this.subject.id, this.group.id, this.selectedSemester.id).subscribe(
       res=>{
-        console.log(res);
-        
+        this.subjectFiles = res;        
       }
     );    
   }
@@ -117,6 +122,7 @@ export class GroupDetailsTeacherComponent implements OnInit {
           this.source = new MatTableDataSource(res);
           this.loaded = true;
           this.studentGrades = res;
+          this.checkIfAllGradesNotZer();
         }
       }
     );
@@ -153,10 +159,23 @@ export class GroupDetailsTeacherComponent implements OnInit {
   public upload(){
     this.subjectService.uploadTeacherFiles(this.files, this.subject.id, this.group.id, this.selectedSemester.id).subscribe(
       res=>{
-        console.log("Ok");
-        
+        this.notificationService.showNotification(`Files uploeded`, StatusEnum[StatusEnum.OK], StatusEnum["OK"]);
+        this.getTeacherFiles();
+      },
+      error=>{
+        this.notificationService.showNotification(error.error.message, error.statusText, error.status);
       }
     );
+  }
+
+  private checkIfAllGradesNotZer(){
+    this.gradesNotZero = true;
+    for(let grade of this.studentGrades){
+      if(grade.grade == 0){
+        this.gradesNotZero = false;
+        break;
+      }
+    }
   }
 
 }

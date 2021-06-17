@@ -12,6 +12,7 @@
 
 $smallIcon: 15px;
 $mediumIcon: 25px;
+$largeIcon: 40px;
 $titleFont: TitleFont;
 $badGrade: #f70808;
 $errorMsg: #f70808;
@@ -71,14 +72,16 @@ a{
 }
 
 .icon__small{
-    @include icon($smallIcon);
-    margin-left: 12px;
+  @include icon($smallIcon);
+  margin-left: 12px;
 }
 .icon__medium{
   @include icon($mediumIcon);
 
 }
-
+.icon__large{
+  @include icon($largeIcon);
+}
 .table__legend{
     padding: 2em;
     border: 3px solid #bbbbbb36;

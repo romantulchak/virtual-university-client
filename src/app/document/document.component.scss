@@ -1,0 +1,14 @@
+$table-font: TitleFont;
+.file{
+    padding: 5px;
+    text-align: center;
+    .file__name{
+        display: flex;
+        align-items: center;
+        font-family: $table-font;
+        gap: 5px; 
+          button{
+            margin-left: -31px;
+          }
+    }
+}

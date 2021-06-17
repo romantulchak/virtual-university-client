@@ -1,51 +1,49 @@
 <section>
-    <div class="container">
-        <ng-container *ngIf="loaded; else loading">
-            <div *ngIf="studentGroup != null;else groupNotFound">
-                <app-group-semesters [group]="studentGroup" (semesterSelected)="getSemesterSelected($event)"></app-group-semesters>
-                <app-group-information *ngIf="studentGroup != null" [group]="studentGroup"></app-group-information>
-                <div class="subjects">
-                    <ng-container *ngFor="let subject of studentGroup?.subjects">
-                        <app-subject-card [subject]="subject.subject" (selectedSubject)="selectedSubject($event, subject.teacher)"></app-subject-card>
-                    </ng-container>
-                </div>
-                <div *ngIf="currentSubject.subject != null">
-                    <h3>Subject {{currentSubject.subject.name}} details</h3>
-                    <div class="subject__details" >
-                        <div class="details">
-                            <h3>Subject details ...</h3>
-                        </div>
-               
-                  
-                        <div class="attachments">
-                            <div *ngFor="let file of subjectFiles">
-                                <button (click)="downloadFile(file.name)">{{file.name}}</button>
-                            </div>
-                        </div>
-                        <div class="teacher">
-                            <h3>My teacher</h3>
-                            <h4>No. {{currentSubject.teacher.numberIdentifier}}</h4>
-                            <h4>{{currentSubject.teacher.firstName}} {{currentSubject.teacher.lastName}}</h4>
-                        </div>
-                        <div class="student__grade" *ngIf="gradeForSubject != 0">
-                            <h4>My grade</h4>
-                            <h3>{{gradeForSubject}}</h3>
-                        </div>
-                    </div>
-                </div>
+  <div class="container">
+    <ng-container *ngIf="loaded; else loading">
+      <div *ngIf="studentGroup != null;else groupNotFound">
+        <app-group-semesters [group]="studentGroup" (semesterSelected)="getSemesterSelected($event)">
+        </app-group-semesters>
+        <app-group-information *ngIf="studentGroup != null" [group]="studentGroup"></app-group-information>
+        <div class="subjects">
+          <ng-container *ngFor="let subject of studentGroup?.subjects">
+            <app-subject-card [subject]="subject.subject" (selectedSubject)="selectedSubject($event, subject.teacher)">
+            </app-subject-card>
+          </ng-container>
+        </div>
+        <div *ngIf="currentSubject.subject != null">
+          <h3>Subject {{currentSubject.subject.name}} details</h3>
+          <div class="subject__details">
+            <div class="details">
+              <h3>Subject details ...</h3>
             </div>
-        </ng-container>
-       
-        <ng-template #groupNotFound>
-
-            <h3>You don't have a group</h3>
-
-        </ng-template>
-
-        <ng-template #loading>
-            <div class="loading">
-              <img src="../../assets/images/icons/loader.gif" alt="">
+            <div class="attachments">
+              <app-document [files]="subjectFiles"></app-document>
             </div>
-          </ng-template>
-    </div>
+            <div class="teacher">
+              <h3>My teacher</h3>
+              <h4>No. {{currentSubject.teacher.numberIdentifier}}</h4>
+              <h4>{{currentSubject.teacher.firstName}} {{currentSubject.teacher.lastName}}</h4>
+            </div>
+            <div class="student__grade" *ngIf="gradeForSubject != 0">
+              <h4>My grade</h4>
+              <h3>{{gradeForSubject}}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #groupNotFound>
+
+      <h3>You don't have a group</h3>
+
+    </ng-template>
+
+    <ng-template #loading>
+      <div class="loading">
+        <img src="../../assets/images/icons/loader.gif" alt="">
+      </div>
+    </ng-template>
+  </div>
 </section>

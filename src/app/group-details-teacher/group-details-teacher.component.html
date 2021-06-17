@@ -8,15 +8,24 @@
         <app-subject-card [subject]="subject.subject" (selectedSubject)="selectSubject($event)"></app-subject-card>
       </ng-container>
     </div>
+
+
     <ng-container *ngIf="loaded;else loading">
-
       <ng-container *ngIf="source != null;">
-        <div>
-          <h3>Upload files</h3>
-          <input type="file" (change)="selectFiles($event)" multiple>
-          <button (click)="upload()">Upload</button>
+        <div class="files__section">
+          <div class="upload__files">
+            <h3>Upload files</h3>
+            <input type="file" (change)="selectFiles($event)" multiple>
+            <button (click)="upload()">Upload</button>
+          </div>
+          <div class="my__files" *ngIf="subjectFiles != null && subjectFiles.length != 0">
+            <h2>My Files</h2>
+            <div class="files">
+              <app-document class="documents" [files]="subjectFiles"></app-document>
+            </div>
+          </div>
         </div>
-
+  
       <div class="students">
         <mat-form-field>
           <mat-label>Filter</mat-label>
@@ -63,10 +72,10 @@
           <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
         </div>
         <button (click)="setGrade()">Ok</button>
+        <app-pie-chart *ngIf="studentGrades && gradesNotZero" [studentGrades]="studentGrades"></app-pie-chart>
       </div>
       </ng-container>
     </ng-container>
-    <app-pie-chart *ngIf="studentGrades" [studentGrades]="studentGrades"></app-pie-chart>
   </div>
   <ng-template #loading>
     <div class="loading">
