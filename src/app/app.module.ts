@@ -87,6 +87,9 @@ import { LessonTableCardComponent } from './lesson-table-card/lesson-table-card.
 import { SettingsComponent } from './settings/settings.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { PaginationComponent } from './pagination/pagination.component';
+import { DocumentComponent } from './document/document.component';
+import { FileExtensionPipe } from './pipe/file-extension.pipe';
+import { SwitchFilePipe } from './pipe/switch-file.pipe';
 
 @NgModule({
   declarations: [
@@ -148,6 +151,9 @@ import { PaginationComponent } from './pagination/pagination.component';
     LessonTableCardComponent,
     SettingsComponent,
     PaginationComponent,
+    DocumentComponent,
+    FileExtensionPipe,
+    SwitchFilePipe,
     
   ],
     imports: [

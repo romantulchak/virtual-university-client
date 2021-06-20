@@ -1,0 +1,19 @@
+<ng-container *ngIf="files != null">
+  <div class="file" *ngFor="let file of files">
+    <div class="file__name">
+        <div class="icon__large" [ngSwitch]="file.name |fileExtension: file.name">
+            <img src="../../assets/images/icons/files/file.svg" *ngSwitchDefault alt="file"/>
+            <img src="../../assets/images/icons/files/docx.svg" *ngSwitchCase="['docx', 'doc'] | switchFile: file.name" alt="doc file">
+            <img src="../../assets/images/icons/files/xlsx.svg" *ngSwitchCase="['xlsx', 'xls'] | switchFile: file.name" alt="xlsx file">
+            <img src="../../assets/images/icons/files/pdf.svg" *ngSwitchCase="'pdf'" alt="pdf file">
+            <img src="../../assets/images/icons/files/picture.svg" *ngSwitchCase="['jpg', 'png', 'jpeg', 'svg', 'gif'] | switchFile: file.name" alt="picture file">
+            <img src="../../assets/images/icons/files/zip.svg" *ngSwitchCase="['zip', 'rar'] | switchFile: file.name" alt="zip file">
+        </div>
+        <div>
+            <h5>{{file.name | slice: 0:10 }}...{{file.name | fileExtension}}</h5>
+        </div>
+    </div>
+
+    <button *ngIf="showDownloadButton" title="{{file.name}}" (click)="downloadFile(file.name)">Download</button>
+  </div>
+</ng-container>

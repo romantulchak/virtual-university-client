@@ -8,16 +8,40 @@
         <app-subject-card [subject]="subject.subject" (selectedSubject)="selectSubject($event)"></app-subject-card>
       </ng-container>
     </div>
-    <ng-container *ngIf="loaded;else loading">
 
-      <ng-container *ngIf="source != null;">
-        <div>
-          <h3>Upload files</h3>
-          <input type="file" (change)="selectFiles($event)" multiple>
-          <button (click)="upload()">Upload</button>
+    <div class="operations" *ngIf="source != null">
+        <div class="operation" (click)="showStudents = !showStudents" [class.active]="showStudents">
+            <img class="icon__large icon" src="../../assets/images/icons/students.svg" alt="">
+            <h3 class="operation__text">Students</h3>
         </div>
+        <div class="operation" (click)="showFiles = !showFiles" [class.active]="showFiles">
+          <img class="icon__large icon" src="../../assets/images/icons/files.svg" alt="">
+          <h3 class="operation__text">Files</h3>
+        </div>
+        <div class="operation" (click)="showChart = !showChart" [class.active]="showChart">
+          <img class="icon__large icon" src="../../assets/images/icons/pie-chart.svg" alt="">
+          <h3 class="operation__text">Chart</h3>
+        </div>
+    </div>
 
-      <div class="students">
+
+    <ng-container *ngIf="loaded;else loading">
+      <ng-container *ngIf="source != null;">
+        <div class="files__section" *ngIf="showFiles">
+          <div class="upload__files">
+            <h3>Upload files</h3>
+            <input type="file" (change)="selectFiles($event)" multiple>
+            <button (click)="upload()">Upload</button>
+          </div>
+          <div class="my__files" *ngIf="subjectFiles != null && subjectFiles.length != 0">
+            <h2>My Files</h2>
+            <div class="files">
+              <app-document class="documents" [files]="subjectFiles"></app-document>
+            </div>
+          </div>
+        </div>
+  
+      <div class="students" *ngIf="showStudents">
         <mat-form-field>
           <mat-label>Filter</mat-label>
           <input matInput (keyup)="filter($event, source)" placeholder="Adam Kowalski" #input>
@@ -66,7 +90,7 @@
       </div>
       </ng-container>
     </ng-container>
-    <app-pie-chart *ngIf="studentGrades" [studentGrades]="studentGrades"></app-pie-chart>
+    <app-pie-chart class="chart" *ngIf="studentGrades && gradesNotZero && showChart" [studentGrades]="studentGrades"></app-pie-chart>
   </div>
   <ng-template #loading>
     <div class="loading">

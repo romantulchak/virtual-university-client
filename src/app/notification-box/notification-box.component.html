@@ -1,17 +1,12 @@
 <section class="notification__box">
-  <span (click)="closeNotificationBox()" class="closebtn">×</span> 
-  <div class="notification__scroll" 
-        infinite-scroll 
-        [infiniteScrollDistance]="0.5"
-        [infiniteScrollThrottle]="50"
-        [scrollWindow]="false" 
-        (scrolled)="scrollNotificationsBox()">
-    <div (mouseenter)="readNotification(notification)" [@anim]="'active'" [class.notRead]="!notification.read" class="notification"
-      *ngFor="let notification of notifications">
+  <span (click)="closeNotificationBox()" class="closebtn">×</span>
+  <div class="notification__scroll" infinite-scroll [infiniteScrollDistance]="0.5" [infiniteScrollThrottle]="50"
+    [scrollWindow]="false" (scrolled)="scrollNotificationsBox()">
+    <div (mouseenter)="readNotification(notification)" [@anim]="'active'" [class.notRead]="!notification.read"
+      class="notification" *ngFor="let notification of notifications">
       <h3>{{notification.message}}</h3>
-
       <div class="date">
-          <span>{{notification.createdAt | date: 'dd-MM-yyyy HH:ss'}}</span>
+        <span>{{notification.createdAt | date: 'dd-MM-yyyy HH:ss'}}</span>
       </div>
     </div>
   </div>
