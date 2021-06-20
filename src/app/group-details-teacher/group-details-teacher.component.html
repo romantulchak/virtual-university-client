@@ -9,10 +9,25 @@
       </ng-container>
     </div>
 
+    <div class="operations" *ngIf="source != null">
+        <div class="operation" (click)="showStudents = !showStudents" [class.active]="showStudents">
+            <img class="icon__large icon" src="../../assets/images/icons/students.svg" alt="">
+            <h3 class="operation__text">Students</h3>
+        </div>
+        <div class="operation" (click)="showFiles = !showFiles" [class.active]="showFiles">
+          <img class="icon__large icon" src="../../assets/images/icons/files.svg" alt="">
+          <h3 class="operation__text">Files</h3>
+        </div>
+        <div class="operation" (click)="showChart = !showChart" [class.active]="showChart">
+          <img class="icon__large icon" src="../../assets/images/icons/pie-chart.svg" alt="">
+          <h3 class="operation__text">Chart</h3>
+        </div>
+    </div>
+
 
     <ng-container *ngIf="loaded;else loading">
       <ng-container *ngIf="source != null;">
-        <div class="files__section">
+        <div class="files__section" *ngIf="showFiles">
           <div class="upload__files">
             <h3>Upload files</h3>
             <input type="file" (change)="selectFiles($event)" multiple>
@@ -26,7 +41,7 @@
           </div>
         </div>
   
-      <div class="students">
+      <div class="students" *ngIf="showStudents">
         <mat-form-field>
           <mat-label>Filter</mat-label>
           <input matInput (keyup)="filter($event, source)" placeholder="Adam Kowalski" #input>
@@ -72,10 +87,10 @@
           <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
         </div>
         <button (click)="setGrade()">Ok</button>
-        <app-pie-chart *ngIf="studentGrades && gradesNotZero" [studentGrades]="studentGrades"></app-pie-chart>
       </div>
       </ng-container>
     </ng-container>
+    <app-pie-chart class="chart" *ngIf="studentGrades && gradesNotZero && showChart" [studentGrades]="studentGrades"></app-pie-chart>
   </div>
   <ng-template #loading>
     <div class="loading">

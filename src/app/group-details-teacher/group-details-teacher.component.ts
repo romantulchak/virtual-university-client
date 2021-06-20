@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
+import { TimeoutError } from 'rxjs';
 import { SemesterDTO } from '../dto/semester.dto';
 import { StudentGroupGradeDTO } from '../dto/student-group-grade.dto';
 import { StudentDTO } from '../dto/student.dto';
@@ -38,6 +39,10 @@ export class GroupDetailsTeacherComponent implements OnInit {
   public studentGrades: StudentGroupGradeDTO[];
   public subjectFiles: SubjectFile[];
   public gradesNotZero: boolean = true;
+  public showFiles: boolean = false;
+  public showStudents: boolean = false;
+  public showChart: boolean = false;
+
   private groupId: number;
   private teacherId: number;
   private studentGroupGrades: StudentGroupGrade[] = [];
@@ -50,13 +55,11 @@ export class GroupDetailsTeacherComponent implements OnInit {
               private subjectTeacherService: SubjectTeacherService,
               private subjectService: SubjectService,
               private notificationService: NotificationService) {
-
       router.params.subscribe(
         res=>{
           this.groupId = res.id;
         }
       );
-
    }
 
   ngOnInit(): void {
@@ -72,10 +75,11 @@ export class GroupDetailsTeacherComponent implements OnInit {
       },
       error=>{
         console.log("You haven't access to this group");
-        
       }
     );
   }
+
+  
 
   public selectSubject(subject: Subject){
     if(this.subject != subject){
