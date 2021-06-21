@@ -1,8 +1,6 @@
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Student } from '../model/student.model';
-import { Subject } from '../model/subject.model';
 import { StudentService } from '../service/student.service';
 import { CourseService } from '../service/course.service';
 import { SpecializationDTO } from '../dto/specialization.dto';
@@ -10,15 +8,9 @@ import { CourseDTO } from '../dto/course.dto';
 import { RoleService } from '../service/role.service';
 import { RoleDTO } from '../dto/role.dto';
 import { SemesterService } from '../service/semester.service';
-import { StudentDTO } from '../dto/student.dto';
-import { Semester } from '../model/semester.model';
 import { SemesterDTO } from '../dto/semester.dto';
 import { MatStepper } from '@angular/material/stepper';
 import { StudentGradesService } from '../service/student-grades.service';
-import { TeacherSubjectStudentGradeLinks } from '../model/teacherSubjectStudentGradeLinks.model';
-import { SubjectDTO } from '../dto/subject.dto';
-import { TeacherDTO } from '../dto/teacher.dto';
-import { Teacher } from '../model/teacher.model';
 import { NotificationService } from '../service/notification.service';
 import { StatusEnum } from '../model/enum/status.enum';
 
@@ -40,21 +32,17 @@ export class CreateStudentComponent implements OnInit {
   public roles: RoleDTO[];
   public specializations: SpecializationDTO[];
   public semester: SemesterDTO;
-
   public currentSubjectId: number;
   public isChecked: boolean = false;
   constructor(private formBuilder: FormBuilder, 
               private studentService: StudentService, 
               private courseService: CourseService, 
-              private roleService: RoleService, 
-              private semesterService: SemesterService,
               private studentGradeService: StudentGradesService,
               private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.initForm();
     this.getCousers();
-    this.getRoles();
   }
 
   private initForm(){
@@ -127,15 +115,8 @@ export class CreateStudentComponent implements OnInit {
         postalCode: this.secondFormGroup.get('postalCode').value,
         city: this.secondFormGroup.get('city').value
       },
-      roles: this.rolesFormControl.value
+      roles: []
     }
   }
 
-  private getRoles(){
-    this.roleService.getRoles().subscribe(
-      res=>{
-        this.roles = res;
-      }
-    );
-  }
 }

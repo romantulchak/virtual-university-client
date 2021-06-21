@@ -68,7 +68,8 @@ export class CreateTeacherComponent implements OnInit {
   private getRoles(){
     this.roleService.getRoles().subscribe(
       res=>{
-        this.roles = res;
+        let roles = res.filter(role => role.name != 'ROLE_TEACHER' && role.name != 'ROLE_STUDENT');
+        this.roles = roles;
       }
     );
   }

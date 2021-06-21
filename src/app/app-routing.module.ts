@@ -36,6 +36,8 @@ import { GroupDetailsTeacherLayoutComponent } from './group-details-teacher-layo
 import { TeacherScheduleComponent } from './teacher-schedule/teacher-schedule.component';
 import { LessonStatusRequestPanelComponent } from './lesson-status-request-panel/lesson-status-request-panel.component';
 import { SettingsComponent } from './settings/settings.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { AdminChildGuard } from './guards/admin-child.guard';
 const routes: Routes = [
   {path:'', component:LoginComponent, canActivate:[LoginGuard, ProfileGuard]},
   {path:'login', component: LoginComponent},
@@ -58,7 +60,7 @@ const routes: Routes = [
     ]}, 
     {path:'settings', component:SettingsComponent}
   ]},
-  {path: 'manage', children:[
+  {path: 'manage', canActivate: [AdminChildGuard], canActivateChild: [AdminChildGuard], children:[
     {path:'', component: ControlPanleComponent},
     {path:'create-student', component: CreateStudentComponent},
     {path: 'create-group', component: CreateGroupComponent},
@@ -77,8 +79,9 @@ const routes: Routes = [
       {path:'groups', component: GroupsComponent},
       {path: 'group-details/:id', component: GroupDetailsComponent}
     ]},
-    
-  ]}
+  ]},
+  {path: 'not-found', component: NotFoundComponent},
+  {path: '**', component: NotFoundComponent}
 ];
 
 @NgModule({
