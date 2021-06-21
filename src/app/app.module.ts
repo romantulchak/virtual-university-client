@@ -90,6 +90,8 @@ import { PaginationComponent } from './pagination/pagination.component';
 import { DocumentComponent } from './document/document.component';
 import { FileExtensionPipe } from './pipe/file-extension.pipe';
 import { SwitchFilePipe } from './pipe/switch-file.pipe';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { AdminChildGuard } from './guards/admin-child.guard';
 
 @NgModule({
   declarations: [
@@ -154,6 +156,7 @@ import { SwitchFilePipe } from './pipe/switch-file.pipe';
     DocumentComponent,
     FileExtensionPipe,
     SwitchFilePipe,
+    NotFoundComponent,
     
   ],
     imports: [
@@ -194,7 +197,8 @@ import { SwitchFilePipe } from './pipe/switch-file.pipe';
       useFactory: rxStompServiceFactory,
       deps: [InjectableRxStompConfig]
     },
-    DatePipe
+    DatePipe,
+    AdminChildGuard
   ],
   bootstrap: [AppComponent]
 })

@@ -92,22 +92,7 @@
                       </mat-form-field>
                 </div>
                 <div>
-                  <mat-form-field appearance="fill">
-                    <mat-label>Roles</mat-label>
-                    <mat-select [formControl]="rolesFormControl" multiple>
-                      <mat-select-trigger>
-                        {{rolesFormControl.value ? rolesFormControl.value[0].name : ''}}
-                        <span *ngIf="rolesFormControl.value?.length > 1" class="example-additional-selection">
-                          (+{{rolesFormControl.value.length - 1}} {{rolesFormControl.value?.length === 2 ? 'other' : 'others'}})
-                        </span>
-                      </mat-select-trigger>
-                      <mat-option *ngFor="let role of roles" [value]="role">{{role.name}}</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-                <div>
                   <button mat-button (click)="createUser(stepper)">Create student</button>
-
                 </div>
               </form>
             </mat-step>
