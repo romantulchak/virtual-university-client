@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { TimeoutError } from 'rxjs';
+import { PageableDTO } from '../dto/pageable/pageable.dto';
 import { SemesterDTO } from '../dto/semester.dto';
 import { StudentGroupGradeDTO } from '../dto/student-group-grade.dto';
 import { StudentDTO } from '../dto/student.dto';
@@ -30,8 +31,7 @@ import { TokenStorageService } from '../service/tokenStorage.service';
 export class GroupDetailsTeacherComponent implements OnInit {
 
   public group: StudentGroupDTO;
-  public source: MatTableDataSource<StudentGroupGradeDTO>;
-  public displayedColumns: string[] = ['id', 'firstName', 'lastName', 'grade'];
+
   public grades: number[] = [2, 3, 3.5, 4, 4.5, 5];
   public loaded: boolean = true;
   public selectedSemester: SemesterDTO;
@@ -40,13 +40,17 @@ export class GroupDetailsTeacherComponent implements OnInit {
   public subjectFiles: SubjectFile[];
   public gradesNotZero: boolean = true;
   public showFiles: boolean = false;
-  public showStudents: boolean = false;
+  public isShowStudents: boolean = false;
   public showChart: boolean = false;
-
+  public totalPages: number;
+  public tableSize: number = 5;
+  public subject: Subject;
+  public gradesForChart: StudentGroupGradeDTO[];
   private groupId: number;
   private teacherId: number;
   private studentGroupGrades: StudentGroupGrade[] = [];
-  private subject: Subject;
+  private currentPage: number = 1;
+
   constructor(private router: ActivatedRoute,
               private studentGroupService: StudentGroupService,
               private tokenStorageService: TokenStorageService, 
@@ -61,6 +65,7 @@ export class GroupDetailsTeacherComponent implements OnInit {
         }
       );
    }
+   
 
   ngOnInit(): void {
     this.teacherId = this.tokenStorageService.getUser().id;
@@ -79,13 +84,10 @@ export class GroupDetailsTeacherComponent implements OnInit {
     );
   }
 
-  
-
   public selectSubject(subject: Subject){
     if(this.subject != subject){
       this.subject = subject;
       this.getTeacherFiles();
-      this.findStudentGrades();
     }
   }
 
@@ -112,21 +114,29 @@ export class GroupDetailsTeacherComponent implements OnInit {
     this.studentGroupGradeService.setGrade(this.studentGroupGrades).subscribe(
       res=>{
         //TODO: make it only on the client side
-        this.findStudentGrades();
+        this.findStudentGrades(this.currentPage);
         
       }
     );
   }
 
-  private findStudentGrades(){
+  public showStudents(){
+    this.isShowStudents = !this.isShowStudents;
+    
+    if(this.isShowStudents){
+      this.findStudentGrades(1);
+    }
+  }
+
+  public findStudentGrades(page:number){
     this.loaded = false;
-    this.studentGroupGradeService.getStudentGradesBySubjectAndGroupForTeacher(this.groupId, this.subject.id, this.teacherId, this.selectedSemester.id).subscribe(
+    this.studentGroupGradeService.getStudentGradesBySubjectAndGroupForTeacher(this.groupId, this.subject.id, this.teacherId, this.selectedSemester.id, page, this.tableSize).subscribe(
       res=>{
         if(res != null){
-          this.source = new MatTableDataSource(res);
           this.loaded = true;
-          this.studentGrades = res;
-          this.checkIfAllGradesNotZer();
+          this.studentGrades = res.data;
+          this.totalPages = res.totalPages;
+          this.currentPage = page;
         }
       }
     );
@@ -143,21 +153,13 @@ export class GroupDetailsTeacherComponent implements OnInit {
   public getSemesterSelected(semester: SemesterDTO){
     this.selectedSemester = semester;
     this.findSubjects();
-    this.source = null;
     this.studentGrades = null;
   }
-  
-  @ViewChild(MatPaginator) 
-  set paginator(value: MatPaginator) {
-      if(value != undefined){
-        this.source.paginator = value;
-      }
-  }
+
 
   public selectFiles(event: any){
     this.files = [];
     this.files = event.target.files;  
-      
   }
 
   public upload(){
@@ -174,7 +176,7 @@ export class GroupDetailsTeacherComponent implements OnInit {
 
   private checkIfAllGradesNotZer(){
     this.gradesNotZero = true;
-    for(let grade of this.studentGrades){
+    for(let grade of this.gradesForChart){
       if(grade.grade == 0){
         this.gradesNotZero = false;
         break;
@@ -182,4 +184,13 @@ export class GroupDetailsTeacherComponent implements OnInit {
     }
   }
 
+  public findGradesForChart(){
+    this.showChart = !this.showChart;
+    this.studentGroupGradeService.findGradesForChart(this.groupId, this.subject.id, this.teacherId, this.selectedSemester.id).subscribe(
+      res=>{
+        this.gradesForChart = res;
+        this.checkIfAllGradesNotZer();
+      }
+    )
+  }
 }

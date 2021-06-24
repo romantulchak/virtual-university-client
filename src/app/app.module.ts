@@ -92,6 +92,7 @@ import { FileExtensionPipe } from './pipe/file-extension.pipe';
 import { SwitchFilePipe } from './pipe/switch-file.pipe';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AdminChildGuard } from './guards/admin-child.guard';
+import { LoadingComponent } from './loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -157,6 +158,7 @@ import { AdminChildGuard } from './guards/admin-child.guard';
     FileExtensionPipe,
     SwitchFilePipe,
     NotFoundComponent,
+    LoadingComponent,
     
   ],
     imports: [

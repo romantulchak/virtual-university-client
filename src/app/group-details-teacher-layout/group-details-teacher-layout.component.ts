@@ -17,7 +17,6 @@ export class GroupDetailsTeacherLayoutComponent implements OnInit {
     router.params.subscribe(
       res=>{
         this.groupId = res.id;
-        
       }
     )}
 
