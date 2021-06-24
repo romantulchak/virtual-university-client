@@ -1,18 +1,10 @@
 $table-font: TitleFont;
 
-table {
-  width: 100%;
-
-  .mat-form-field {
-    font-size: 14px;
-    width: 100%;
-  }
-
-  td,
-  th {
-    width: 25%;
-  }
-}
+$gl-ms : "screen and (max-width: 23.5em)"; // up to 360px
+$gl-xs : "screen and (max-width: 35.5em)"; // up to 568px
+$gl-sm : "screen and (max-width: 48em)"; // max 768px
+$gl-md : "screen and (max-width: 64em)"; // max 1024px
+$gl-lg : "screen and (max-width: 80em)"; // max 1280px
 
 .subjects {
   display: grid;
@@ -20,12 +12,12 @@ table {
   grid-gap: 2em;
 }
 
-.files__section{
+.files__section {
   display: grid;
   grid-template-columns: 25em 1fr;
   align-items: center;
 
-  .files{
+  .files {
     display: grid;
     max-height: 210px;
     overflow-y: scroll;
@@ -36,26 +28,28 @@ table {
     &::-webkit-scrollbar {
       width: 3px;
     }
-    
+
     &::-webkit-scrollbar-track {
-      background: #f1f1f1; 
+      background: #f1f1f1;
     }
-     
+
     &::-webkit-scrollbar-thumb {
-      background: #bebbbb; 
+      background: #bebbbb;
     }
-    
+
     &::-webkit-scrollbar-thumb:hover {
-      background: #bebbbb; 
+      background: #bebbbb;
     }
-    .documents{
+
+    .documents {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       gap: 6px;
     }
   }
 }
-.operations{
+
+.operations {
   display: flex;
   justify-content: space-around;
   margin-top: 1em;
@@ -63,7 +57,7 @@ table {
   align-items: center;
   text-align: center;
 
-  .operation{
+  .operation {
     width: 75px;
     height: 75px;
     padding: 2em;
@@ -71,23 +65,144 @@ table {
     border-radius: 4px;
     cursor: pointer;
 
-    .operation__text{
+    .operation__text {
       margin-top: 1em;
       text-align: center;
       font-family: $table-font;
     }
   }
-  .active{
+
+  .active {
     box-shadow: 0px 0px 6px #5583099e;
   }
 
 }
-.icon{
+
+.icon {
   filter: saturate(0.5);
 }
 
-.chart{
+.chart {
   margin-top: 1em;
   margin-top: 3em;
   display: block;
+}
+.students{
+  margin-top: 5em;
+}
+
+table {
+  border-spacing: 1;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 6px;
+  overflow: hidden;
+  max-width: 100%;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+
+  * {
+    position: relative
+  }
+
+  td,
+  th {
+    padding-left: 8px;
+    width: 250px;
+    height: 65px;
+  }
+
+  thead tr {
+    height: 60px;
+    background: rgb(0 0 0 / 12%);
+    font-size: 16px;
+  }
+
+  tbody tr {
+    height: 48px;
+    border-bottom: 1px solid #E3F1D5;
+
+    &:last-child {
+      border: 0;
+    }
+  }
+
+  td,
+  th {
+    text-align: center;
+
+    &.l {
+      text-align: right
+    }
+
+    &.c {
+      text-align: center
+    }
+
+    &.r {
+      text-align: center
+    }
+  }
+}
+
+
+@media #{$gl-xs} {
+
+  table {
+    display: block;
+
+    >*,
+    tr,
+    td,
+    th {
+      display: block
+    }
+
+    thead {
+      display: none
+    }
+
+    tbody tr {
+      height: auto;
+      padding: 8px 0;
+
+      td {
+        padding-left: 45%;
+        margin-bottom: 12px;
+
+        &:last-child {
+          margin-bottom: 0
+        }
+
+        &:before {
+          position: absolute;
+          font-weight: 700;
+          width: 40%;
+          left: 10px;
+          top: 0
+        }
+
+        &:nth-child(1):before {
+          content: "Code";
+        }
+
+        &:nth-child(2):before {
+          content: "Stock";
+        }
+
+        &:nth-child(3):before {
+          content: "Cap";
+        }
+
+        &:nth-child(4):before {
+          content: "Inch";
+        }
+
+        &:nth-child(5):before {
+          content: "Box Type";
+        }
+      }
+    }
+  }
 }
