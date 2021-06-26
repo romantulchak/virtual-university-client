@@ -14,7 +14,7 @@
           <label class="label__radio" for="range">Range</label>
         </div>
     </div>
-    <button class="icon__medium export__pdf" title="Export to PDF" (click)="exportPdf()"><img src="../../assets/images/icons/pdf.svg" alt=""></button>
+    <button *ngIf="days != null && days.length != 0" class="icon__medium export__pdf" title="Export to PDF" (click)="exportPdf()"><img src="../../assets/images/icons/pdf.svg" alt=""></button>
   </div>
   <div class="inputGroup" *ngIf="rangeFilter">
     <form action="" [formGroup]="rangeGroup" (ngSubmit)="filterByRange()">

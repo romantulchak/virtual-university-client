@@ -12,10 +12,8 @@ import { CreateStudentComponent } from './create-student/create-student.componen
 import { StudentGradeComponent } from './student-grade/student-grade.component';
 import { StudentProfileDetailsComponent } from './student-profile-details/student-profile-details.component';
 import { CreateSpecializationComponent } from './create-specialization/create-specialization.component';
-import { CreateSemesterComponent } from './create-semester/create-semester.component';
 import { CreateSubjectComponent } from './create-subject/create-subject.component';
 import { CreateTeacherComponent } from './create-teacher/create-teacher.component';
-import { ChangePasswordComponent } from './change-password/change-password.component';
 import { TeacherSpecializationsComponent } from './teacher-specializations/teacher-specializations.component';
 import { TeacherProfileDetailsComponent } from './teacher-profile-details/teacher-profile-details.component';
 import { SubjectsPanelComponent } from './subjects-panel/subjects-panel.component';
@@ -66,7 +64,6 @@ const routes: Routes = [
     {path: 'create-group', component: CreateGroupComponent},
     {path: 'create-course', component: CreateCourseComponent},
     {path: 'create-specialization', component: CreateSpecializationComponent},
-    {path: 'create-semester', component: CreateSemesterComponent},
     {path: 'create-subject', component: CreateSubjectComponent},
     {path: 'create-teacher', component: CreateTeacherComponent},
     {path: 'subject-panel', component: SubjectsPanelComponent},

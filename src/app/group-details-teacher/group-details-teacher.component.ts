@@ -88,6 +88,7 @@ export class GroupDetailsTeacherComponent implements OnInit {
     if(this.subject != subject){
       this.subject = subject;
       this.getTeacherFiles();
+      this.changeView()
     }
   }
 
@@ -154,6 +155,9 @@ export class GroupDetailsTeacherComponent implements OnInit {
     this.selectedSemester = semester;
     this.findSubjects();
     this.studentGrades = null;
+    this.subject = null;
+    this.changeView();
+
   }
 
 
@@ -192,5 +196,11 @@ export class GroupDetailsTeacherComponent implements OnInit {
         this.checkIfAllGradesNotZer();
       }
     )
+  }
+
+  private changeView(){
+    this.isShowStudents = false;
+    this.showChart = false;
+    this.showFiles = false;
   }
 }
