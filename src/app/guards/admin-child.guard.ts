@@ -10,8 +10,6 @@ export class AdminChildGuard implements CanActivate, CanActivateChild {
   constructor(private tokenStorageService: TokenStorageService, private router: Router){}
   
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    console.log("ASDASDSAD");
-      
     let user = this.tokenStorageService.getUser();
     if(user != null){
       if(user.roles.includes('ROLE_ADMIN' || 'ROLE_MANAGER')){

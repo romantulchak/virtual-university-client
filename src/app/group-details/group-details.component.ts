@@ -28,26 +28,19 @@ import { SubjectService } from '../service/subject.service';
   styleUrls: ['./group-details.component.scss']
 })
 export class GroupDetailsComponent implements OnInit, AfterViewInit {
-  private groupId: number;
   public groupDetais: StudentGroupDTO;
   public loading: boolean = true;
-
   public source: MatTableDataSource<StudentDTO>;
   public displayedColumns: string[] = ['id', 'firstName', 'lastName', 'delete'];
-
   public subjectsSource: MatTableDataSource<SubjectTeacherGroup>;
   public subjectsDisplayedColumns: string[] = ['id', 'name', 'type', 'teacherDetails'];
-
   public studentsToAddSource: MatTableDataSource<StudentDTO>;
   public studentsToAddDisplayedColumns: string[] = ['id', 'firstName', 'lastName', 'add'];
-
-
   public subjectsToAddSource: MatTableDataSource<SubjectDTO>;
   public subjectsToAddDisplayedColumns: string[] = ['id', 'name', 'type', 'teacher'];
-
-
   public studentToGroup: StudentDTO[] = [];
   public subjectTeacherGroup: SubjectTeacherGroup[] = [];
+  private groupId: number;
 
   @ViewChild('allSubjectsButton') allSubjectsButton: AllSubjectsButtonComponent;
 

@@ -22,6 +22,15 @@ export class ScheduleService{
     public getScheduleIdForGroup(semesterId: number):Observable<number>{
         return this.http.get<number>(`${API_URL}schedule/findScheduleIdForGroup/${semesterId}`);
     }
+
+    public getScheduleForTeacherByWeek(teacherId: number, groupId: number, semesterId: number): Observable<ScheduleDTO>{
+        let params = new HttpParams();
+        params = params.append("teacherId", teacherId.toString())
+                        .append("groupId", groupId.toString())
+                        .append("semesterId", semesterId.toString());
+        return this.http.get<ScheduleDTO>(API_URL + 'schedule/findScheduleForTeacherByWeek', {params: params});                
+    }
+
     public getScheduleForTeacherByGroup(teacherId: number, groupId: number, semesterId: number): Observable<ScheduleDTO>{
         let params = new HttpParams();
         params = params.append("teacherId", teacherId.toString())

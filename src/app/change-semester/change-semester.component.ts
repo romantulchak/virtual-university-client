@@ -42,6 +42,8 @@ export class ChangeSemesterComponent implements OnInit {
     this.subjectService.getAllForSpecialization(id).subscribe(
       res => {
         this.subjectsSource = new MatTableDataSource(res);  
+      console.log(res);
+
       }
     );
   }
@@ -49,6 +51,7 @@ export class ChangeSemesterComponent implements OnInit {
     if(subjects != null && subjects.length > 0){
       this.subjectsSource = new MatTableDataSource(subjects);
       this.subjectTeacherGroup = [];
+      
     }
   }
   public createSemester(semester:any){
