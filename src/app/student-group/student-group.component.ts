@@ -91,6 +91,7 @@ export class StudentGroupComponent implements OnInit {
 
   public getSemesterSelected(semester: SemesterDTO){
     this.selectedSemester = semester;
+    this.currentSubject.subject = null;
     this.getSubjectsForGroup();       
   }
 

@@ -1,10 +1,10 @@
 $table-font: TitleFont;
 
-$gl-ms : "screen and (max-width: 23.5em)"; // up to 360px
-$gl-xs : "screen and (max-width: 35.5em)"; // up to 568px
-$gl-sm : "screen and (max-width: 48em)"; // max 768px
-$gl-md : "screen and (max-width: 64em)"; // max 1024px
-$gl-lg : "screen and (max-width: 80em)"; // max 1280px
+$gl-ms : "screen and (max-width: 23.5em)";
+$gl-xs : "screen and (max-width: 35.5em)";
+$gl-sm : "screen and (max-width: 48em)";
+$gl-md : "screen and (max-width: 64em)"; 
+$gl-lg : "screen and (max-width: 80em)";
 
 .subjects {
   display: grid;
@@ -77,7 +77,6 @@ $gl-lg : "screen and (max-width: 80em)"; // max 1280px
   }
 
 }
-
 .icon {
   filter: saturate(0.5);
 }
@@ -184,19 +183,19 @@ table {
         }
 
         &:nth-child(1):before {
-          content: "Code";
+          content: "Nr.alb";
         }
 
         &:nth-child(2):before {
-          content: "Stock";
+          content: "First Name";
         }
 
         &:nth-child(3):before {
-          content: "Cap";
+          content: "Last Name";
         }
 
         &:nth-child(4):before {
-          content: "Inch";
+          content: "Grade";
         }
 
         &:nth-child(5):before {

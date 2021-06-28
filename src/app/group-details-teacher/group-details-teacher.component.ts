@@ -45,10 +45,10 @@ export class GroupDetailsTeacherComponent implements OnInit {
   public totalPages: number;
   public tableSize: number = 5;
   public subject: Subject;
+  public studentGroupGrades: StudentGroupGrade[] = [];
   public gradesForChart: StudentGroupGradeDTO[];
   private groupId: number;
   private teacherId: number;
-  private studentGroupGrades: StudentGroupGrade[] = [];
   private currentPage: number = 1;
 
   constructor(private router: ActivatedRoute,

@@ -97,8 +97,6 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
   }
 
   public create(semester?:any) {
-    console.log(semester);
-    
     if(semester != null && semester.isSemesterCreated){
       this.group.name = this.formGroup.get('name').value;
       this.group.specialization = this.formGroup.get('specialization').value;

@@ -31,7 +31,6 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { CreateSubjectComponent } from './create-subject/create-subject.component';
 import { CreateTeacherComponent } from './create-teacher/create-teacher.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
-import { TeacherSpecializationsComponent } from './teacher-specializations/teacher-specializations.component';
 import { TeacherProfileDetailsComponent } from './teacher-profile-details/teacher-profile-details.component';
 import { TeacherProfileComponent } from './teacher-profile/teacher-profile.component';
 import { SubjectsPanelComponent } from './subjects-panel/subjects-panel.component';
@@ -111,7 +110,6 @@ import { LoadingComponent } from './loading/loading.component';
     CreateSubjectComponent,
     CreateTeacherComponent,
     ChangePasswordComponent,
-    TeacherSpecializationsComponent,
     TeacherProfileDetailsComponent,
     TeacherProfileComponent,
     SubjectsPanelComponent,

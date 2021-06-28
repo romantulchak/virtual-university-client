@@ -78,9 +78,10 @@
           </tbody>
       </table>
     </ng-container>
-
-      <button (click)="setGrade()">Ok</button>
-      <app-pagination [totalPages]="totalPages" (findDataOnPage)="findStudentGrades($event)"></app-pagination>
+    <div class="set__grade_btn">
+      <button *ngIf="studentGroupGrades.length != 0"  mat-stroked-button color="primary" (click)="setGrade()">Set grades</button>
+    </div>
+    <app-pagination [totalPages]="totalPages" (findDataOnPage)="findStudentGrades($event)"></app-pagination>
     </div>
     <app-pie-chart class="chart" *ngIf="gradesForChart && gradesNotZero && showChart" [studentGrades]="gradesForChart"></app-pie-chart>
 

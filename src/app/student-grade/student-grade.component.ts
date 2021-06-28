@@ -30,8 +30,6 @@ export class StudentGradeComponent implements OnInit {
   private selectedSemester: SemesterDTO;
   private studentId: number;
 
-
-
   ngOnInit(): void {
     this.studentId = this.tokenStorageService.getUser().id;
     this.getStudentGroup();
@@ -47,6 +45,7 @@ export class StudentGradeComponent implements OnInit {
       }
     );
   }
+
   private getStudentGroup(){
     this.studentGroupService.findStudentGroup(this.studentId).subscribe(
       res=>{
@@ -57,7 +56,6 @@ export class StudentGradeComponent implements OnInit {
       }
     );
   }
-
 
   public getSemesterSelected(semester: SemesterDTO){
     this.selectedSemester = semester;
