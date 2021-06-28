@@ -14,7 +14,6 @@ import { StudentProfileDetailsComponent } from './student-profile-details/studen
 import { CreateSpecializationComponent } from './create-specialization/create-specialization.component';
 import { CreateSubjectComponent } from './create-subject/create-subject.component';
 import { CreateTeacherComponent } from './create-teacher/create-teacher.component';
-import { TeacherSpecializationsComponent } from './teacher-specializations/teacher-specializations.component';
 import { TeacherProfileDetailsComponent } from './teacher-profile-details/teacher-profile-details.component';
 import { SubjectsPanelComponent } from './subjects-panel/subjects-panel.component';
 import { StudentPanelComponent } from './student-panel/student-panel.component';
@@ -48,7 +47,6 @@ const routes: Routes = [
     ]},
     {path:'teacher', component: TeacherProfileComponent, children:[
       {path:'', component: TeacherProfileDetailsComponent, canActivate:[TeacherProfileGuardGuard]},
-      {path:'teacher-speicalizations', component: TeacherSpecializationsComponent},
       {path: 'subjects', component: TeacherSubjectComponent},
       {path: 'my-groups', component: TeacherGroupsComponent},
       {path: 'group-details/:id', component:GroupDetailsTeacherLayoutComponent , children:[

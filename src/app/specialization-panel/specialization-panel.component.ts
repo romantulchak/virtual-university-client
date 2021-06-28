@@ -4,7 +4,9 @@ import { SemesterDTO } from '../dto/semester.dto';
 import { SpecializationDTO } from '../dto/specialization.dto';
 import { SubjectDTO } from '../dto/subject.dto';
 import { FilterHelper } from '../helpers/filter.helper';
+import { StatusEnum } from '../model/enum/status.enum';
 import { Subject } from '../model/subject.model';
+import { NotificationService } from '../service/notification.service';
 import { SemesterService } from '../service/semester.service';
 import { SpecializationService } from '../service/specialization.service';
 import { SubjectService } from '../service/subject.service';
@@ -16,7 +18,10 @@ import { SubjectService } from '../service/subject.service';
 })
 export class SpecializationPanelComponent implements OnInit {
 
-  constructor(private semesterService: SemesterService, private specializationService: SpecializationService, private subjectService: SubjectService, private filterHelper: FilterHelper) { }
+  constructor(private specializationService: SpecializationService, 
+              private subjectService: SubjectService, 
+              private filterHelper: FilterHelper,
+              private notificationService: NotificationService) { }
   public specializations: SpecializationDTO[];
   public semesters: SemesterDTO[];
   public currentSpecializationId: number;
@@ -58,13 +63,12 @@ export class SpecializationPanelComponent implements OnInit {
     if(this.subjects.length != 0){
       this.specializationService.addSubjectsToSpecialization(this.subjects, this.currentSpecializationId).subscribe(
         res=>{
-          console.log("Added");
+          this.notificationService.showNotification(`Subjects were added to specialization`, StatusEnum[StatusEnum.OK], StatusEnum["OK"]);
           
         }
       );
     }else{
       console.log("Subjects is empty");
-      
     }
     
   }
@@ -72,7 +76,6 @@ export class SpecializationPanelComponent implements OnInit {
     this.filterHelper.filter(event);
   }
   public addSubjectsToArray(subject: Subject){
-
     if(this.subjects.filter(x=>x.id == subject.id).length != 0){
       this.subjects = this.subjects.filter(x=>x.id != subject.id);
     }else{

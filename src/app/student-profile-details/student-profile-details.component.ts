@@ -20,8 +20,6 @@ export class StudentProfileDetailsComponent implements OnInit {
     this.getStudentInformation();
   }
 
-
-
   public getStudentInformation(){
     this.studentService.getStudentInformation(this.studentId).subscribe(
       res=>{

@@ -1,25 +1,21 @@
 <section>
-
-    <ng-container *ngFor="let specialization of specializations">
-        <div>
-            <h3>{{specialization.name}}</h3>    
-
-            <button (click)="getAvailableSubjectsForSpecialization(specialization.id)">Find subjects</button>
-        </div>   
-
-    </ng-container>
-
-    <div *ngIf="source != null">
-        <h3>Subjects</h3>
-        <app-subjects-table [source]="source"
-                            [showTecahers]="false"
-                            [displayedColumns]="displayedData" 
-                            [showAddSubjectButton]="true"
-                            (getSubjects)="addSubjectsToArray($event)"
-                            (sendFilter)="filter($event)"
-                            ></app-subjects-table>
-    
-        <button (click)="addSubjectsToSpecialization()">Add</button>
+    <div class="container">
+        <ng-container *ngFor="let specialization of specializations">
+            <div>
+              <h3>{{specialization.name}}</h3>
+              <button mat-stroked-button color="primary" (click)="getAvailableSubjectsForSpecialization(specialization.id)">Find
+                subjects</button>
+            </div>
+          </ng-container>
+          <div *ngIf="source != null">
+            <h3>Subjects</h3>
+            <app-subjects-table [source]="source" [showTecahers]="false" [displayedColumns]="displayedData"
+              [showAddSubjectButton]="true" (getSubjects)="addSubjectsToArray($event)" (sendFilter)="filter($event)">
+            </app-subjects-table>
+            <div class="set__grade_btn">
+              <button mat-stroked-button color="primary"
+                (click)="addSubjectsToSpecialization()">Add</button>
+            </div>
+          </div>
     </div>
-    
 </section>

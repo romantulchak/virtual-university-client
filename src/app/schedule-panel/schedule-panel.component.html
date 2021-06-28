@@ -9,20 +9,13 @@
         </mat-select>
       </mat-form-field>
     </div>
-
     <div *ngIf="currentGroup != null">
-      <app-group-semesters [group]="currentGroup" (semesterSelected)="getSemesterSelected($event)"></app-group-semesters>
-      <app-schedule-table 
-                (showDaysForWeek)="getDaysForWeek()" 
-                (showAllDays)="getScheduleForGroup()"
-                (showDaysByRange)="filterByRange($event)" 
-                [schedule]="schedule" 
-                [group]="currentGroup" 
-                [isAdmin]="true"
-                [selectedSemester]="selectedSemester">
+      <app-group-semesters [group]="currentGroup" (semesterSelected)="getSemesterSelected($event)">
+      </app-group-semesters>
+      <app-schedule-table (showDaysForWeek)="getDaysForWeek()" (showAllDays)="getScheduleForGroup()"
+        (showDaysByRange)="filterByRange($event)" [schedule]="schedule" [group]="currentGroup" [isAdmin]="true"
+        [selectedSemester]="selectedSemester">
       </app-schedule-table>
     </div>
-
   </div>
-
 </section>

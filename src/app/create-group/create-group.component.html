@@ -1,49 +1,45 @@
 <section>
-   <div class="container">
+  <div class="container">
     <form [formGroup]="formGroup">
-        <div>
-            <mat-form-field>
-                <mat-label>Group Name</mat-label>
-                <input matInput placeholder="Group name" formControlName="name" required>
-              </mat-form-field>
-              
-            <mat-form-field appearance="fill">
-                <mat-label>Specialization</mat-label>
-                <mat-select formControlName="specialization" (selectionChange)="getDataForSpecialization($event.value)">
-                  <mat-option *ngFor="let specialization of specializations" [value]="specialization">{{specialization.name}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-        </div>
-        <div>
-          <app-create-semester [isCreate]="isCreateGroup" (createSemester)="create($event)"></app-create-semester>
-        </div>
+      <div>
+        <mat-form-field>
+          <mat-label>Group Name</mat-label>
+          <input matInput placeholder="Group name" formControlName="name" required>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Specialization</mat-label>
+          <mat-select formControlName="specialization" (selectionChange)="getDataForSpecialization($event.value)">
+            <mat-option *ngFor="let specialization of specializations" [value]="specialization">{{specialization.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <app-create-semester [isCreate]="isCreateGroup" (createSemester)="create($event)"></app-create-semester>
+      </div>
     </form>
     <div>
-        <div *ngIf="dataSource != null">
-            <div class="table__legend">
-              <h3 class="table__title">Available Students</h3>
-              <app-students-table [source]="dataSource"
-                                [displayedColumns]="displayedColumns"
-                                [showAddButton]="true" 
-                                (studentToArray)="addStudentToArray($event)"></app-students-table>
-            </div>
-        </div>    
+      <div *ngIf="dataSource != null">
+        <div class="table__legend">
+          <h3 class="table__title">Available Students</h3>
+          <app-students-table [source]="dataSource" [displayedColumns]="displayedColumns" [showAddButton]="true"
+            (studentToArray)="addStudentToArray($event)"></app-students-table>
+        </div>
+      </div>
     </div>
     <div>
+      <div style="margin-top: 3em;" *ngIf="subjectsSource != null">
+        <div class="table__legend">
+          <h3 class="table__title">Subjects</h3>
+          <app-subjects-table [source]="subjectsSource" [showTecahers]="true"
+            (getTeachers)="setTeacherForSubject($event)" [displayedColumns]="subjectsDisplayedColumns">
+          </app-subjects-table>
+          <div class="set__grade_btn">
+            <button mat-stroked-button color="primary" (click)="createGroup()">Create</button>
+          </div>
+        </div>
 
-        <div style="margin-top: 3em;" *ngIf="subjectsSource != null">
-            <div class="table__legend">
-              <h3 class="table__title">Subjects</h3>
-              <app-subjects-table [source]="subjectsSource"
-                                [showTecahers]="true"
-                                (getTeachers)="setTeacherForSubject($event)"
-                                [displayedColumns]="subjectsDisplayedColumns"></app-subjects-table>
-              <button (click)="createGroup()">Create</button>
-            </div>
-
-        </div>  
-    </div>  
-   </div>
+      </div>
+    </div>
+  </div>
 </section>
-
-

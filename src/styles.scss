@@ -41,7 +41,7 @@ $errorMsg: #f70808;
 $virtual-university-client-primary: mat-palette($mat-indigo);
 $virtual-university-client-accent: mat-palette($mat-pink, A200, A100, A400);
 
-// The warn palette is optional (defaults to red).
+
 $virtual-university-client-warn: mat-palette($mat-red);
 
 $virtual-university-client-theme: mat-light-theme((
@@ -171,5 +171,13 @@ a{
     .active{
       color: #2d9266;
     }
+  }
+}
+.set__grade_btn{
+  display: flex;
+  justify-content: flex-end;
+
+  button{
+    margin-top: 1em;
   }
 }
