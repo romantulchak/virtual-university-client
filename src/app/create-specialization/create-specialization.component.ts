@@ -29,7 +29,7 @@ export class CreateSpecializationComponent implements OnInit {
   public subjectsFormControl: FormControl = new FormControl();
   ngOnInit(): void {
     this.initForm();
-  
+
     this.getCourses();
     this.getSubjects();
   }
@@ -42,7 +42,7 @@ export class CreateSpecializationComponent implements OnInit {
   }
   private getCourses(){
     this.courseService.getCourses().subscribe(
-      res=>{
+      res =>{
         this.courses = res;
       }
     );

@@ -5,11 +5,10 @@ import { environment } from 'src/environments/environment';
 import { LessonDTO } from '../dto/lesson.dto';
 import { PageableDTO } from '../dto/pageable/pageable.dto';
 import { ScheduleLessonRequestDTO } from '../dto/scheduleLessonRequest.dto';
-import { RequestDecisionEnum } from '../model/enum/request.enum';
 import { Lesson } from '../model/lesson.model';
-import { ScheduleLessonRequest } from '../model/scheduleLessonRequest.model';
 import { ChangeDecisionRequest } from '../request/changeDecisionRequest.request';
 import { ChangeStatusRequest } from '../request/changeStatusRequest.request';
+import {ChangeLessonStatusRequest} from '../request/change-lesson-status.request';
 
 const API_URL = environment.api;
 
@@ -28,11 +27,11 @@ export class LessonService{
     public delete(lessonId: number): Observable<any>{
         return this.http.delete(API_URL + 'lesson/delete/' + lessonId);
     }
-    
-    public changeLessonStatus(teacherId: number, scheduleLessonRequest: ScheduleLessonRequest):Observable<any>{
-        return this.http.post(`${API_URL}lesson/change-status-request/${scheduleLessonRequest.lesson.id}/${teacherId}`, scheduleLessonRequest);
+
+    public changeLessonStatus(changeLessonStatus: ChangeLessonStatusRequest): Observable<void>{
+        return this.http.post<void>(`${API_URL}lesson/change-status-request`, changeLessonStatus);
     }
-    
+
     public findLessonRequests(page: number):Observable<PageableDTO<ScheduleLessonRequestDTO[]>>{
         let params = new HttpParams();
         params = params.append('page', page.toString());

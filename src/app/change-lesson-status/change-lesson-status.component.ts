@@ -1,10 +1,10 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { StatusEnum } from '../model/enum/status.enum';
-import { ScheduleLessonRequest } from '../model/scheduleLessonRequest.model';
-import { LessonService } from '../service/lesson.service';
-import { NotificationService } from '../service/notification.service';
-import { TokenStorageService } from '../service/tokenStorage.service';
+import {Component, Inject, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {StatusEnum} from '../model/enum/status.enum';
+import {LessonService} from '../service/lesson.service';
+import {NotificationService} from '../service/notification.service';
+import {TokenStorageService} from '../service/tokenStorage.service';
+import {ChangeLessonStatusRequest} from '../request/change-lesson-status.request';
 
 @Component({
   selector: 'app-change-lesson-status',
@@ -13,27 +13,30 @@ import { TokenStorageService } from '../service/tokenStorage.service';
 })
 export class ChangeLessonStatusComponent implements OnInit {
 
-  public scheduleLessonRequest: ScheduleLessonRequest = new ScheduleLessonRequest();
+  public request = {
+    currentStatus: '',
+    message: ''
+  };
   private teacherId: number;
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
               private lessonService: LessonService,
               private tokenStorageService: TokenStorageService,
               private notificationService: NotificationService) { }
 
   ngOnInit(): void {
-    this.scheduleLessonRequest.actualStatus = this.data.lesson.status;
+    this.request.currentStatus = this.data.lesson.status;
     this.teacherId = this.tokenStorageService.getUser().id;
   }
 
-  public sendRequest(){
-    if(this.teacherId != undefined){
-      this.scheduleLessonRequest.lesson = this.data.lesson;
-      this.scheduleLessonRequest.semesterId = this.data.semester.id;
-      this.lessonService.changeLessonStatus(this.teacherId, this.scheduleLessonRequest).subscribe(
-        res=>{
-          this.notificationService.showNotification('The request has been sent', StatusEnum[StatusEnum.OK], StatusEnum["OK"]);
+  public sendRequest(): void {
+    if (this.teacherId) {
+      const changeLessonStatusRequest = new ChangeLessonStatusRequest(this.data.lesson.id, this.data.semester.id, this.teacherId, this.request.currentStatus, this.request.message);
+      this.lessonService.changeLessonStatus(changeLessonStatusRequest).subscribe(
+        () => {
+          this.notificationService.showNotification('The request has been sent', StatusEnum[StatusEnum.OK], StatusEnum.OK);
         },
-        error=>{
+        error => {
           this.notificationService.showNotification(error.error.message, error.statusText, error.status);
         }
       );

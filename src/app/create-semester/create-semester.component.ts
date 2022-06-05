@@ -18,7 +18,6 @@ import { SubjectService } from '../service/subject.service';
 })
 export class CreateSemesterComponent implements OnInit, OnChanges {
   public subjects: SubjectDTO[];
-  public subjectFormControl = new FormControl();
   public semesterForm:FormGroup;
   public specializations: SpecializationDTO[];
   public semesterRange: FormGroup;
@@ -50,7 +49,7 @@ export class CreateSemesterComponent implements OnInit, OnChanges {
 
   public createSemester(){
     let semester: Semester = this.buildSemester()
-   
+
     this.semesterService.createSemester(semester).subscribe(
       res=>{
         let semester = {
@@ -64,7 +63,7 @@ export class CreateSemesterComponent implements OnInit, OnChanges {
       error=>{
         this.notificationService.showNotification(error.error.message, error.statusText, error.status);
       }
-      
+
     );
   }
 

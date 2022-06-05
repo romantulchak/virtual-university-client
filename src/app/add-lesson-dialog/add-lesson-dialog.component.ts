@@ -25,12 +25,10 @@ export class AddLessonDialogComponent implements OnInit {
               private notificationService: NotificationService) { }
 
   ngOnInit(): void {
-    console.log(this.data);
-    
       this.findSubjectsForGroup();
   }
 
-  
+
 
   public setTimeStart(time: string) {
     //this.lesson.dateStart = new Date(this.data.currentDay.day + " " + time);
@@ -45,7 +43,8 @@ export class AddLessonDialogComponent implements OnInit {
     this.lesson.subjectTeacher = subject;
   }
 
-  public addLessonToDay() {
+  public addLessonToDay(): void {
+    debugger
     this.lesson.scheduleDay = this.data.currentDay;
     this.lessonService.create(this.lesson).subscribe(
       res => {
