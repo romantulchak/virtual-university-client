@@ -1,0 +1,40 @@
+.edit__form {
+  width: 350px;
+
+  .field__with_label {
+    margin-bottom: 2em;
+    display: grid;
+    text-align: center;
+
+    .field__title {
+      text-align: center;
+      margin-bottom: 1em;
+      font-family: 'TitleFont';
+    }
+
+    .text__field {
+      height: 30px;
+      border-radius: 7px;
+      border: 1px solid #0000002e;
+      padding: 18px;
+      box-sizing: border-box;
+    }
+
+    .time__picker {
+      display: block;
+      width: 170px;
+      margin: 0 auto;
+    }
+
+    .mat-form-field-wrapper {
+
+      .mat-form-field-flex {
+        background: none;
+      }
+    }
+
+    .error-msg{
+      font-size: 13px;
+    }
+  }
+}

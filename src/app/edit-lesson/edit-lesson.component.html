@@ -1,37 +1,37 @@
-<section *ngIf="data.currentDay != null">
-    <div>
-      <h3>Current day: {{data.currentDay.day}}</h3>
+<form [formGroup]="editFormGroup" #form="ngForm" (submit)="form.valid && edit()" class="edit__form">
+  <div class="field__with_label">
+    <h4 class="field__title">Date start</h4>
+    <div class="time__picker">
+      <ngx-timepicker-field formControlName="dateStart" [defaultTime]="editFormGroup.get('dateStart')?.value"
+                            [format]="24" (timeChanged)="changeTime($event, true)"></ngx-timepicker-field>
     </div>
-    <form>
-      <div>
-        <div>
-          <label for="timeStart">Time from</label>
-          <input placeholder="Start Date" aria-label="24hr format" [ngxTimepicker]="startTime" id="timeStart"
-            [format]="24" readonly>
-          <ngx-material-timepicker (timeSet)="setTimeStart($event)" #startTime></ngx-material-timepicker>
-        </div>
-        <div>
-          <label for="timeEnd">Time end</label>
-          <input placeholder="End Date" aria-label="24hr format" name="dateEnd" [(ngModel)]="data.lesson.dateEnd" [ngxTimepicker]="endTime" id="timeEnd" [format]="24"
-            readonly>
-          <ngx-material-timepicker (timeSet)="setTimeEnd($event)" #endTime></ngx-material-timepicker>
-        </div>
-      </div>
-      <div>
-        <label for="roomNumber">Room Number</label>
-        <input type="text" id="roomNumber" [(ngModel)]="data.lesson.roomNumber" name="roomNumber" #room (change)="setRoomNumber(room.value)">
-      </div>
-      <div>
-        <mat-form-field appearance="fill">
-          <mat-label>Subject</mat-label>
-          <mat-select (selectionChange)="setSubjectToLesson($event.value)">
-            <mat-option *ngFor="let subject of subjectTeacher" [value]="subject">{{subject.subject.name}} |
-              {{subject.teacher.firstName}} {{subject.teacher.lastName}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-  
-      <button (click)="addLessonToDay()">Add lesson to day</button>
-    </form>
-  </section>
-  
+    <div *ngIf="editFormGroup.get('dateStart').invalid">
+      <span class="error-msg">Date end is incorrect</span>
+    </div>
+  </div>
+  <div class="field__with_label">
+    <h4 class="field__title">Date end</h4>
+    <div class="time__picker">
+      <ngx-timepicker-field formControlName="dateEnd" [defaultTime]="editFormGroup.get('dateEnd')?.value"
+                            (timeChanged)="changeTime($event, false)" [format]="24"></ngx-timepicker-field>
+    </div>
+    <div *ngIf="editFormGroup.get('dateEnd').invalid">
+      <span class="error-msg">Date end is incorrect</span>
+    </div>
+  </div>
+  <div class="field__with_label">
+    <h4 class="field__title">Room number</h4>
+    <input class="text__field" type="text" id="roomNumber" formControlName="roomNumber" name="roomNumber">
+    <div *ngIf="editFormGroup.get('roomNumber').invalid && editFormGroup.get('roomNumber').touched">
+      <span class="error-msg">Room number is required</span>
+    </div>
+  </div>
+  <mat-form-field appearance="fill" class="field__with_label">
+    <mat-label>Subject</mat-label>
+    <mat-select class="field__select" formControlName="subject">
+      <mat-option *ngFor="let subject of subjectTeacher" [value]="subject">{{subject.subject.name}} |
+        {{subject.teacher.firstName}} {{subject.teacher.lastName}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button type="submit">Send</button>
+</form>
