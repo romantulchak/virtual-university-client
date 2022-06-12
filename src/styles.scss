@@ -37,6 +37,18 @@ $errorMsg: #f70808;
   color: $color;
 }
 
+@mixin btn($bg, $color){
+  display: block;
+  background: $bg;
+  border: none;
+  padding: 1em;
+  border-radius: 5px;
+  color: $color;
+  margin: 0 auto;
+  cursor: pointer;
+  transition: .3s ease-in-out;
+}
+
 @include mat-core();
 $virtual-university-client-primary: mat-palette($mat-indigo);
 $virtual-university-client-accent: mat-palette($mat-pink, A200, A100, A400);
@@ -58,10 +70,10 @@ $virtual-university-client-theme: mat-light-theme((
   margin: 0;
   padding: 0;
 }
-body { 
+body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  background: #fafafa; 
+  background: #fafafa;
 }
 a{
   text-decoration: none;
@@ -179,5 +191,13 @@ a{
 
   button{
     margin-top: 1em;
+  }
+}
+
+.btn__ok {
+  @include btn(cornflowerblue, #fff);
+
+  &:hover {
+    box-shadow: -2px 3px 3px #467fe5;
   }
 }

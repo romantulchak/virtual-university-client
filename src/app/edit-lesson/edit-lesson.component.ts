@@ -3,6 +3,8 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {SubjectTeacherGroupDTO} from '../dto/subjectTeacherGroup.dto';
 import {StudentGroupService} from '../service/student-group.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {EditLessonRequest} from '../request/edit-lesson.request';
+import {LessonService} from '../service/lesson.service';
 
 @Component({
   selector: 'app-edit-lesson',
@@ -17,6 +19,7 @@ export class EditLessonComponent implements OnInit  {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
               private groupService: StudentGroupService,
+              private lessonService: LessonService,
               private fb: FormBuilder) {
   }
 
@@ -26,7 +29,16 @@ export class EditLessonComponent implements OnInit  {
   }
 
   public edit(): void {
-
+    const editFormGroupValue = this.editFormGroup.value;
+    const editLessonRequest = Object.assign(new EditLessonRequest(), editFormGroupValue);
+    editLessonRequest.dateStart = this.concatDateWithTime(this.data.currentDay.day, editFormGroupValue.dateStart);
+    editLessonRequest.dateEnd = this.concatDateWithTime(this.data.currentDay.day, editFormGroupValue.dateEnd);
+    editLessonRequest.subjectTeacherId = editFormGroupValue.subject.id;
+    this.lessonService.updatedLesson(editLessonRequest).subscribe(
+      res => {
+        console.log(res);
+      }
+    );
   }
 
   /**
@@ -56,12 +68,15 @@ export class EditLessonComponent implements OnInit  {
    * Inits edit form group
    */
   private initEditFormGroup(): void {
-    console.log(this.data);
     this.editFormGroup = this.fb.group({
       id: [this.data.lesson.id, Validators.required],
       dateStart: [this.getTimeFromDate(this.data.lesson.dateStart), Validators.required],
       dateEnd: [this.getTimeFromDate(this.data.lesson.dateEnd), Validators.required],
       roomNumber: [this.data.lesson.roomNumber, Validators.required],
+      dayId: [this.data.currentDay.id, Validators.required],
+      groupId: [this.data.group.id, Validators.required],
+      semesterId: [this.data.selectedSemester.id, Validators.required],
+      lessonId: [this.data.lesson.id, Validators.required],
       subject: [null, Validators.required]
     });
   }
@@ -87,6 +102,15 @@ export class EditLessonComponent implements OnInit  {
       return value.slice(11, 16);
     }
     return '';
+  }
+
+  /**
+   * Concat date with time
+   * @param date to be concat
+   * @param time to be concat
+   */
+  private concatDateWithTime(date: string, time: string): string{
+    return `${date}T${time}`;
   }
 
   get dateStart(): FormControl {
