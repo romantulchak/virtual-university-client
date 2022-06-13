@@ -60,16 +60,16 @@
         <div class="day__header_button">
           <h3 class="day_header">{{day.day | date: 'dd-MM-yyyy'}}</h3>
           <div class="day__control_buttons">
-            <button title="Add new Lesson to {{day.day}}" *ngIf="isAdmin" class="icon__medium"  (click)="setCurrentDay(day)"><img src="../../assets/images/icons/add.svg" alt=""></button> 
-            <button title="Delete day {{day.day}}" *ngIf="isAdmin" class="icon__medium"  (click)="deleteDayFromSchedule(day)"><img src="../../assets/images/icons/delete.svg" alt=""></button> 
-          
+            <button title="Add new Lesson to {{day.day}}" *ngIf="isAdmin" class="icon__medium"  (click)="setCurrentDay(day)"><img src="../../assets/images/icons/add.svg" alt=""></button>
+            <button title="Delete day {{day.day}}" *ngIf="isAdmin" class="icon__medium"  (click)="deleteDayFromSchedule(day)"><img src="../../assets/images/icons/delete.svg" alt=""></button>
+
           </div>
         </div>
         <tbody *ngIf="day.lessons.length != 0 || isAdmin">
           <ng-container *ngFor="let lesson of day.lessons">
-            <app-lesson-table-card [lesson]="lesson" 
-                                   [isAdmin]="isAdmin" 
-                                   [isEditable]="isEditable" 
+            <app-lesson-table-card [lesson]="lesson"
+                                   [isAdmin]="isAdmin"
+                                   [isEditable]="isEditable"
                                    [teacherId]="teacherId"
                                    [day]="day"
                                    (deleteLesson)="deleteLessonFromDay($event)"

@@ -19,7 +19,8 @@ import { StatusEnum } from '../model/enum/status.enum';
 import { NotificationService } from '../service/notification.service';
 import { TokenStorageService } from '../service/tokenStorage.service';
 import { ChangeLessonStatusComponent } from '../change-lesson-status/change-lesson-status.component';
-import { LessonDTO } from '../dto/lesson.dto';
+import {EditLesson} from '../model/lesson/edit.lesson.model';
+import {LessonDay} from '../model/lesson/lesson.day.model';
 
 @Component({
   selector: 'app-schedule-table',
@@ -44,8 +45,8 @@ export class ScheduleTableComponent implements OnInit, OnChanges, AfterViewInit 
   @Output("showAllDays") showAllDays: EventEmitter<boolean> = new EventEmitter();
   @Output("showDaysForWeek") showDaysForWeek: EventEmitter<boolean> = new EventEmitter();
   @Output("showDaysByRange") showDaysByRange: EventEmitter<any> = new EventEmitter();
-  constructor(private fb: FormBuilder, 
-              private scheduleDayService: ScheduleDayService, 
+  constructor(private fb: FormBuilder,
+              private scheduleDayService: ScheduleDayService,
               private lessonService: LessonService,
               private dialog: MatDialog,
               private scheduleService: ScheduleService,
@@ -61,11 +62,11 @@ export class ScheduleTableComponent implements OnInit, OnChanges, AfterViewInit 
   ngOnChanges(){
     if(this.group != null && this.schedule != null){
       this.days = this.schedule.days;
-      this.scheduleId = this.schedule.id;     
+      this.scheduleId = this.schedule.id;
       this.teacherId = this.tokenStorageService.getUser().id;
     }
   }
-  
+
   ngAfterViewInit(){
   }
 
@@ -136,18 +137,28 @@ export class ScheduleTableComponent implements OnInit, OnChanges, AfterViewInit 
         );
       }
   }
-     /**
-    * This method allow to edit lesson in day
-    * @param obj lesson: LessonDTO, day: ScheduleDayDTO
-    */
-  public editLessonInDay(obj: any){
-      this.dialog.open(EditLessonComponent, {
-        data: {
-          lesson: obj.lesson,
-          group: this.group,
-          currentDay: obj.day,
-          selectedSemester: this.selectedSemester
-        }
+
+  /**
+   * This method allow to edit lesson in day
+   *
+   * @param editLessonModel lesson: LessonDTO, day: ScheduleDayDTO {@link EditLessonComponent}
+   */
+  public editLessonInDay(editLessonModel: EditLesson): void {
+    const editDialog = this.dialog.open(EditLessonComponent, {
+      data: {
+        lesson: editLessonModel.lesson,
+        group: this.group,
+        currentDay: editLessonModel.day,
+        selectedSemester: this.selectedSemester
+      }
+    });
+    editDialog.afterClosed().subscribe(
+      (res: LessonDay) => {
+        const lessonDTO = this.days.find(day => day.id === res.dayId)?.lessons.find(lesson => lesson.id === res.lesson.id);
+        lessonDTO.dateStart = new Date(res.lesson.dateStart);
+        lessonDTO.dateEnd = new Date(res.lesson.dateEnd);
+        lessonDTO.roomNumber = res.lesson.roomNumber;
+        lessonDTO.subjectTeacher = res.lesson.subjectTeacher;
       });
   }
 
@@ -165,7 +176,7 @@ export class ScheduleTableComponent implements OnInit, OnChanges, AfterViewInit 
         }
       );
     }
-    
+
   }
 
 
@@ -203,9 +214,10 @@ export class ScheduleTableComponent implements OnInit, OnChanges, AfterViewInit 
 
   /**
    * This method allow to change status of lesson
+   *
    * @param obj lesson: LessonDTO, day: ScheduleDayDTO
    */
-  public changeStatus(obj: any){
+  public changeStatus(obj: any): void {
     this.dialog.open(ChangeLessonStatusComponent, {
       data: {
         lesson: obj.lesson,

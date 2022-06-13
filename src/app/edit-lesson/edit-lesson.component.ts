@@ -1,10 +1,11 @@
 import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {SubjectTeacherGroupDTO} from '../dto/subjectTeacherGroup.dto';
 import {StudentGroupService} from '../service/student-group.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {EditLessonRequest} from '../request/edit-lesson.request';
 import {LessonService} from '../service/lesson.service';
+import {LessonDay} from '../model/lesson/lesson.day.model';
 
 @Component({
   selector: 'app-edit-lesson',
@@ -20,6 +21,7 @@ export class EditLessonComponent implements OnInit  {
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
               private groupService: StudentGroupService,
               private lessonService: LessonService,
+              private dialogRef: MatDialogRef<any>,
               private fb: FormBuilder) {
   }
 
@@ -28,6 +30,9 @@ export class EditLessonComponent implements OnInit  {
     this.findSubjectsForGroup();
   }
 
+  /**
+   * Prepare data for updating lesson
+   */
   public edit(): void {
     const editFormGroupValue = this.editFormGroup.value;
     const editLessonRequest = Object.assign(new EditLessonRequest(), editFormGroupValue);
@@ -36,7 +41,8 @@ export class EditLessonComponent implements OnInit  {
     editLessonRequest.subjectTeacherId = editFormGroupValue.subject.id;
     this.lessonService.updatedLesson(editLessonRequest).subscribe(
       res => {
-        console.log(res);
+        const lessonDay = new LessonDay(res, this.data.currentDay.id);
+        this.dialogRef.close(lessonDay);
       }
     );
   }
@@ -74,8 +80,6 @@ export class EditLessonComponent implements OnInit  {
       dateEnd: [this.getTimeFromDate(this.data.lesson.dateEnd), Validators.required],
       roomNumber: [this.data.lesson.roomNumber, Validators.required],
       dayId: [this.data.currentDay.id, Validators.required],
-      groupId: [this.data.group.id, Validators.required],
-      semesterId: [this.data.selectedSemester.id, Validators.required],
       lessonId: [this.data.lesson.id, Validators.required],
       subject: [null, Validators.required]
     });
